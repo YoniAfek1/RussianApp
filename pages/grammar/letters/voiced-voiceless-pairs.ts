@@ -1,4 +1,4 @@
-interface ConsonantPair {
+export interface ConsonantPair {
   voiced: string;
   voiceless: string;
 }

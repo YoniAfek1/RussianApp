@@ -1,11 +1,6 @@
 import React from 'react';
 import styles from '../../../styles/Grammar.module.css';
-import { CONSONANT_PAIRS, EXAMPLE_WORDS, type ExampleWord } from './voiced-voiceless-pairs';
-
-interface ConsonantPair {
-  voiced: string;
-  voiceless: string;
-}
+import { CONSONANT_PAIRS, EXAMPLE_WORDS, type ExampleWord, type ConsonantPair } from './voiced-voiceless-pairs.ts';
 
 export default function VoicedVoicelessPairsPage() {
   return (
