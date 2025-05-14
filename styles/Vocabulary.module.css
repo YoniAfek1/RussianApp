@@ -1,0 +1,336 @@
+/* Main container for the vocabulary page */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  /* Soft radial gradient background */
+  background: radial-gradient(ellipse at 60% 40%, #e0e7ff 0%, #f5f3ff 60%, #f5f5f5 100%);
+}
+
+/* Title styling */
+.title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #333;
+  text-align: center;
+}
+
+/* Base card styling with glassmorphism and layered shadows */
+.card {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  min-height: 200px;
+  border-radius: 16px;
+  /* Glassmorphism background */
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  /* Soft border */
+  border: 1.5px solid rgba(255,255,255,0.5);
+  /* Multi-layered shadow for 3D effect */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05), 0 6px 20px rgba(0,0,0,0.10), 0 1.5px 8px rgba(80,80,180,0.04);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  touch-action: none;
+  transition: box-shadow 0.25s cubic-bezier(.4,2,.3,1), background 0.3s;
+}
+
+.card:active {
+  cursor: grabbing;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12), 0 12px 32px rgba(0,0,0,0.13);
+}
+
+/* Word content container */
+.wordContent {
+  text-align: center;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* Russian word styling */
+.word {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Translation text styling */
+.translation {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Controls container */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Button container */
+.buttonContainer {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+/* Base button styles with 3D shadow */
+.translateButton,
+.associationButton {
+  background: white;
+  color: black;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08), 0 6px 16px rgba(80,80,180,0.06);
+  transition: all 0.2s cubic-bezier(.4,2,.3,1);
+}
+
+.translateButton:hover,
+.associationButton:hover {
+  background: #f8f8f8;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.12), 0 12px 32px rgba(80,80,180,0.08);
+  transform: translateY(-2px) scale(1.03);
+}
+
+.translateButton.active,
+.associationButton.active {
+  background: #f0f0f0;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.10);
+}
+
+/* Association styles */
+.association {
+  text-align: center;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+
+.associationWord {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2196f3;
+  margin-bottom: 0.5rem;
+}
+
+.associationSentence {
+  font-size: 1.2rem;
+  color: #333;
+  line-height: 1.4;
+}
+
+/* Card status colors with darker shades */
+.card.red {
+  background-color: #ffcdd2;
+  transition: background-color 0.3s ease;
+}
+
+.card.yellow {
+  background-color: #fff176;
+  transition: background-color 0.3s ease;
+}
+
+.card.green {
+  background-color: #a5d6a7;
+  transition: background-color 0.3s ease;
+}
+
+/* Speaker button styling with 3D shadow and pulse animation */
+.speakerButton {
+  background: white;
+  color: black;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.10), 0 6px 16px rgba(80,80,180,0.08);
+  transition: box-shadow 0.2s, background 0.2s;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.speakerButton:hover {
+  background: #f8f8f8;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.12), 0 12px 32px rgba(80,80,180,0.10);
+}
+
+.speakerButton svg {
+  width: 20px;
+  height: 20px;
+}
+
+.speakerButton.playing {
+  box-shadow: 0 0 0 0.2rem #a5b4fc, 0 2px 4px rgba(0,0,0,0.10), 0 6px 16px rgba(80,80,180,0.08);
+  animation: speakerPulse 1s infinite cubic-bezier(.4,2,.3,1);
+  border-color: #6366f1;
+}
+
+@keyframes speakerPulse {
+  0% {
+    box-shadow: 0 0 0 0.2rem #a5b4fc, 0 2px 4px rgba(0,0,0,0.10), 0 6px 16px rgba(80,80,180,0.08);
+  }
+  70% {
+    box-shadow: 0 0 0 0.7rem #a5b4fc44, 0 2px 4px rgba(0,0,0,0.10), 0 6px 16px rgba(80,80,180,0.08);
+  }
+  100% {
+    box-shadow: 0 0 0 0.2rem #a5b4fc, 0 2px 4px rgba(0,0,0,0.10), 0 6px 16px rgba(80,80,180,0.08);
+  }
+}
+
+/* Remove instruction text */
+.instructions {
+  display: none;
+}
+
+.loading, .error, .empty {
+  font-size: 1.5rem;
+  color: #666;
+  text-align: center;
+}
+
+.error {
+  color: #dc3545;
+}
+
+/* Legend styling */
+.legend {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.legendItem {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.legendItem.red {
+  background-color: #ffe5e5;
+}
+
+.legendItem.yellow {
+  background-color: #fff9c4;
+}
+
+.legendItem.green {
+  background-color: #c8e6c9;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .card {
+    min-height: 150px;
+    padding: 1.5rem;
+  }
+
+  .word {
+    font-size: 1.5rem;
+  }
+
+  .translation {
+    font-size: 1.2rem;
+  }
+}
+
+.filterMenu {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(255,255,255,0.85);
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  z-index: 10;
+}
+
+.filterLabel {
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+  color: #444;
+  gap: 0.3em;
+  font-weight: 500;
+}
+
+.filterDropdown {
+  font-size: 0.95rem;
+  padding: 0.3rem 1.2rem 0.3rem 0.7rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  background: #f3f4f6;
+  color: #333;
+  transition: border 0.18s, box-shadow 0.18s;
+  margin-left: 0.3rem;
+  outline: none;
+  cursor: pointer;
+}
+.filterDropdown:focus, .filterDropdown:hover {
+  border: 1.5px solid #6366f1;
+  box-shadow: 0 0 0 2px #a5b4fc44;
+  background: #fff;
+}
+
+.noResults {
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: #6366f1;
+  background: rgba(245,245,255,0.7);
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(80,80,180,0.04);
+  margin: 2rem 0;
+  padding: 2rem;
+  text-align: center;
+}
+
+.noResultsSoft {
+  margin: 0rem 0 0 0;
+  color: #6366f1;
+  background: rgba(245,245,255,0.5);
+  border-radius: 0.5rem;
+  padding: 0.7rem 1.2rem;
+  font-size: 1.05rem;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(80,80,180,0.04);
+  max-width: 350px;
+  margin-left: auto;
+  margin-right: 0;
+  display: block;
+} 

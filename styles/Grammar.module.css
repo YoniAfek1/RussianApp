@@ -1,0 +1,1680 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  direction: rtl;
+}
+
+/* Remove navigation styles */
+.hamburgerButton,
+.sideMenu,
+.sideMenu.open,
+.mainContent.menuOpen,
+.menuButton,
+.grammarButton,
+.vocabularyButton,
+.hearingButton,
+.buttonIcon {
+  display: none;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 2rem;
+  width: 100%;
+}
+
+.title {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #666;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.topicsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.topicCard {
+  background: white;
+  border: none;
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.topicCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.topicIconImage {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+
+.topicIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.topicTitle {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.topicDescription {
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.topicContent {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.backButton {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  color: #2c3e50;
+  background: transparent;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 2rem;
+}
+
+.backButton:hover {
+  background: #f5f5f5;
+  border-color: #2196F3;
+  color: #1976D2;
+}
+
+.grammarTable {
+  margin-top: 2rem;
+}
+
+.topicExplanation {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.tableContainer {
+  margin-top: 1.5rem;
+  overflow-x: auto;
+}
+
+.tableContainer table {
+  width: 100%;
+  border-collapse: collapse;
+  direction: rtl;
+}
+
+.tableContainer th {
+  background-color: #f8f9fa;
+  color: #000000;
+  padding: 1rem;
+  text-align: right;
+  font-weight: 600;
+  border-bottom: 2px solid #e0e0e0;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.tableContainer td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: right;
+}
+
+.tableContainer tr:hover {
+  background-color: #f5f5f5;
+}
+
+.lettersSection {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding: 2rem;
+}
+
+.sectionTitle {
+  font-size: 2rem;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.alphabetSection {
+  padding: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+}
+
+.sectionDescription {
+  text-align: center;
+  color: #666;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.alphabetGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.letterCard {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  min-height: 160px;
+}
+
+.letterCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.letterPair {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+  color: #333;
+  line-height: 1;
+}
+
+.pronunciation {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.audioButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0.5rem;
+  margin-top: auto;
+}
+
+.audioButton:hover {
+  background-color: #0056b3;
+  transform: scale(1.1);
+}
+
+.audioButton:active {
+  transform: scale(0.95);
+}
+
+.audioButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.audioButton svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+.pronunciationRules {
+  margin-top: 3rem;
+}
+
+.ruleTitle {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.lightbulbContainer {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .alphabetSection {
+    padding: 1rem;
+  }
+
+  .alphabetGrid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
+  }
+
+  .letterCard {
+    padding: 1rem;
+    min-height: 140px;
+  }
+
+  .letterPair {
+    font-size: 2.5rem;
+  }
+
+  .pronunciation {
+    font-size: 1.1rem;
+  }
+
+  .audioButton {
+    width: 36px;
+    height: 36px;
+  }
+
+  .audioButton svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.ruleSection {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ruleSection h3 {
+  color: #2c3e50;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.ruleSection p {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.ruleSection ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.ruleSection li {
+  margin: 0.5rem 0;
+  color: #666;
+}
+
+.examplesSection {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.examplesTitle {
+  font-size: 1.2rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.examplesList {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.exampleWord {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 1rem;
+}
+
+.wordText {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.wordHover {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #2c3e50;
+  color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(5px);
+  text-align: center;
+  white-space: pre-line;
+  min-width: 200px;
+  max-width: 300px;
+  margin-left: -100px;
+  margin-right: -100px;
+}
+
+.exampleWord:hover .wordHover {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .examplesList {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .wordHover {
+    position: static;
+    display: none;
+    margin-top: 0.5rem;
+    background: #f8f9fa;
+    color: #2c3e50;
+    border: 1px solid #e9ecef;
+    margin-left: 0;
+    margin-right: 0;
+    min-width: auto;
+    max-width: none;
+  }
+
+  .exampleWord:hover .wordHover {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+}
+
+.pronunciationRules {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.pronunciationRule {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ruleExplanation {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+}
+
+.explanationIcon {
+  font-size: 1.2rem;
+  margin-left: 0.5rem;
+  color: #2196F3;
+}
+
+.inlineExamples {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.exampleItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.1rem;
+}
+
+.russianWord {
+  font-weight: bold;
+  color: #2ecc71;
+  font-size: 1.2rem;
+}
+
+.pronunciation {
+  color: #666;
+}
+
+.pronunciation strong {
+  color: #2c3e50;
+}
+
+@media (max-width: 768px) {
+  .pronunciationRule {
+    padding: 1.5rem;
+  }
+
+  .inlineExamples {
+    padding: 0.75rem;
+  }
+
+  .exampleItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
+
+/* Number Tables Styles */
+.numberTablesContainer {
+  margin: 2rem 0;
+  padding: 1rem;
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+}
+
+.rangeGroups {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.rangeGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.rangeGroupTitle {
+  font-size: 1.2rem;
+  color: #2c3e50;
+  margin: 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.rangeNavigation {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.rangeButton {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  background: white;
+  color: #666;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 100px;
+}
+
+.rangeButton:hover {
+  border-color: #2196F3;
+  color: #2196F3;
+}
+
+.activeRange {
+  background: #2196F3;
+  color: white;
+  border-color: #2196F3;
+}
+
+.activeRange:hover {
+  color: white;
+  background: #1976D2;
+}
+
+.transliterationCell {
+  font-family: 'SBL Hebrew', 'Times New Roman', serif;
+  direction: rtl;
+}
+
+.tooltipContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip {
+  visibility: hidden;
+  position: absolute;
+  background: var(--primary-color);
+  color: white;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  z-index: 2;
+  bottom: 100%;
+  right: 50%;
+  transform: translateX(50%);
+  margin-bottom: 0.5rem;
+}
+
+.tooltipContainer:hover .tooltip {
+  visibility: visible;
+}
+
+@media (max-width: 768px) {
+  .numberTablesContainer {
+    padding: 1rem;
+  }
+
+  .rangeGroups {
+    gap: 1.5rem;
+  }
+
+  .rangeGroup {
+    gap: 0.75rem;
+  }
+
+  .rangeNavigation {
+    gap: 0.25rem;
+  }
+
+  .rangeButton {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    min-width: 80px;
+  }
+
+  .tableContainer td,
+  .tableContainer th {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .tooltip {
+    position: fixed;
+    bottom: 20px;
+    right: 50%;
+    transform: translateX(50%);
+    width: 90%;
+    max-width: 300px;
+    white-space: normal;
+    text-align: center;
+  }
+}
+
+.ruleDisplay {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  width: 100%;
+}
+
+.ruleToggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  transition: transform 0.2s ease;
+  align-self: flex-start;
+}
+
+.ruleToggle:hover {
+  transform: scale(1.1);
+}
+
+.ruleText {
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  width: 100%;
+  text-align: right;
+  animation: fadeIn 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  direction: rtl;
+}
+
+.ruleText h3 {
+  color: #2c3e50;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.ruleText p {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.ruleText ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.ruleText li {
+  margin: 0.5rem 0;
+  color: #666;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .ruleText {
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+.verbConjugation {
+  direction: rtl;
+  margin: 2rem 0;
+}
+
+.verbTabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.verbTab {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  background: #f0f0f0;
+  color: #333;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.verbTab:hover {
+  background: #e0e0e0;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.verbTab.activeTab {
+  background: #2196F3;
+  color: white;
+  box-shadow: 0 2px 4px rgba(33, 150, 243, 0.2);
+}
+
+.verbTableTitle {
+  margin: 2rem 0 1.5rem;
+  font-size: 1.2rem;
+  color: #2c3e50;
+  text-align: center;
+}
+
+.tenseDescription {
+  text-align: center;
+  color: #2c3e50;
+  font-size: 1.1rem;
+  margin: 1rem 0 2rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  line-height: 1.5;
+}
+
+.conjugationTable {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1.5fr;
+  background: #2196F3;
+  color: white;
+  padding: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1.5fr;
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s ease;
+  align-items: center;
+}
+
+.tableRow:last-child {
+  border-bottom: none;
+}
+
+.tableRow:hover {
+  background: #f8f9fa;
+}
+
+.pronounCol {
+  text-align: right;
+  padding-right: 1.5rem;
+  font-weight: 500;
+}
+
+.endingCol {
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.endingCol strong {
+  color: #2196F3;
+}
+
+.exampleCol {
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.infinitiveExamples {
+  margin-top: 2rem;
+}
+
+.examplesTable {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.examplesHeader {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: #2196F3;
+  color: white;
+  padding: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.exampleRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 14px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+  transition: background-color 0.2s ease;
+}
+
+.exampleRow:last-child {
+  border-bottom: none;
+}
+
+.exampleRow:hover {
+  background: #f8f9fa;
+}
+
+.russianVerb {
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .verbTabs {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .verbTab {
+    width: 100%;
+    min-width: unset;
+  }
+  
+  .tableHeader, .tableRow, .examplesHeader, .exampleRow {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .pronounCol {
+    text-align: center;
+    padding-right: 0;
+  }
+}
+
+.consonantPairsWrapper {
+  margin: 2rem auto;
+  width: 100%;
+  max-width: 800px;
+}
+
+.consonantPairsTitle {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.consonantPairsTable {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.consonantRow {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.75rem;
+  direction: rtl;
+}
+
+.consonantCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  font-weight: bold;
+  padding: 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  aspect-ratio: 1;
+  border: 2px solid transparent;
+  width: 100%;
+  max-width: 60px;
+  margin: 0 auto;
+}
+
+.voicedCell {
+  color: #1e90ff;
+  background-color: rgba(30, 144, 255, 0.1);
+}
+
+.voicelessCell {
+  color: #ff4757;
+  background-color: rgba(255, 71, 87, 0.1);
+}
+
+.consonantCell.highlighted {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.voicedCell.highlighted {
+  border-color: #1e90ff;
+  background-color: rgba(30, 144, 255, 0.2);
+}
+
+.voicelessCell.highlighted {
+  border-color: #ff4757;
+  background-color: rgba(255, 71, 87, 0.2);
+}
+
+@media (max-width: 768px) {
+  .consonantPairsTable {
+    padding: 1rem;
+  }
+
+  .consonantRow {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .consonantCell {
+    font-size: 1.5rem;
+    padding: 0.75rem;
+  }
+}
+
+/* Adjectives Page Styles */
+.endingsTable {
+  width: 100%;
+  max-width: 400px;
+  margin: 1rem 0;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.endingsTable th,
+.endingsTable td {
+  padding: 0.75rem;
+  text-align: center;
+  border: 1px solid #e0e0e0;
+}
+
+.endingsTable th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+/* Gender-based row colors */
+.masculineRow {
+  background-color: #d9ecff;
+}
+
+.feminineRow {
+  background-color: #fae1f4;
+}
+
+.neuterRow {
+  background-color: #fff7cc;
+}
+
+.pluralRow {
+  background-color: #f0f0f0;
+}
+
+.masculineRow:hover {
+  background-color: #c5e1ff;
+}
+
+.feminineRow:hover {
+  background-color: #f8d0ee;
+}
+
+.neuterRow:hover {
+  background-color: #fff0b3;
+}
+
+.pluralRow:hover {
+  background-color: #e6e6e6;
+}
+
+/* Color Legend */
+.colorLegend {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin: 1rem 0;
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.legendColor {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 4px;
+}
+
+.legendColor.masculine {
+  background-color: #d9ecff;
+}
+
+.legendColor.feminine {
+  background-color: #fae1f4;
+}
+
+.legendColor.neuter {
+  background-color: #fff7cc;
+}
+
+.legendColor.plural {
+  background-color: #f0f0f0;
+}
+
+.ruleNote {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  color: #2c3e50;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  border-right: 4px solid #2196F3;
+}
+
+/* Pronouns Table Styles */
+.singularRow {
+  background-color: rgba(173, 216, 230, 0.1);
+}
+
+.singularRow:hover {
+  background-color: rgba(173, 216, 230, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+.pluralRow {
+  background-color: rgba(255, 182, 193, 0.1);
+}
+
+.pluralRow:hover {
+  background-color: rgba(255, 182, 193, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+/* Mobile responsiveness for pronouns table */
+@media (max-width: 768px) {
+  .tableContainer table td,
+  .tableContainer table th {
+    padding: 8px;
+    font-size: 14px;
+  }
+}
+
+/* Possessive Pronouns Table Styles */
+.evenRow {
+  background-color: rgba(173, 216, 230, 0.1);
+}
+
+.oddRow {
+  background-color: rgba(255, 182, 193, 0.1);
+}
+
+.evenRow:hover,
+.oddRow:hover {
+  background-color: rgba(173, 216, 230, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+/* Examples Section */
+.examplesSection {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.examplesSection h3 {
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.exampleSentence {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.exampleSentence:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.russianText {
+  font-size: 1.2rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.transliteration {
+  color: #666;
+  margin-bottom: 0.5rem;
+  font-style: italic;
+}
+
+.hebrewText {
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+/* Mobile responsiveness for examples */
+@media (max-width: 768px) {
+  .examplesSection {
+    padding: 1rem;
+  }
+
+  .exampleSentence {
+    padding: 0.75rem;
+  }
+
+  .russianText {
+    font-size: 1.1rem;
+  }
+}
+
+.prepositionsSection {
+  background-color: rgba(173, 216, 230, 0.1);
+  padding: 2rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.prepositionsSection table tr {
+  background-color: rgba(255, 182, 193, 0.1);
+}
+
+.prepositionsSection table tr:hover {
+  background-color: rgba(255, 182, 193, 0.2);
+}
+
+.conjunctionsSection {
+  background-color: rgba(255, 182, 193, 0.1);
+  padding: 2rem;
+  border-radius: 12px;
+}
+
+.conjunctionsSection table tr {
+  background-color: rgba(173, 216, 230, 0.1);
+}
+
+.conjunctionsSection table tr:hover {
+  background-color: rgba(173, 216, 230, 0.2);
+}
+
+.prepositionsSection h3,
+.conjunctionsSection h3 {
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.prepositionsSection .tableContainer,
+.conjunctionsSection .tableContainer {
+  margin-top: 1.5rem;
+  overflow-x: auto;
+}
+
+.prepositionsSection table,
+.conjunctionsSection table {
+  width: 100%;
+  border-collapse: collapse;
+  direction: rtl;
+}
+
+.prepositionsSection th,
+.conjunctionsSection th {
+  background-color: #f8f9fa;
+  color: #000000;
+  padding: 1rem;
+  text-align: right;
+  font-weight: 600;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.prepositionsSection td,
+.conjunctionsSection td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .prepositionsSection,
+  .conjunctionsSection {
+    padding: 1rem;
+  }
+
+  .prepositionsSection th,
+  .conjunctionsSection th,
+  .prepositionsSection td,
+  .conjunctionsSection td {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+.casesContainer {
+  padding: 2rem;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.casesTitle {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.casesNavigation {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 2rem 0;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+}
+
+.caseButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  min-height: 120px;
+  gap: 0.5rem;
+  background: transparent;
+}
+
+.caseButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.caseButton.activeCase {
+  border-color: #2c3e50;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.caseButton div:first-child {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.caseButton div:nth-child(2) {
+  font-size: 1.1rem;
+  color: #2c3e50;
+}
+
+.russianName {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+.caseContent {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.caseTitle {
+  color: #2c3e50;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.caseDescription {
+  color: #2c3e50;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  text-align: right;
+}
+
+.exampleContainer {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 2rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.exampleText {
+  font-size: 1.2rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  text-align: right;
+}
+
+.exampleTranslation {
+  font-size: 1.1rem;
+  color: #666;
+  font-style: italic;
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .casesContainer {
+    padding: 1rem;
+  }
+
+  .casesNavigation {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  .caseButton {
+    padding: 1rem;
+    min-height: 100px;
+  }
+
+  .caseButton div:first-child {
+    font-size: 1.1rem;
+  }
+
+  .caseButton div:nth-child(2) {
+    font-size: 1rem;
+  }
+
+  .russianName {
+    font-size: 0.85rem;
+  }
+
+  .caseContent {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .casesNavigation {
+    grid-template-columns: 1fr;
+  }
+}
+
+.commonWordsContainer {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.commonWordsTitle {
+  color: #2c3e50;
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+  text-align: right;
+}
+
+.commonWordsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.commonWordsList li {
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  color: #2c3e50;
+  transition: all 0.2s ease;
+  text-align: right;
+}
+
+.commonWordsList li:hover {
+  background: #e9ecef;
+  transform: translateX(-5px);
+}
+
+.commonWordsList li strong {
+  color: #1976D2;
+}
+
+@media (max-width: 768px) {
+  .caseContent {
+    padding: 1rem;
+  }
+
+  .caseTitle {
+    font-size: 1.5rem;
+  }
+
+  .caseDescription {
+    font-size: 1.1rem;
+  }
+
+  .exampleContainer {
+    padding: 1rem;
+  }
+
+  .exampleText {
+    font-size: 1.1rem;
+  }
+
+  .exampleTranslation {
+    font-size: 1rem;
+  }
+
+  .tableContainer {
+    margin: 1.5rem 0;
+  }
+
+  .tableContainer th,
+  .tableContainer td {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .commonWordsContainer {
+    padding: 1rem;
+  }
+
+  .commonWordsList {
+    grid-template-columns: 1fr;
+  }
+
+  .commonWordsList li {
+    padding: 0.75rem;
+  }
+}
+
+.summaryTableContainer {
+  margin-top: 2rem;
+  overflow-x: auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.summaryTable {
+  width: 100%;
+  border-collapse: collapse;
+  direction: rtl;
+}
+
+.summaryTable th {
+  background-color: #f8f9fa;
+  color: #2c3e50;
+  font-weight: 600;
+  padding: 1rem;
+  text-align: right;
+  border-bottom: 2px solid #e0e0e0;
+  white-space: nowrap;
+}
+
+.summaryTable td {
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: right;
+}
+
+/* Case-specific row colors */
+.summaryTable tr[data-case="1"] {
+  background-color: #e3f2fd;
+}
+
+.summaryTable tr[data-case="2"] {
+  background-color: #e8f5e9;
+}
+
+.summaryTable tr[data-case="3"] {
+  background-color: #fff3e0;
+}
+
+.summaryTable tr[data-case="4"] {
+  background-color: #fde0e0;
+}
+
+.summaryTable tr[data-case="5"] {
+  background-color: #ede7f6;
+}
+
+.summaryTable tr[data-case="6"] {
+  background-color: #e0f7fa;
+}
+
+/* Case name styling */
+.caseSummaryName {
+  min-width: 150px;
+}
+
+.caseSummaryName div:first-child {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.caseSummaryName div:nth-child(2) {
+  font-size: 1.1rem;
+  color: #2c3e50;
+}
+
+/* Case-specific text colors */
+.summaryTable tr[data-case="1"] .caseSummaryName div {
+  color: #1976D2;
+}
+
+.summaryTable tr[data-case="2"] .caseSummaryName div {
+  color: #2e7d32;
+}
+
+.summaryTable tr[data-case="3"] .caseSummaryName div {
+  color: #ef6c00;
+}
+
+.summaryTable tr[data-case="4"] .caseSummaryName div {
+  color: #c62828;
+}
+
+.summaryTable tr[data-case="5"] .caseSummaryName div {
+  color: #6a1b9a;
+}
+
+.summaryTable tr[data-case="6"] .caseSummaryName div {
+  color: #00838f;
+}
+
+.commonWordsCell {
+  min-width: 200px;
+  max-width: 300px;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .summaryTableContainer {
+    margin: 1rem -1rem;
+    border-radius: 0;
+  }
+
+  .summaryTable th,
+  .summaryTable td {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .caseSummaryName {
+    min-width: 120px;
+  }
+
+  .caseSummaryName div:nth-child(2) {
+    font-size: 1rem;
+  }
+
+  .commonWordsCell {
+    min-width: 150px;
+  }
+}
+
+.gameButton {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  color: #2c3e50;
+  background: transparent;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 2rem;
+}
+
+.gameButton:hover {
+  background: #f5f5f5;
+  border-color: #2196F3;
+  color: #1976D2;
+}
