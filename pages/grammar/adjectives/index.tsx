@@ -145,7 +145,7 @@ const ColorLegend = () => (
   </div>
 );
 
-export const AdjectivesPage = () => {
+export default function AdjectivesPage() {
   return (
     <div className={styles.topicContent}>
       <h2>שם תואר</h2>

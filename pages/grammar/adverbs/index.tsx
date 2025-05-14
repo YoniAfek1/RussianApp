@@ -40,7 +40,7 @@ const EXAMPLE_SENTENCES: ExampleSentence[] = [
   }
 ];
 
-export const AdverbsPage = () => {
+export default function AdverbsPage() {
   return (
     <div className={styles.topicContent}>
       <h2>תואר הפועל</h2>

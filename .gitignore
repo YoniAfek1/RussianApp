@@ -34,3 +34,6 @@ out/
 *.local
 *.log
 public/models/silero_v3_ru.pt
+
+.next/
+
