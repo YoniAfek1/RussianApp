@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import styles from '../styles/Grammar.module.css';
 import LettersPage from './grammar/letters';
-import { NumberTables } from './grammar/numbers/number-tables';
-import { VerbConjugation } from './grammar/verbs/verb-conjugation';
-import { AdverbsPage } from './grammar/adverbs';
-import { AdjectivesPage } from './grammar/adjectives';
-import { NounsPage } from './grammar/nouns';
-import { PronounsPage } from './grammar/pronouns';
-import { PossessivePage } from './grammar/possessive';
-import { PrepositionsPage } from './grammar/prepositions';
+import NumberTables from './grammar/numbers/number-tables';
+import VerbConjugation from './grammar/verbs/verb-conjugation';
+import AdverbsPage from './grammar/adverbs';
+import AdjectivesPage from './grammar/adjectives';
+import NounsPage from './grammar/nouns';
+import PronounsPage from './grammar/pronouns';
+import PossessivePage from './grammar/possessive';
+import PrepositionsPage from './grammar/prepositions';
 import CasesPage from './grammar/cases';
 
 const topics = [
