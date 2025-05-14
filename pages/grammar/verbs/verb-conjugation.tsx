@@ -74,7 +74,7 @@ const VERB_CONJUGATIONS: Record<string, TenseData> = {
   }
 };
 
-export const VerbConjugation = () => {
+export default function VerbConjugationPage() {
   const [activeTense, setActiveTense] = useState('infinitive');
   const activeTenseData = VERB_CONJUGATIONS[activeTense];
 
@@ -138,4 +138,4 @@ export const VerbConjugation = () => {
       )}
     </div>
   );
-}; 
+} 

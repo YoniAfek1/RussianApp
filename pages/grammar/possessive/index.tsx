@@ -87,7 +87,7 @@ const EXAMPLE_SENTENCES = [
   }
 ];
 
-export const PossessivePage = () => {
+export default function PossessivePage() {
   return (
     <div className={styles.topicContent}>
       <h2>שייכות – כינויי שייכות</h2>
@@ -141,4 +141,4 @@ export const PossessivePage = () => {
       </div>
     </div>
   );
-}; 
+} 

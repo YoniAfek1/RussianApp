@@ -20,7 +20,7 @@ const PRONOUNS: Pronoun[] = [
   { person: 'הם / הן', russian: 'Они', transliteration: 'אַנִי', english: 'They', number: 'plural' },
 ];
 
-export const PronounsPage = () => {
+export default function PronounsPage() {
   return (
     <div className={styles.topicContent}>
       <h2>כינויי גוף</h2>
@@ -63,4 +63,4 @@ export const PronounsPage = () => {
       </div>
     </div>
   );
-}; 
+} 

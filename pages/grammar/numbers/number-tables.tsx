@@ -172,7 +172,7 @@ const RULE_TEXTS = {
   'מאות': '💡 במספרי מאות ברוסית, השורש של המספר מופיע לפני הסיומת "сто" (שמשמעותה "מאה"), והיא חוזרת בכל מילה.'
 };
 
-export const NumberTables = () => {
+export default function NumberTablesPage() {
   const [selectedRange, setSelectedRange] = useState('0-9');
 
   return (
@@ -242,4 +242,4 @@ export const NumberTables = () => {
       )}
     </div>
   );
-}; 
+} 

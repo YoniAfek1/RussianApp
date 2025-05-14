@@ -99,7 +99,7 @@ const CONJUNCTIONS: Conjunction[] = [
   }
 ];
 
-export const PrepositionsPage = () => {
+export default function PrepositionsPage() {
   return (
     <div className={styles.topicContent}>
       <h2>מילות יחס וקישור</h2>
@@ -169,4 +169,4 @@ export const PrepositionsPage = () => {
       </div>
     </div>
   );
-}; 
+} 

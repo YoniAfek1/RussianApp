@@ -163,7 +163,7 @@ const ColorLegend = () => (
   </div>
 );
 
-export const NounsPage = () => {
+export default function NounsPage() {
   return (
     <div className={styles.topicContent}>
       <h2>שם עצם</h2>
@@ -267,4 +267,4 @@ export const NounsPage = () => {
       </div>
     </div>
   );
-}; 
+} 
