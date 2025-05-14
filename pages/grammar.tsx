@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import React, { useState, ComponentType } from 'react';
 import styles from '../styles/Grammar.module.css';
 import LettersPage from './grammar/letters';
-import NumberTables from './grammar/numbers/number-tables';
-import VerbConjugation from './grammar/verbs/verb-conjugation';
+import NumberTablesPage from './grammar/numbers/number-tables';
+import VerbConjugationPage from './grammar/verbs/verb-conjugation';
 import AdverbsPage from './grammar/adverbs';
 import AdjectivesPage from './grammar/adjectives';
 import NounsPage from './grammar/nouns';
@@ -11,7 +11,15 @@ import PossessivePage from './grammar/possessive';
 import PrepositionsPage from './grammar/prepositions';
 import CasesPage from './grammar/cases';
 
-const topics = [
+interface Topic {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  component: ComponentType;
+}
+
+const topics: Topic[] = [
   {
     id: 'letters',
     title: 'אותיות',
@@ -31,7 +39,7 @@ const topics = [
     title: 'מספרים',
     description: 'אם אי פעם רצית לספור תפוחי אדמה ברוסית ולא ידעת איך',
     icon: '/animations/grammar/numbers.png',
-    component: NumberTables
+    component: NumberTablesPage
   },
   {
     id: 'nouns',
@@ -59,7 +67,7 @@ const topics = [
     title: 'שם פועל',
     description: 'מי שזורע – קוצר',
     icon: '/animations/grammar/tools.png',
-    component: VerbConjugation
+    component: VerbConjugationPage
   },
   {
     id: 'adverbs',
