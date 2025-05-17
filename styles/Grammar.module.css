@@ -40,16 +40,19 @@
 
 .topicsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
   padding: 1rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .topicCard {
   background: white;
   border: none;
   border-radius: 16px;
-  padding: 2rem;
+  padding: 1.5rem;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -57,7 +60,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
 .topicCard:hover {
@@ -126,26 +129,30 @@
 }
 
 .tableContainer {
-  margin-top: 1.5rem;
+  margin: 1rem 0;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
 }
 
 .tableContainer table {
   width: 100%;
   border-collapse: collapse;
   direction: rtl;
+  font-size: 1rem;
 }
 
 .tableContainer th {
   background-color: #f8f9fa;
   color: #000000;
-  padding: 1rem;
+  padding: 0.75rem;
   text-align: right;
   font-weight: 600;
   border-bottom: 2px solid #e0e0e0;
   position: sticky;
   top: 0;
   z-index: 1;
+  white-space: nowrap;
 }
 
 .tableContainer td {
@@ -280,205 +287,134 @@
 }
 
 @media (max-width: 768px) {
-  .container {
-    padding: 1rem;
-  }
-
-  .title {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .subtitle {
-    font-size: 1rem;
-    margin-bottom: 2rem;
-  }
-
   .topicsGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
-    padding: 0.5rem;
+    padding: 0.75rem;
   }
 
   .topicCard {
-    padding: 1.5rem;
+    padding: 1.25rem;
   }
 
   .topicIconImage {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
   }
 
   .topicTitle {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
   }
 
-  /* Table improvements */
+  .topicDescription {
+    font-size: 0.9rem;
+  }
+
   .tableContainer {
-    margin: 1rem -1rem;
-    width: calc(100% + 2rem);
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    margin: 0.75rem 0;
   }
 
   .tableContainer table {
-    min-width: 100%;
     font-size: 0.9rem;
   }
 
   .tableContainer th,
   .tableContainer td {
     padding: 0.5rem;
-    white-space: nowrap;
   }
 
-  /* Consonant pairs improvements */
   .consonantPairsTable {
     padding: 0.75rem;
   }
 
   .consonantRow {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    gap: 0.4rem;
   }
 
   .consonantCell {
-    font-size: 1.5rem;
-    padding: 0.5rem;
-    max-width: 50px;
-  }
-
-  /* Examples section improvements */
-  .examplesSection {
-    padding: 1rem;
-    margin-top: 1.5rem;
-  }
-
-  .examplesTitle {
-    font-size: 1.1rem;
-  }
-
-  .examplesList {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .exampleWord {
-    margin: 0.5rem 0;
-  }
-
-  .wordText {
-    font-size: 1rem;
-  }
-
-  .wordHover {
-    position: static;
-    margin-top: 0.5rem;
-    background: #f8f9fa;
-    color: #2c3e50;
-    border: 1px solid #e9ecef;
-    margin-left: 0;
-    margin-right: 0;
-    min-width: auto;
-    max-width: none;
-    padding: 0.75rem;
-    font-size: 0.9rem;
-  }
-
-  /* Verb conjugation improvements */
-  .verbTabs {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .verbTab {
-    width: 100%;
-    padding: 0.75rem;
-    font-size: 0.9rem;
-  }
-
-  .tableHeader,
-  .tableRow,
-  .examplesHeader,
-  .exampleRow {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-    padding: 0.75rem;
-  }
-
-  /* Cases navigation improvements */
-  .casesNavigation {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-  }
-
-  .caseButton {
-    padding: 1rem;
-    min-height: auto;
-  }
-
-  .caseButton div:first-child {
-    font-size: 1rem;
-  }
-
-  .caseButton div:nth-child(2) {
-    font-size: 0.9rem;
-  }
-
-  /* Summary table improvements */
-  .summaryTableContainer {
-    margin: 1rem -1rem;
-    border-radius: 0;
-  }
-
-  .summaryTable th,
-  .summaryTable td {
-    padding: 0.5rem;
-    font-size: 0.85rem;
-  }
-
-  .caseSummaryName {
-    min-width: 100px;
-  }
-
-  .caseSummaryName div:nth-child(2) {
-    font-size: 0.9rem;
-  }
-
-  .commonWordsCell {
-    min-width: 120px;
-  }
-}
-
-/* Additional breakpoint for very small screens */
-@media (max-width: 480px) {
-  .container {
-    padding: 0.75rem;
-  }
-
-  .title {
-    font-size: 1.5rem;
-  }
-
-  .consonantRow {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .consonantCell {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
+    padding: 0.4rem;
     max-width: 45px;
   }
 
-  .tableContainer th,
-  .tableContainer td {
-    padding: 0.4rem;
-    font-size: 0.8rem;
+  .examplesSection {
+    padding: 0.75rem;
+    margin-top: 1rem;
   }
 
-  .verbTab {
+  .examplesTitle {
+    font-size: 1rem;
+  }
+
+  .examplesList {
+    gap: 0.75rem;
+  }
+
+  .wordText {
+    font-size: 0.9rem;
+  }
+
+  .wordHover {
     padding: 0.5rem;
     font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .topicsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.75rem;
+    padding: 0.5rem;
+  }
+
+  .topicCard {
+    padding: 1rem;
+  }
+
+  .topicIconImage {
+    width: 50px;
+    height: 50px;
+  }
+
+  .topicTitle {
+    font-size: 1rem;
+  }
+
+  .topicDescription {
+    font-size: 0.85rem;
+  }
+
+  .consonantRow {
+    grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+    gap: 0.3rem;
+  }
+
+  .consonantCell {
+    font-size: 1.1rem;
+    padding: 0.3rem;
+    max-width: 40px;
+  }
+
+  .tableContainer table {
+    font-size: 0.85rem;
+  }
+
+  .examplesSection {
+    padding: 0.5rem;
+  }
+
+  .examplesTitle {
+    font-size: 0.9rem;
+  }
+
+  .wordText {
+    font-size: 0.85rem;
+  }
+
+  .wordHover {
+    padding: 0.4rem;
+    font-size: 0.8rem;
   }
 }
 
@@ -1085,33 +1021,21 @@
   gap: 0.75rem;
   width: 100%;
   background: white;
-  padding: 1.5rem;
+  padding: 1rem;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .consonantRow {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 0.75rem;
-  direction: rtl;
+  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+  gap: 0.5rem;
 }
 
 .consonantCell {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.75rem;
-  font-weight: bold;
-  padding: 0.75rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  aspect-ratio: 1;
-  border: 2px solid transparent;
-  width: 100%;
-  max-width: 60px;
-  margin: 0 auto;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  max-width: 50px;
 }
 
 .voicedCell {
@@ -1141,16 +1065,18 @@
 
 @media (max-width: 768px) {
   .consonantPairsTable {
-    padding: 1rem;
+    padding: 0.75rem;
   }
 
   .consonantRow {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    gap: 0.4rem;
   }
 
   .consonantCell {
-    font-size: 1.5rem;
-    padding: 0.75rem;
+    font-size: 1.3rem;
+    padding: 0.4rem;
+    max-width: 45px;
   }
 }
 
