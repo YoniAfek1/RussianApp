@@ -9,6 +9,7 @@
 }
 
 .headerSection {
+  margin-top: 2rem;
   margin-bottom: 1rem;
   text-align: center;
   max-width: 800px;
@@ -31,7 +32,7 @@
 .mainNav {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
   max-width: 600px;
   margin: 0 auto 1rem;
   padding: 0 1rem;
@@ -44,16 +45,16 @@
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  padding: 0.8rem 2rem;
+  padding: 0.9rem 2rem;
   font-size: 1.1rem;
   background: white;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
   width: 100%;
-  max-width: 500px;
+  max-width: 520px;
 }
 
 .navButton:hover {
@@ -62,8 +63,8 @@
 }
 
 .iconImage {
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
 }
 
 .icon {
@@ -73,27 +74,27 @@
 .buttonText {
   direction: rtl;
   text-align: right;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   flex: 1;
 }
 
 .bottomAnim {
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
+  padding: 1.5rem;
   background: white;
   border-radius: 16px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.08);
   width: fit-content;
-  max-width: 90%;
+  max-width: 95%;
 }
 
 .wavingAnim {
-  width: 120px;
-  height: 120px;
+  width: 180px;
+  height: 180px;
   border-radius: 1rem;
   object-fit: cover;
 }
@@ -140,10 +141,11 @@
 
 @media (max-width: 768px) {
   .homeBg {
-    padding: 1.25rem 0.75rem;
+    padding: 1rem 0.75rem;
   }
 
   .headerSection {
+    margin-top: 1.25rem;
     margin-bottom: 0.75rem;
     padding: 0 0.75rem;
   }
@@ -159,79 +161,31 @@
   }
 
   .mainNav {
-    gap: 0.4rem;
-    margin-bottom: 0.75rem;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
     padding: 0 0.75rem;
   }
 
   .navButton {
-    padding: 0.65rem 1.2rem;
+    padding: 0.75rem 1.2rem;
     font-size: 1rem;
+    max-width: 100%;
   }
 
   .bottomAnim {
     margin-top: 1.5rem;
-    margin-bottom: 0.75rem;
-    padding: 0.75rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
   }
 
   .wavingAnim {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
   }
 
   .homeNavButton {
     padding: 0.5rem 1.25rem;
     font-size: 1rem;
     max-width: 240px;
-  }
-}
-
-@media (max-width: 480px) {
-  .homeBg {
-    padding: 1rem 0.5rem;
-  }
-
-  .headerSection {
-    margin-bottom: 0.5rem;
-    padding: 0 0.5rem;
-  }
-
-  .header {
-    font-size: 1.6rem;
-    margin-bottom: 0.3rem;
-  }
-
-  .subheader {
-    font-size: 0.9rem;
-    margin-bottom: 0.3rem;
-  }
-
-  .mainNav {
-    gap: 0.3rem;
-    margin-bottom: 0.5rem;
-    padding: 0 0.5rem;
-  }
-
-  .navButton {
-    padding: 0.55rem 1rem;
-    font-size: 0.95rem;
-  }
-
-  .bottomAnim {
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
-    padding: 0.5rem;
-  }
-
-  .wavingAnim {
-    width: 90px;
-    height: 90px;
-  }
-
-  .homeNavButton {
-    padding: 0.4rem 1rem;
-    font-size: 0.9rem;
-    max-width: 200px;
   }
 }
