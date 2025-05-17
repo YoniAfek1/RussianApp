@@ -11,7 +11,9 @@ export default function VocabularyPage() {
   const [showTranslation, setShowTranslation] = useState(false);
   const [showAssociation, setShowAssociation] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [showFilter, setShowFilter] = useState(false);
   const controls = useAnimation();
+  const filterRef = useRef<HTMLDivElement>(null);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const [statusFilter, setStatusFilter] = useState('all');
   const [topicFilter, setTopicFilter] = useState('all');
@@ -35,6 +37,18 @@ export default function VocabularyPage() {
   }, [words, statusFilter, topicFilter]);
 
   const currentWord = filteredWords[currentIndex] || null;
+
+  // Handle click outside to close filter
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (filterRef.current && !filterRef.current.contains(event.target as Node)) {
+        setShowFilter(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   useEffect(() => {
     loadWords();
@@ -188,49 +202,68 @@ export default function VocabularyPage() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.filterMenu}>
-        <label className={styles.filterLabel} htmlFor="statusFilter">
-          <FaFilter style={{ marginRight: 4, fontSize: '1em', opacity: 0.7 }} />
-          סטטוס
-        </label>
-        <select
-          id="statusFilter"
-          className={styles.filterDropdown}
-          value={statusFilter}
-          onChange={e => {
-            setStatusFilter(e.target.value);
-            setCurrentIndex(0);
-          }}
-        >
-          <option value="all">הכל</option>
-          <option value="red">אדום</option>
-          <option value="yellow">צהוב</option>
-          <option value="green">ירוק</option>
-        </select>
-        <label className={styles.filterLabel} htmlFor="topicFilter">
-          <FaFilter style={{ marginRight: 4, fontSize: '1em', opacity: 0.7 }} />
-          נושא
-        </label>
-        <select
-          id="topicFilter"
-          className={styles.filterDropdown}
-          value={topicFilter}
-          onChange={e => {
-            setTopicFilter(e.target.value);
-            setCurrentIndex(0);
-          }}
-        >
-          <option value="all">הכל</option>
-          {topics.map(topic => (
-            <option key={topic} value={topic}>{topic}</option>
-          ))}
-        </select>
-        {filteredWords.length === 0 && (
-        <div className={styles.noResultsSoft}>
-          אין מילים מתאימות. נסו לשנות את המסננים.
-        </div>
-      )}
-      </div>
+      <button 
+        className={styles.filterToggleButton}
+        onClick={() => setShowFilter(prev => !prev)}
+        aria-label="Toggle Filters"
+      >
+        <FaFilter />
+      </button>
+
+      <AnimatePresence>
+        {showFilter && (
+          <motion.div 
+            ref={filterRef}
+            className={styles.filterMenu}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+          >
+            <label className={styles.filterLabel} htmlFor="statusFilter">
+              <FaFilter style={{ marginRight: 4, fontSize: '1em', opacity: 0.7 }} />
+              סטטוס
+            </label>
+            <select
+              id="statusFilter"
+              className={styles.filterDropdown}
+              value={statusFilter}
+              onChange={e => {
+                setStatusFilter(e.target.value);
+                setCurrentIndex(0);
+              }}
+            >
+              <option value="all">הכל</option>
+              <option value="red">אדום</option>
+              <option value="yellow">צהוב</option>
+              <option value="green">ירוק</option>
+            </select>
+            <label className={styles.filterLabel} htmlFor="topicFilter">
+              <FaFilter style={{ marginRight: 4, fontSize: '1em', opacity: 0.7 }} />
+              נושא
+            </label>
+            <select
+              id="topicFilter"
+              className={styles.filterDropdown}
+              value={topicFilter}
+              onChange={e => {
+                setTopicFilter(e.target.value);
+                setCurrentIndex(0);
+              }}
+            >
+              <option value="all">הכל</option>
+              {topics.map(topic => (
+                <option key={topic} value={topic}>{topic}</option>
+              ))}
+            </select>
+            {filteredWords.length === 0 && (
+              <div className={styles.noResultsSoft}>
+                אין מילים מתאימות. נסו לשנות את המסננים.
+              </div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {currentWord && (
         <motion.div
