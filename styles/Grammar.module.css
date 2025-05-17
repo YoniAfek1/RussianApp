@@ -345,96 +345,31 @@
 }
 
 .examplesSection {
-  margin-top: 2rem;
-  padding: 1.5rem;
-  background: white;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: none;
 }
 
 .examplesTitle {
-  font-size: 1.2rem;
-  color: #2c3e50;
-  margin-bottom: 1rem;
-  text-align: center;
+  display: none;
 }
 
 .examplesList {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  flex-wrap: wrap;
+  display: none;
 }
 
 .exampleWord {
-  position: relative;
-  cursor: pointer;
-  display: inline-block;
-  margin: 0 1rem;
+  display: none;
 }
 
 .wordText {
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: #2c3e50;
+  display: none;
 }
 
 .wordHover {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: #2c3e50;
-  color: white;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  font-size: 0.9rem;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.2s ease;
-  z-index: 100;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transform: translateY(5px);
-  text-align: center;
-  white-space: pre-line;
-  min-width: 200px;
-  max-width: 300px;
-  margin-left: -100px;
-  margin-right: -100px;
+  display: none;
 }
 
 .exampleWord:hover .wordHover {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-@media (max-width: 768px) {
-  .examplesList {
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .wordHover {
-    position: static;
-    display: none;
-    margin-top: 0.5rem;
-    background: #f8f9fa;
-    color: #2c3e50;
-    border: 1px solid #e9ecef;
-    margin-left: 0;
-    margin-right: 0;
-    min-width: auto;
-    max-width: none;
-  }
-
-  .exampleWord:hover .wordHover {
-    display: block;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-  }
+  display: none;
 }
 
 .pronunciationRules {
