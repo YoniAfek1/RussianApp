@@ -280,36 +280,205 @@
 }
 
 @media (max-width: 768px) {
-  .alphabetSection {
+  .container {
     padding: 1rem;
   }
 
-  .alphabetGrid {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  .title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .topicsGrid {
+    grid-template-columns: 1fr;
     gap: 1rem;
+    padding: 0.5rem;
   }
 
-  .letterCard {
+  .topicCard {
+    padding: 1.5rem;
+  }
+
+  .topicIconImage {
+    width: 80px;
+    height: 80px;
+  }
+
+  .topicTitle {
+    font-size: 1.3rem;
+  }
+
+  /* Table improvements */
+  .tableContainer {
+    margin: 1rem -1rem;
+    width: calc(100% + 2rem);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tableContainer table {
+    min-width: 100%;
+    font-size: 0.9rem;
+  }
+
+  .tableContainer th,
+  .tableContainer td {
+    padding: 0.5rem;
+    white-space: nowrap;
+  }
+
+  /* Consonant pairs improvements */
+  .consonantPairsTable {
+    padding: 0.75rem;
+  }
+
+  .consonantRow {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .consonantCell {
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    max-width: 50px;
+  }
+
+  /* Examples section improvements */
+  .examplesSection {
     padding: 1rem;
-    min-height: 140px;
+    margin-top: 1.5rem;
   }
 
-  .letterPair {
-    font-size: 2.5rem;
-  }
-
-  .pronunciation {
+  .examplesTitle {
     font-size: 1.1rem;
   }
 
-  .audioButton {
-    width: 36px;
-    height: 36px;
+  .examplesList {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
   }
 
-  .audioButton svg {
-    width: 20px;
-    height: 20px;
+  .exampleWord {
+    margin: 0.5rem 0;
+  }
+
+  .wordText {
+    font-size: 1rem;
+  }
+
+  .wordHover {
+    position: static;
+    margin-top: 0.5rem;
+    background: #f8f9fa;
+    color: #2c3e50;
+    border: 1px solid #e9ecef;
+    margin-left: 0;
+    margin-right: 0;
+    min-width: auto;
+    max-width: none;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  /* Verb conjugation improvements */
+  .verbTabs {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .verbTab {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .tableHeader,
+  .tableRow,
+  .examplesHeader,
+  .exampleRow {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    padding: 0.75rem;
+  }
+
+  /* Cases navigation improvements */
+  .casesNavigation {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .caseButton {
+    padding: 1rem;
+    min-height: auto;
+  }
+
+  .caseButton div:first-child {
+    font-size: 1rem;
+  }
+
+  .caseButton div:nth-child(2) {
+    font-size: 0.9rem;
+  }
+
+  /* Summary table improvements */
+  .summaryTableContainer {
+    margin: 1rem -1rem;
+    border-radius: 0;
+  }
+
+  .summaryTable th,
+  .summaryTable td {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .caseSummaryName {
+    min-width: 100px;
+  }
+
+  .caseSummaryName div:nth-child(2) {
+    font-size: 0.9rem;
+  }
+
+  .commonWordsCell {
+    min-width: 120px;
+  }
+}
+
+/* Additional breakpoint for very small screens */
+@media (max-width: 480px) {
+  .container {
+    padding: 0.75rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .consonantRow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .consonantCell {
+    font-size: 1.25rem;
+    max-width: 45px;
+  }
+
+  .tableContainer th,
+  .tableContainer td {
+    padding: 0.4rem;
+    font-size: 0.8rem;
+  }
+
+  .verbTab {
+    padding: 0.5rem;
+    font-size: 0.85rem;
   }
 }
 
@@ -345,31 +514,95 @@
 }
 
 .examplesSection {
-  display: none;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .examplesTitle {
-  display: none;
+  font-size: 1.2rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
 .examplesList {
-  display: none;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
 
 .exampleWord {
-  display: none;
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 1rem;
 }
 
 .wordText {
-  display: none;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #2c3e50;
 }
 
 .wordHover {
-  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #2c3e50;
+  color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(5px);
+  text-align: center;
+  white-space: pre-line;
+  min-width: 200px;
+  max-width: 300px;
+  margin-left: -100px;
+  margin-right: -100px;
 }
 
 .exampleWord:hover .wordHover {
-  display: none;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .examplesList {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .wordHover {
+    position: static;
+    margin-top: 0.5rem;
+    background: #f8f9fa;
+    color: #2c3e50;
+    border: 1px solid #e9ecef;
+    margin-left: 0;
+    margin-right: 0;
+    min-width: auto;
+    max-width: none;
+  }
+
+  .exampleWord:hover .wordHover {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
 }
 
 .pronunciationRules {
@@ -1072,20 +1305,6 @@
 }
 
 /* Examples Section */
-.examplesSection {
-  margin-top: 2rem;
-  padding: 1.5rem;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.examplesSection h3 {
-  color: #2c3e50;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-
 .exampleSentence {
   margin-bottom: 1.5rem;
   padding: 1rem;

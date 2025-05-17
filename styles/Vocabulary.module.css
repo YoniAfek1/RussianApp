@@ -243,26 +243,7 @@
   background-color: #c8e6c9;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-  .container {
-    padding: 1rem;
-  }
-
-  .card {
-    min-height: 150px;
-    padding: 1.5rem;
-  }
-
-  .word {
-    font-size: 1.5rem;
-  }
-
-  .translation {
-    font-size: 1.2rem;
-  }
-}
-
+/* Filter menu styling */
 .filterMenu {
   position: absolute;
   top: 2rem;
@@ -299,6 +280,7 @@
   outline: none;
   cursor: pointer;
 }
+
 .filterDropdown:focus, .filterDropdown:hover {
   border: 1.5px solid #6366f1;
   box-shadow: 0 0 0 2px #a5b4fc44;
@@ -333,4 +315,172 @@
   margin-left: auto;
   margin-right: 0;
   display: block;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .card {
+    max-width: 90%;
+    min-height: 180px;
+    padding: 1.5rem;
+  }
+
+  .word {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .translation {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .buttonContainer {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .translateButton,
+  .associationButton {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .association {
+    margin: 0.75rem 0;
+    padding: 0.75rem;
+  }
+
+  .associationWord {
+    font-size: 1.3rem;
+  }
+
+  .associationSentence {
+    font-size: 1rem;
+  }
+
+  .speakerButton {
+    width: 35px;
+    height: 35px;
+    top: 0.75rem;
+    right: 0.75rem;
+  }
+
+  .speakerButton svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .filterMenu {
+    position: relative;
+    top: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: 90%;
+    margin: 0 auto 1rem;
+    padding: 0.75rem;
+  }
+
+  .filterLabel {
+    font-size: 0.9rem;
+  }
+
+  .filterDropdown {
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .legend {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .legendItem {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0.75rem;
+  }
+
+  .title {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .card {
+    max-width: 95%;
+    min-height: 160px;
+    padding: 1.25rem;
+  }
+
+  .word {
+    font-size: 1.8rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .translation {
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .translateButton,
+  .associationButton {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .associationWord {
+    font-size: 1.1rem;
+  }
+
+  .associationSentence {
+    font-size: 0.9rem;
+  }
+
+  .speakerButton {
+    width: 30px;
+    height: 30px;
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+
+  .speakerButton svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .filterMenu {
+    padding: 0.5rem;
+  }
+
+  .filterLabel {
+    font-size: 0.85rem;
+  }
+
+  .filterDropdown {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .legendItem {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
+  }
 } 
