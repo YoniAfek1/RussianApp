@@ -12,10 +12,10 @@ export default function Home() {
       </header>
       <main className={styles.mainNav}>
         <Link href="/vocabulary" className={styles.navButton}>
-        <span className={styles.buttonText}>אוצר מילים</span>
         <span className={styles.icon}>
         <img src="/animations/book.png" alt="vocabulary Icon" className={styles.iconImage} />
         </span>         </Link>
+        <span className={styles.buttonText}>אוצר מילים</span>
         <Link href="/practice" className={styles.navButton}>
         <span className={styles.buttonText}>תרגול</span>
         <span className={styles.icon}>
