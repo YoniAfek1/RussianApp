@@ -1,6 +1,43 @@
 import React from 'react';
 import styles from '../../../styles/Grammar.module.css';
-import { CONSONANT_PAIRS, EXAMPLE_WORDS, type ExampleWord, type ConsonantPair } from './voiced-voiceless-pairs';
+
+interface ConsonantPair {
+  voiced: string;
+  voiceless: string;
+}
+
+interface ExampleWord {
+  word: string;
+  transliteration: string;
+  translation: string;
+}
+
+const CONSONANT_PAIRS: ConsonantPair[] = [
+  { voiced: 'Б', voiceless: 'П' },
+  { voiced: 'В', voiceless: 'Ф' },
+  { voiced: 'Г', voiceless: 'К' },
+  { voiced: 'Д', voiceless: 'Т' },
+  { voiced: 'Ж', voiceless: 'Ш' },
+  { voiced: 'З', voiceless: 'С' }
+];
+
+const EXAMPLE_WORDS: ExampleWord[] = [
+  {
+    word: 'Cделал',
+    transliteration: 'זְדֶלַל',
+    translation: 'עשה'
+  },
+  {
+    word: 'Юбка',
+    transliteration: 'יוּפְּקָה',
+    translation: 'חצאית'
+  },
+  {
+    word: 'Редко',
+    transliteration: 'רֵטְקָה',
+    translation: 'לעיתים רחוקות'
+  }
+];
 
 export default function VoicedVoicelessPairsPage() {
   return (
