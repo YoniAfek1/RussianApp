@@ -104,6 +104,7 @@
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
   transition: all 0.2s cubic-bezier(.4,2,.3,1);
   flex: 1;
+  min-height: 44px;
 }
 
 .translateButton:hover,
@@ -163,8 +164,8 @@
   background: white;
   color: black;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -183,8 +184,8 @@
 }
 
 .speakerButton svg {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
 }
 
 .speakerButton.playing {
@@ -273,6 +274,7 @@
 .filterDropdown {
   font-size: 0.85rem;
   padding: 0.35rem 0.7rem;
+  min-height: 44px;
 }
 
 .noResults {
@@ -320,6 +322,8 @@
     max-width: 240px;
     min-height: 140px;
     padding: 1rem;
+    transform: scale(0.9);
+    transform-origin: center;
   }
 
   .word {
@@ -358,15 +362,15 @@
   }
 
   .speakerButton {
-    width: 28px;
-    height: 28px;
+    width: 36px;
+    height: 36px;
     top: 0.4rem;
     right: 0.4rem;
   }
 
   .speakerButton svg {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
   }
 
   .filterMenu {
@@ -408,6 +412,7 @@
     max-width: 200px;
     min-height: 120px;
     padding: 0.75rem;
+    transform: scale(0.8);
   }
 
   .word {
@@ -435,13 +440,13 @@
   }
 
   .speakerButton {
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: 32px;
   }
 
   .speakerButton svg {
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
   }
 
   .filterMenu {

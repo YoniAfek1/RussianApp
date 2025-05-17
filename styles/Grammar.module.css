@@ -292,26 +292,27 @@
 
 @media (max-width: 768px) {
   .topicsGrid {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 0.6rem;
-    padding: 0.6rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+    padding: 0.5rem;
   }
 
   .topicCard {
-    padding: 0.75rem;
+    padding: 0.5rem;
   }
 
   .topicIconImage {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
   }
 
   .topicTitle {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
   }
 
   .topicDescription {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
   }
 
   .tableContainer {
@@ -359,38 +360,43 @@
     font-size: 0.9rem;
   }
 
-  .wordHover {
+  .tableRow,
+  .exampleRow {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    text-align: center;
     padding: 0.5rem;
-    font-size: 0.8rem;
-    min-width: 140px;
-    max-width: 200px;
-    margin-left: -70px;
-    margin-right: -70px;
+  }
+
+  .pronounCol {
+    text-align: center;
+    padding-right: 0;
   }
 }
 
 @media (max-width: 480px) {
   .topicsGrid {
-    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-    gap: 0.4rem;
-    padding: 0.4rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.3rem;
+    padding: 0.3rem;
   }
 
   .topicCard {
-    padding: 0.6rem;
+    padding: 0.4rem;
   }
 
   .topicIconImage {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
   }
 
   .topicTitle {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
   }
 
   .topicDescription {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
 
   .consonantRow {
@@ -418,15 +424,6 @@
 
   .wordText {
     font-size: 0.85rem;
-  }
-
-  .wordHover {
-    padding: 0.4rem;
-    font-size: 0.75rem;
-    min-width: 120px;
-    max-width: 180px;
-    margin-left: -60px;
-    margin-right: -60px;
   }
 }
 
@@ -497,33 +494,21 @@
 }
 
 .wordHover {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
+  position: static;
   background: #2c3e50;
   color: white;
   padding: 0.6rem;
   border-radius: 6px;
   font-size: 0.85rem;
-  opacity: 0;
-  visibility: hidden;
+  opacity: 1;
+  visibility: visible;
   transition: all 0.2s ease;
   z-index: 100;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  transform: translateY(5px);
   text-align: center;
-  white-space: pre-line;
-  min-width: 160px;
-  max-width: 220px;
-  margin-left: -80px;
-  margin-right: -80px;
-}
-
-.exampleWord:hover .wordHover {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
+  white-space: normal;
+  width: 100%;
+  margin: 0.4rem 0;
 }
 
 @media (max-width: 768px) {
