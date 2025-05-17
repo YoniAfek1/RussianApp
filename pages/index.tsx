@@ -14,24 +14,26 @@ export default function Home() {
         <Link href="/vocabulary" className={styles.navButton}>
         <span className={styles.icon}>
         <img src="/animations/book.png" alt="vocabulary Icon" className={styles.iconImage} />
-        </span>         </Link>
+        </span>           
         <span className={styles.buttonText}>אוצר מילים</span>
+        </Link>
         <Link href="/practice" className={styles.navButton}>
-        <span className={styles.buttonText}>תרגול</span>
         <span className={styles.icon}>
         <img src="/animations/play.png" alt="practice Icon" className={styles.iconImage} />
-        </span>        </Link>
+        </span>        
+        <span className={styles.buttonText}>תרגול</span>
+        </Link>
         <Link href="/grammar" className={styles.navButton}>
-        <span className={styles.buttonText}>דקדוק</span>
         <span className={styles.icon}>
         <img src="/animations/rule.png" alt="Grammar Icon" className={styles.iconImage} />
-        </span>
+        </span>        
+        <span className={styles.buttonText}>דקדוק</span>
         </Link>
         <Link href="/hearing" className={styles.navButton}>
-        <span className={styles.buttonText}>האזנה</span>
         <span className={styles.icon}>
         <img src="/animations/headphone.png" alt="hearing Icon" className={styles.iconImage} />
-        </span>
+        </span>        
+        <span className={styles.buttonText}>האזנה</span>
         </Link>
       </main>
       <div className={styles.bottomAnim}>
