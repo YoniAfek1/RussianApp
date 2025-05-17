@@ -6,12 +6,6 @@ interface ConsonantPair {
   voiceless: string;
 }
 
-interface ExampleWord {
-  word: string;
-  transliteration: string;
-  translation: string;
-}
-
 const CONSONANT_PAIRS: ConsonantPair[] = [
   { voiced: 'Б', voiceless: 'П' },
   { voiced: 'В', voiceless: 'Ф' },
@@ -19,24 +13,6 @@ const CONSONANT_PAIRS: ConsonantPair[] = [
   { voiced: 'Д', voiceless: 'Т' },
   { voiced: 'Ж', voiceless: 'Ш' },
   { voiced: 'З', voiceless: 'С' }
-];
-
-const EXAMPLE_WORDS: ExampleWord[] = [
-  {
-    word: 'Cделал',
-    transliteration: 'זְדֶלַל',
-    translation: 'עשה'
-  },
-  {
-    word: 'Юбка',
-    transliteration: 'יוּפְּקָה',
-    translation: 'חצאית'
-  },
-  {
-    word: 'Редко',
-    transliteration: 'רֵטְקָה',
-    translation: 'לעיתים רחוקות'
-  }
 ];
 
 export default function VoicedVoicelessPairsPage() {
@@ -52,17 +28,6 @@ export default function VoicedVoicelessPairsPage() {
             <div className={`${styles.consonantCell} ${styles.voicelessCell}`}>
               {pair.voiceless}
             </div>
-          </div>
-        ))}
-      </div>
-
-      <h3>Example Words</h3>
-      <div className={styles.examplesTable}>
-        {EXAMPLE_WORDS.map((example, index) => (
-          <div key={index} className={styles.exampleRow}>
-            <div>{example.word}</div>
-            <div>{example.transliteration}</div>
-            <div>{example.translation}</div>
           </div>
         ))}
       </div>
