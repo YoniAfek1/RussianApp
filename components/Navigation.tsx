@@ -51,13 +51,13 @@ export default function Navigation({ onLogout }: NavigationProps) {
             <div className={styles.overlay}>
               <div ref={menuRef} className={styles.menu}>
                 <button onClick={() => handleNavigation('/statistics')}>
-                  סטטיסטיקות
+                 פרופיל      
                 </button>
                 <button onClick={() => handleNavigation('/profile')}>
-                  פרופיל
+                  אודות
                 </button>
                 <button onClick={() => handleNavigation('/about')}>
-                  אודות
+                  התנתקות
                 </button>
                 {onLogout && (
                   <button onClick={onLogout} className={styles.logoutButton}>
