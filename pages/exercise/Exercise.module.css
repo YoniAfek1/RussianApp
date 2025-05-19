@@ -74,6 +74,10 @@
   }
 
   .optionCard {
+    gap: 1rem;
+    max-width: 240px;
+    width: 100%;
+    min-height: unset; 
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
@@ -91,9 +95,7 @@
     margin: 0.25rem auto;
     text-decoration: none;
     box-sizing: border-box;
-    max-width: 240px;
     height: auto;  /* מבטל height: 80px */
-    width: 100%;
   }  
 
   .icon {
