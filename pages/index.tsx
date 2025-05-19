@@ -17,7 +17,7 @@ export default function Home() {
         </span>           
         <span className={styles.buttonText}>אוצר מילים</span>
         </Link>
-        <Link href="/practice" className={styles.navButton}>
+        <Link href="/exercise" className={styles.navButton}>
         <span className={styles.icon}>
         <img src="/animations/play.png" alt="practice Icon" className={styles.iconImage} />
         </span>        
