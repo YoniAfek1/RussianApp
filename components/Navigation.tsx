@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useState, useRef, useEffect } from 'react';
-import { FaBars, FaArrowRight } from 'react-icons/fa';
-import styles from './Navigation.module.css';
+import { FaBars, FaArrowRight, FaChartBar, FaUser, FaInfoCircle, FaSignOutAlt } from 'react-icons/fa';
+import styles from '@/styles/Navigation.module.css';
 
 interface NavigationProps {
   onLogout?: () => void;

@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { FaBook, FaCalculator, FaFont, FaLanguage } from 'react-icons/fa';
-import styles from './Exercise.module.css';
+import { FaBook, FaFont, FaCalculator, FaLanguage } from 'react-icons/fa';
+import styles from '@/styles/Exercise.module.css';
 
 export default function Exercise() {
   return (
