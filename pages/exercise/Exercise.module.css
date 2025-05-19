@@ -75,9 +75,9 @@
 
   .optionCard {
     padding: 1.25rem;
-    min-height: 120px;     /* גובה מינימלי */
-    width: 100%;           /* רוחב מלא */
-    max-width: 100%;       /* מבטיח שלא יישבר */
+    height: 120px;     
+    width: 85%; 
+    max-width: 200px;  
   }
 
   .icon {
