@@ -5,7 +5,7 @@ import styles from './Exercise.module.css';
 export default function Exercise() {
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>מה נתרגל</h1>
+      <h1 className={styles.title}>תרגול </h1>
       <div className={styles.optionsGrid}>
       <Link href="/practice" className={styles.optionCard}>
           <span className={styles.icon}>
