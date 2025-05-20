@@ -1,14 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { exec } from 'child_process';
-import { writeFile } from 'fs/promises';
 import { join } from 'path';
 import { tmpdir } from 'os';
+import formidable, { Fields, Files, File } from 'formidable';
+import { promises as fs } from 'fs';
 
 export const config = {
   api: {
-    bodyParser: {
-      sizeLimit: '10mb',
-    },
+    bodyParser: false, // Disable the default body parser
   },
 };
 
@@ -22,22 +21,33 @@ export default async function handler(
   }
 
   try {
-    const { audioData } = req.body;
+    // Parse the incoming form data
+    const form = formidable({ 
+      uploadDir: tmpdir(),
+      keepExtensions: true,
+      maxFileSize: 10 * 1024 * 1024, // 10MB
+    });
 
-    if (!audioData) {
-      return res.status(400).json({ error: 'No audio data provided' });
+    const [fields, files] = await new Promise<[Fields, Files]>((resolve, reject) => {
+      form.parse(req, (err: Error | null, fields: Fields, files: Files) => {
+        if (err) reject(err);
+        else resolve([fields, files]);
+      });
+    });
+
+    const audioFile = files.audio;
+    if (!audioFile || Array.isArray(audioFile)) {
+      return res.status(400).json({ error: 'No audio file provided' });
     }
 
-    // Convert base64 audio data to buffer
-    const audioBuffer = Buffer.from(audioData.split(',')[1], 'base64');
+    // Ensure we have a single file
+    const file = audioFile as unknown as File;
+    if (!file.filepath) {
+      return res.status(400).json({ error: 'Invalid audio file' });
+    }
 
-    // Create temporary files for audio
-    const tempDir = tmpdir();
-    const webmPath = join(tempDir, `audio-${Date.now()}.webm`);
-    const wavPath = join(tempDir, `audio-${Date.now()}.wav`);
-
-    // Write the webm file
-    await writeFile(webmPath, audioBuffer);
+    const webmPath = file.filepath;
+    const wavPath = join(tmpdir(), `audio-${Date.now()}.wav`);
 
     // Convert webm to wav using ffmpeg
     await new Promise<void>((resolve, reject) => {
@@ -69,7 +79,15 @@ export default async function handler(
     });
 
     return new Promise((resolve) => {
-      pythonProcess.on('close', (code) => {
+      pythonProcess.on('close', async (code) => {
+        // Clean up temporary files
+        try {
+          await fs.unlink(webmPath);
+          await fs.unlink(wavPath);
+        } catch (err) {
+          console.error('Error cleaning up temporary files:', err);
+        }
+
         if (code !== 0) {
           resolve(res.status(500).json({ error: `Transcription failed: ${error}` }));
           return;

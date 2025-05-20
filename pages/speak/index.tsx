@@ -25,34 +25,27 @@ export default function SpeakPage() {
         setIsProcessing(true);
         const audioBlob = new Blob(chunksRef.current, { type: 'audio/webm' });
         
-        // Convert blob to base64
-        const reader = new FileReader();
-        reader.readAsDataURL(audioBlob);
-        reader.onloadend = async () => {
-          const base64Audio = reader.result as string;
+        const formData = new FormData();
+        formData.append('audio', audioBlob, 'recording.webm');
 
-          try {
-            const res = await fetch('/api/transcribe', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ audioData: base64Audio }),
-            });
+        try {
+          const res = await fetch('/api/transcribe', {
+            method: 'POST',
+            body: formData,
+          });
 
-            if (!res.ok) {
-              throw new Error('Transcription failed');
-            }
-
-            const data = await res.json();
-            setTranscript(data.text || 'לא זוהה טקסט');
-          } catch (error) {
-            console.error('Error transcribing:', error);
-            setTranscript('שגיאה בזיהוי הדיבור');
-          } finally {
-            setIsProcessing(false);
+          if (!res.ok) {
+            throw new Error('Transcription failed');
           }
-        };
+
+          const data = await res.json();
+          setTranscript(data.text || 'לא זוהה טקסט');
+        } catch (error) {
+          console.error('Error transcribing:', error);
+          setTranscript('שגיאה בזיהוי הדיבור');
+        } finally {
+          setIsProcessing(false);
+        }
 
         // Stop all tracks in the stream
         stream.getTracks().forEach(track => track.stop());
