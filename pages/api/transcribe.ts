@@ -7,15 +7,11 @@ import { promises as fs } from 'fs';
 
 export const config = {
   api: {
-    bodyParser: false, // Disable the default body parser
+    bodyParser: false,
   },
 };
 
-// API: תמלול שמע (שלב עתידי)
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   console.log('[API] Received transcription request');
 
   if (req.method !== 'POST') {
@@ -24,11 +20,10 @@ export default async function handler(
   }
 
   try {
-    // Parse the incoming form data
-    const form = formidable({ 
+    const form = formidable({
       uploadDir: tmpdir(),
       keepExtensions: true,
-      maxFileSize: 10 * 1024 * 1024, // 10MB
+      maxFileSize: 10 * 1024 * 1024,
     });
 
     console.log('[API] Starting formidable parse...');
@@ -45,14 +40,13 @@ export default async function handler(
     });
 
     const audioFile = files.audio;
-    if (!audioFile || Array.isArray(audioFile)) {
-      console.error('[API] No audio file received or multiple files received');
+    if (!audioFile) {
+      console.error('[API] No audio file received');
       return res.status(400).json({ error: 'No audio file provided' });
     }
 
-    // Ensure we have a single file
-    const file = audioFile as unknown as File;
-    if (!file.filepath) {
+    const file = Array.isArray(audioFile) ? audioFile[0] : audioFile;
+    if (!file || !file.filepath) {
       console.error('[API] Invalid audio file - no filepath');
       return res.status(400).json({ error: 'Invalid audio file' });
     }
@@ -63,27 +57,8 @@ export default async function handler(
       filepath: file.filepath
     });
 
-    const webmPath = file.filepath;
-    const wavPath = join(tmpdir(), `audio-${Date.now()}.wav`);
+    const wavPath = file.filepath;
 
-    // Convert webm to wav using ffmpeg
-    console.log('[API] Converting webm to wav:', { webmPath, wavPath });
-    await new Promise<void>((resolve, reject) => {
-      exec(
-        `ffmpeg -i "${webmPath}" -ar 16000 -ac 1 -f wav "${wavPath}"`,
-        (error) => {
-          if (error) {
-            console.error('[API] FFmpeg conversion error:', error);
-            reject(new Error('Audio conversion failed'));
-            return;
-          }
-          console.log('[API] FFmpeg conversion succeeded');
-          resolve();
-        }
-      );
-    });
-
-    // Run Python script for transcription with the wav file
     const command = `python scripts/transcribe.py "${wavPath}"`;
     console.log('[API] Running transcription command:', command);
 
@@ -105,13 +80,11 @@ export default async function handler(
       pythonProcess.on('close', async (code) => {
         console.log('[API] Python process exited with code:', code);
         
-        // Clean up temporary files
         try {
-          await fs.unlink(webmPath);
           await fs.unlink(wavPath);
-          console.log('[API] Temporary files cleaned up');
+          console.log('[API] Temporary file cleaned up');
         } catch (err) {
-          console.error('[API] Error cleaning up temporary files:', err);
+          console.error('[API] Error cleaning up temporary file:', err);
         }
 
         if (code !== 0) {
