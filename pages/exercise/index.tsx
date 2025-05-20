@@ -6,25 +6,25 @@ const options = [
     id: 'nouns',
     title: 'שם עצם',
     icon: '/animations/grammar/bone.png',
-    path: '/games/noun'
+    path: '/grammar/nouns/game'
   },
   {
     id: 'adjectives',
     title: 'שם תואר',
     icon: '/animations/grammar/colors.png',
-    path: '/games/adjective'
+    path: '/grammar/adjectives/game'
   },
   {
     id: 'numbers',
     title: 'מספרים',
     icon: '/animations/grammar/numbers.png',
-    path: '/games/numbers'
+    path: '/grammar/numbers/game'
   },
   {
     id: 'verbs',
     title: 'שם פועל',
     icon: '/animations/grammar/tools.png',
-    path: '/games/verb'
+    path: '/grammar/verbs/game'
   }
 ];
 
