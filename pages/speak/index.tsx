@@ -109,7 +109,7 @@ export default function SpeakPage() {
           onClick={startRecognition} 
           disabled={listening}
         >
-          {listening ? 'מקשיב...' : 'לחץ ודבר'}
+          {listening ? '...' : '🎤'}
         </button>
       </div>
 
