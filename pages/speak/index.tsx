@@ -1,64 +1,60 @@
-import { useRef, useState } from 'react';
-import Recorder from 'recorder-js';
+import { useState } from 'react';
 import styles from '../../styles/Speak.module.css';
 
+// Add TypeScript declarations for the Web Speech API
+declare global {
+  interface Window {
+    SpeechRecognition: typeof SpeechRecognition;
+    webkitSpeechRecognition: typeof SpeechRecognition;
+  }
+}
+
 export default function SpeakPage() {
-  const recorderRef = useRef<Recorder | null>(null);
   const [transcript, setTranscript] = useState('');
-  const [isRecording, setIsRecording] = useState(false);
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [listening, setListening] = useState(false);
+  const [error, setError] = useState('');
 
-  const startRecording = async () => {
-    try {
-      console.log('[Frontend] Starting recording...');
-      const audioContext = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      console.log('[Frontend] Got audio stream');
-      
-      const recorder = new Recorder(audioContext);
-      await recorder.init(stream);
-      recorder.start();
-      recorderRef.current = recorder;
-      setIsRecording(true);
-      console.log('[Frontend] Recording started');
-
-      setTimeout(stopRecording, 6000); // 6 sec max
-    } catch (error) {
-      console.error('[Frontend] Error starting recording:', error);
-      setTranscript('Error accessing microphone');
-    }
-  };
-
-  const stopRecording = async () => {
-    if (!recorderRef.current) {
-      console.error('[Frontend] No recorder instance found');
+  const startRecognition = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      setError('Speech recognition is not supported in this browser.');
       return;
     }
 
     try {
-      console.log('[Frontend] Stopping recording...');
-      const { blob } = await recorderRef.current.stop();
-      setIsRecording(false);
-      setIsProcessing(true);
-      console.log('[Frontend] Recording stopped, blob size:', blob.size);
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'ru-RU';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
 
-      const formData = new FormData();
-      formData.append('audio', blob, 'recording.wav');
+      recognition.onstart = () => {
+        console.log('[Frontend] Speech recognition started');
+        setListening(true);
+        setError('');
+      };
 
-      console.log('[Frontend] Sending audio to server...');
-      const res = await fetch('/api/transcribe', {
-        method: 'POST',
-        body: formData,
-      });
+      recognition.onend = () => {
+        console.log('[Frontend] Speech recognition ended');
+        setListening(false);
+      };
 
-      const data = await res.json();
-      console.log('[Frontend] Server response:', data);
-      setTranscript(data.text || data.error || 'Transcription failed');
-    } catch (error) {
-      console.error('[Frontend] Error processing recording:', error);
-      setTranscript('Error processing recording');
-    } finally {
-      setIsProcessing(false);
+      recognition.onresult = (event: SpeechRecognitionEvent) => {
+        const text = event.results[0][0].transcript;
+        console.log('[Frontend] Recognized text:', text);
+        setTranscript(text);
+      };
+
+      recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
+        console.error('[Frontend] Speech recognition error:', event.error);
+        setError(`Error: ${event.error}`);
+        setListening(false);
+      };
+
+      console.log('[Frontend] Starting speech recognition...');
+      recognition.start();
+    } catch (err) {
+      console.error('[Frontend] Error initializing speech recognition:', err);
+      setError('Failed to start speech recognition');
     }
   };
 
@@ -71,19 +67,21 @@ export default function SpeakPage() {
       
       <div className={styles.controls}>
         <button 
-          className={`${styles.recordButton} ${isRecording ? styles.recording : ''}`}
-          onClick={startRecording} 
-          disabled={isRecording || isProcessing}
+          className={`${styles.recordButton} ${listening ? styles.recording : ''}`}
+          onClick={startRecognition} 
+          disabled={listening}
         >
-          {isRecording ? '🎤 Recording...' : '🎤 Start Speaking'}
+          {listening ? '🎤 Listening...' : '🎤 Start Speaking'}
         </button>
       </div>
 
       <div className={styles.result}>
-        {isProcessing ? (
-          <div className={styles.processing}>Processing...</div>
+        {error ? (
+          <div className={styles.error}>{error}</div>
         ) : (
-          <div className={styles.transcript}>{transcript || 'Your transcription will appear here'}</div>
+          <div className={styles.transcript}>
+            {transcript || 'Your transcription will appear here'}
+          </div>
         )}
       </div>
     </div>
