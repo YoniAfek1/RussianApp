@@ -109,18 +109,8 @@ export default function SpeakPage() {
           onClick={startRecognition} 
           disabled={listening}
         >
-          🎤 {listening ? 'מקשיב...' : 'לחץ כדי לדבר'}
+          {listening ? 'מקשיב...' : 'לחץ ודבר'}
         </button>
-        
-        {listening && (
-          <div className={styles.waveform}>
-            <div className={styles.wave}></div>
-            <div className={styles.wave}></div>
-            <div className={styles.wave}></div>
-            <div className={styles.wave}></div>
-            <div className={styles.wave}></div>
-          </div>
-        )}
       </div>
 
       <div className={styles.result}>

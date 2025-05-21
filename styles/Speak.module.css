@@ -27,10 +27,11 @@
   bottom: 2rem;
   left: 50%;
   transform: translateX(-50%);
-  width: 90px;
+  width: 250px;
   height: 90px;
-  font-size: 2rem;
-  border-radius: 50%;
+  font-size: 1.8rem;
+  font-weight: bold;
+  border-radius: 100px;
   border: none;
   background-color: #1976D2;
   color: white;
@@ -58,7 +59,6 @@
 
 .recording {
   background-color: #d32f2f;
-  animation: pulse 1.5s infinite;
 }
 
 .result {
@@ -82,55 +82,6 @@
   line-height: 1.5;
 }
 
-.waveform {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  height: 40px;
-  margin-top: 1rem;
-  gap: 4px;
-}
-
-.wave {
-  width: 6px;
-  height: 20px;
-  background-color: #1976D2;
-  animation: bounce 1s infinite ease-in-out;
-}
-
-.wave:nth-child(2) {
-  animation-delay: 0.1s;
-}
-
-.wave:nth-child(3) {
-  animation-delay: 0.2s;
-}
-
-.wave:nth-child(4) {
-  animation-delay: 0.3s;
-}
-
-.wave:nth-child(5) {
-  animation-delay: 0.4s;
-}
-
-@keyframes bounce {
-  0%, 100% { height: 20px; }
-  50% { height: 40px; }
-}
-
-@keyframes pulse {
-  0% {
-    transform: translateX(-50%) scale(1);
-  }
-  50% {
-    transform: translateX(-50%) scale(1.05);
-  }
-  100% {
-    transform: translateX(-50%) scale(1);
-  }
-}
-
 @media (max-width: 600px) {
   .container {
     padding: 1rem;
@@ -145,9 +96,9 @@
   }
 
   .recordButton {
-    width: 80px;
+    width: 90%;
     height: 80px;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
 
   .transcript {
