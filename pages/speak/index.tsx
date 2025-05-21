@@ -82,6 +82,14 @@ export default function SpeakPage() {
 
       console.log('[Frontend] Starting speech recognition...');
       recognition.start();
+
+      // ⏱️ Stop after 8 seconds
+      setTimeout(() => {
+        if (listening) {
+          console.log('[Frontend] Stopping recognition after 8 seconds');
+          recognition.stop();
+        }
+      }, 8000);
     } catch (err) {
       console.error('[Frontend] Error initializing speech recognition:', err);
       setTranscript('⚠️ שגיאה בהפעלת זיהוי הקולי');
@@ -103,6 +111,16 @@ export default function SpeakPage() {
         >
           🎤 {listening ? 'מקשיב...' : 'לחץ כדי לדבר'}
         </button>
+        
+        {listening && (
+          <div className={styles.waveform}>
+            <div className={styles.wave}></div>
+            <div className={styles.wave}></div>
+            <div className={styles.wave}></div>
+            <div className={styles.wave}></div>
+            <div className={styles.wave}></div>
+          </div>
+        )}
       </div>
 
       <div className={styles.result}>
