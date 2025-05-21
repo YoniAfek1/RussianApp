@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from '../../styles/Speak.module.css';
 
 // Add TypeScript declarations for the Web Speech API
@@ -12,12 +12,42 @@ declare global {
 export default function SpeakPage() {
   const [transcript, setTranscript] = useState('');
   const [listening, setListening] = useState(false);
-  const [error, setError] = useState('');
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+
+  // Load available voices when component mounts
+  useEffect(() => {
+    const loadVoices = () => {
+      const availableVoices = window.speechSynthesis.getVoices();
+      setVoices(availableVoices);
+    };
+
+    // Chrome loads voices asynchronously
+    if (window.speechSynthesis.onvoiceschanged !== undefined) {
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+    loadVoices();
+  }, []);
+
+  const speak = (text: string) => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'ru-RU';
+    
+    // Find Russian voice if available
+    const ruVoice = voices.find(v => v.lang === 'ru-RU');
+    if (ruVoice) {
+      console.log('[Frontend] Using Russian voice:', ruVoice.name);
+      utterance.voice = ruVoice;
+    } else {
+      console.log('[Frontend] No Russian voice found, using default');
+    }
+
+    window.speechSynthesis.speak(utterance);
+  };
 
   const startRecognition = () => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
-      setError('Speech recognition is not supported in this browser.');
+      alert('הדפדפן שלך לא תומך בזיהוי קולי');
       return;
     }
 
@@ -30,7 +60,6 @@ export default function SpeakPage() {
       recognition.onstart = () => {
         console.log('[Frontend] Speech recognition started');
         setListening(true);
-        setError('');
       };
 
       recognition.onend = () => {
@@ -42,11 +71,12 @@ export default function SpeakPage() {
         const text = event.results[0][0].transcript;
         console.log('[Frontend] Recognized text:', text);
         setTranscript(text);
+        speak(text); // 🔊 Play back the text
       };
 
       recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
         console.error('[Frontend] Speech recognition error:', event.error);
-        setError(`Error: ${event.error}`);
+        setTranscript('⚠️ לא זוהה טקסט. נסה שוב.');
         setListening(false);
       };
 
@@ -54,15 +84,15 @@ export default function SpeakPage() {
       recognition.start();
     } catch (err) {
       console.error('[Frontend] Error initializing speech recognition:', err);
-      setError('Failed to start speech recognition');
+      setTranscript('⚠️ שגיאה בהפעלת זיהוי הקולי');
     }
   };
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Speak Russian</h1>
+    <div className={styles.container} dir="rtl">
+      <h1 className={styles.title}>דבר ברוסית</h1>
       <p className={styles.description}>
-        Click the microphone button and speak in Russian. The app will transcribe your speech.
+        לחץ על הכפתור ודבר ברוסית. הטקסט יופיע ויוקרא בקול.
       </p>
       
       <div className={styles.controls}>
@@ -71,17 +101,16 @@ export default function SpeakPage() {
           onClick={startRecognition} 
           disabled={listening}
         >
-          {listening ? '🎤 Listening...' : '🎤 Start Speaking'}
+          🎤 {listening ? 'מקשיב...' : 'לחץ כדי לדבר'}
         </button>
       </div>
 
       <div className={styles.result}>
-        {error ? (
-          <div className={styles.error}>{error}</div>
-        ) : (
-          <div className={styles.transcript}>
-            {transcript || 'Your transcription will appear here'}
-          </div>
+        {transcript && (
+          <>
+            <div className={styles.transcriptLabel}>מה שאמרת:</div>
+            <div className={styles.transcript}>{transcript}</div>
+          </>
         )}
       </div>
     </div>
