@@ -20,15 +20,24 @@
 }
 
 .recordButton {
-  padding: 1rem 2rem;
-  font-size: 1.2rem;
+  width: auto;
+  min-width: 100px;
+  min-height: 100px;
+  border-radius: 100px;
+  padding: 0 1rem;
+  height: 100px;
+  font-size: 1.1rem;
+  font-weight: bold;
   background-color: #4CAF50;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 50%; /* ← עיגול */
   cursor: pointer;
   transition: all 0.3s ease;
   margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .recordButton:hover {
