@@ -1,19 +1,21 @@
 import { useEffect, useState, useRef } from 'react';
 import styles from '../../styles/Conversations.module.css';
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 declare global {
   interface Window {
     SpeechRecognition: typeof SpeechRecognition;
     webkitSpeechRecognition: typeof SpeechRecognition;
-    transformers: any;
   }
 }
+
+const API_KEY = "AIzaSyA1MUHts75rFBYBxxoBc20ZUjU8FYnHab0";
 
 type Role = 'user' | 'assistant';
 type Message = { role: Role; content: string };
 
 export default function ConversationsPage() {
-  const [pipeline, setPipeline] = useState<any>(null);
+  const [chatSession, setChatSession] = useState<any>(null);
   const [history, setHistory] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
   const [listening, setListening] = useState(false);
@@ -39,71 +41,63 @@ export default function ConversationsPage() {
   }, []);
 
   useEffect(() => {
-    // Load transformers.js from CDN (v2.7.0)
-    if (window.transformers) {
-      setDebugMsg('📦 Transformers already loaded.');
-      loadModel();
-      return;
-    }
-
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.7.0/dist/transformers.min.js';
-    script.async = true;
-
-    script.onload = () => {
-      setDebugMsg('📦 Transformers loaded, loading model...');
-      loadModel();
+    const initGemini = async () => {
+      try {
+        setDebugMsg('📦 Initializing Gemini...');
+        const genAI = new GoogleGenerativeAI(API_KEY);
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        
+        // Initialize chat with system prompt
+        const chat = await model.startChat({
+          history: [{
+            role: "user",
+            parts: [{ text: "You are a friendly Russian market vendor. Keep responses short, conversational, and in Russian. Use simple vocabulary suitable for language learners." }]
+          }],
+          generationConfig: {
+            maxOutputTokens: 100,
+            temperature: 0.7,
+          },
+        });
+        
+        setChatSession(chat);
+        setDebugMsg('✅ Gemini ready!');
+      } catch (error) {
+        console.error('Error initializing Gemini:', error);
+        setDebugMsg('❌ Failed to initialize Gemini');
+      }
     };
 
-    script.onerror = () => {
-      console.error('Failed to load transformers.js');
-      setDebugMsg('❌ Failed to load transformers.js');
-    };
-
-    document.body.appendChild(script);
+    initGemini();
   }, []);
-
-  const loadModel = async () => {
-    try {
-      setDebugMsg('📦 Loading model...');
-      const generator = await window.transformers.pipeline('text-generation', 'Xenova/distilGPT2');
-      setPipeline(generator);
-      setDebugMsg('✅ Model loaded and ready!');
-    } catch (error) {
-      console.error('Error loading model:', error);
-      setDebugMsg('❌ Failed to load model.');
-    }
-  };
 
   const speak = (text: string) => {
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US'; // או 'ru-RU' אם הקלט ברוסית
-    const voice = voices.find(v => v.lang.startsWith('en') || v.lang.startsWith('ru'));
+    utterance.lang = 'ru-RU';
+    const voice = voices.find(v => v.lang.startsWith('ru'));
     if (voice) utterance.voice = voice;
     window.speechSynthesis.speak(utterance);
   };
 
   const handleRecognizedText = async (text: string) => {
-    if (!pipeline || !text) {
+    if (!chatSession || !text) {
       setDebugMsg('⚠️ No input or model not ready');
       return;
     }
 
     const updatedHistory: Message[] = [...history, { role: 'user', content: text }];
-    const context = updatedHistory.slice(-3).map(msg =>
-      `${msg.role === 'user' ? 'User' : 'Assistant'}: ${msg.content}`
-    ).join('\n') + '\nAssistant:';
+    setHistory(updatedHistory);
 
-    setDebugMsg('💬 Sending to model...');
+    setDebugMsg('💬 Sending to Gemini...');
     setLoading(true);
     try {
-      const result = await pipeline(context, { max_new_tokens: 60 });
-      const output = result[0].generated_text.replace(context, '').trim();
-      setHistory([...updatedHistory, { role: 'assistant', content: output }]);
-      speak(output);
+      const result = await chatSession.sendMessage(text);
+      const reply = result.response.text();
+      
+      setHistory([...updatedHistory, { role: 'assistant', content: reply }]);
+      speak(reply);
       setDebugMsg('✅ Response complete');
     } catch (error) {
-      console.error('Error generating response:', error);
+      console.error('Error from Gemini:', error);
       setDebugMsg('❌ Error from model');
     }
     setLoading(false);
@@ -119,7 +113,7 @@ export default function ConversationsPage() {
 
     try {
       const recognition = new SpeechRecognition();
-      recognition.lang = 'en-US'; // או 'ru-RU'
+      recognition.lang = 'ru-RU';
       recognition.interimResults = false;
       recognition.maxAlternatives = 1;
 
@@ -153,16 +147,16 @@ export default function ConversationsPage() {
   };
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Chat with DistilGPT2 🤖</h1>
+    <div className={styles.container} dir="rtl">
+      <h1 className={styles.title}>שיחה עם מוכר בשוק הרוסי 🛍️</h1>
       <p className={styles.description}>
-        Press and speak. The model will reply instantly.
+        לחץ ודבר ברוסית. המוכר יענה לך בעברית
       </p>
 
       <div className={styles.chatBox} ref={chatRef}>
         {history.map((msg, i) => (
           <div key={i} className={msg.role === 'user' ? styles.userMsg : styles.assistantMsg}>
-            <strong>{msg.role === 'user' ? 'You' : 'Bot'}:</strong> {msg.content}
+            <strong>{msg.role === 'user' ? 'אתה' : 'המוכר'}:</strong> {msg.content}
           </div>
         ))}
       </div>
@@ -173,12 +167,12 @@ export default function ConversationsPage() {
           onClick={startRecognition}
           disabled={listening || loading}
         >
-          {listening ? 'Listening...' : '🎤 Speak'}
+          {listening ? 'מקשיב...' : 'לחץ ודבר'}
         </button>
       </div>
 
       <div style={{ marginTop: '1rem', fontSize: '1rem', color: '#666' }}>
-        <strong>Debug:</strong> {debugMsg}
+        <strong>סטטוס:</strong> {debugMsg}
       </div>
     </div>
   );
