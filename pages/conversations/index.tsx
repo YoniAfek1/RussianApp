@@ -18,16 +18,15 @@ export default function ConversationsPage() {
   const [loading, setLoading] = useState(false);
   const [listening, setListening] = useState(false);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [debugMsg, setDebugMsg] = useState<string>('Initializing...');
   const chatRef = useRef<HTMLDivElement>(null);
 
-  // Scroll to bottom on new message
   useEffect(() => {
     if (chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
   }, [history]);
 
-  // Load TTS voices
   useEffect(() => {
     const loadVoices = () => {
       const availableVoices = window.speechSynthesis.getVoices();
@@ -39,14 +38,16 @@ export default function ConversationsPage() {
     loadVoices();
   }, []);
 
-  // Load Transformers model
   useEffect(() => {
     async function loadModel() {
       try {
+        setDebugMsg('📦 Loading model...');
         const generator = await window.transformers.pipeline('text-generation', 'facebook/xglm-564M');
         setPipeline(generator);
+        setDebugMsg('✅ Model loaded and ready!');
       } catch (error) {
         console.error('Error loading model:', error);
+        setDebugMsg('❌ Failed to load model.');
       }
     }
     loadModel();
@@ -61,21 +62,27 @@ export default function ConversationsPage() {
   };
 
   const handleRecognizedText = async (text: string) => {
-    if (!pipeline || !text) return;
+    if (!pipeline || !text) {
+      setDebugMsg('⚠️ No input or model not ready');
+      return;
+    }
 
     const updatedHistory: Message[] = [...history, { role: 'user', content: text }];
     const context = updatedHistory.slice(-10).map(msg =>
       `${msg.role === 'user' ? 'User' : 'Assistant'}: ${msg.content}`
     ).join('\n') + '\nAssistant:';
 
+    setDebugMsg('💬 Sending to model...');
     setLoading(true);
     try {
       const result = await pipeline(context, { max_new_tokens: 60 });
       const output = result[0].generated_text.replace(context, '').trim();
       setHistory([...updatedHistory, { role: 'assistant', content: output }]);
       speak(output);
+      setDebugMsg('✅ Response complete');
     } catch (error) {
       console.error('Error generating response:', error);
+      setDebugMsg('❌ Error from model');
     }
     setLoading(false);
   };
@@ -84,6 +91,7 @@ export default function ConversationsPage() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
       alert('הדפדפן שלך לא תומך בזיהוי קולי');
+      setDebugMsg('❌ SpeechRecognition not supported');
       return;
     }
 
@@ -95,23 +103,30 @@ export default function ConversationsPage() {
 
       const timeoutId = setTimeout(() => recognition.stop(), 8000);
 
-      recognition.onstart = () => setListening(true);
+      recognition.onstart = () => {
+        setDebugMsg('🎙️ Listening...');
+        setListening(true);
+      };
       recognition.onend = () => {
         clearTimeout(timeoutId);
         setListening(false);
+        setDebugMsg('🛑 Recognition ended.');
       };
       recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
         console.error('Speech recognition error:', event.error);
         setListening(false);
+        setDebugMsg(`❌ STT error: ${event.error}`);
       };
       recognition.onresult = (event: SpeechRecognitionEvent) => {
         const text = event.results[0][0].transcript;
+        setDebugMsg(`📝 Recognized: "${text}"`);
         handleRecognizedText(text);
       };
 
       recognition.start();
     } catch (err) {
       console.error('Error initializing speech recognition:', err);
+      setDebugMsg('❌ Error initializing STT');
     }
   };
 
@@ -138,6 +153,10 @@ export default function ConversationsPage() {
         >
           {listening ? 'מקשיב...' : '🎤 דבר'}
         </button>
+      </div>
+
+      <div style={{ marginTop: '1rem', fontSize: '1rem', color: '#666' }}>
+        <strong>Debug:</strong> {debugMsg}
       </div>
     </div>
   );
