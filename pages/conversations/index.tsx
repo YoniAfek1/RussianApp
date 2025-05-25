@@ -21,12 +21,14 @@ export default function ConversationsPage() {
   const [debugMsg, setDebugMsg] = useState<string>('Initializing...');
   const chatRef = useRef<HTMLDivElement>(null);
 
+  // Scroll to bottom when history updates
   useEffect(() => {
     if (chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
   }, [history]);
 
+  // Load voices for TTS
   useEffect(() => {
     const loadVoices = () => {
       const availableVoices = window.speechSynthesis.getVoices();
@@ -38,20 +40,37 @@ export default function ConversationsPage() {
     loadVoices();
   }, []);
 
+  // Dynamically load transformers.js script and then load model
   useEffect(() => {
-    async function loadModel() {
-      try {
-        setDebugMsg('📦 Loading model...');
-        const generator = await window.transformers.pipeline('text-generation', 'facebook/xglm-564M');
-        setPipeline(generator);
-        setDebugMsg('✅ Model loaded and ready!');
-      } catch (error) {
-        console.error('Error loading model:', error);
-        setDebugMsg('❌ Failed to load model.');
-      }
-    }
-    loadModel();
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/@xenova/transformers@3/dist/transformers.min.js';
+    script.async = true;
+
+    script.onload = () => {
+      setDebugMsg('📦 Transformers.js loaded, loading model...');
+      loadModel();
+    };
+
+    script.onerror = () => {
+      console.error('Failed to load transformers.js');
+      setDebugMsg('❌ Failed to load transformers.js');
+    };
+
+    document.body.appendChild(script);
   }, []);
+
+  // Load model function
+  const loadModel = async () => {
+    try {
+      setDebugMsg('📦 Loading model...');
+      const generator = await window.transformers.pipeline('text-generation', 'facebook/xglm-564M');
+      setPipeline(generator);
+      setDebugMsg('✅ Model loaded and ready!');
+    } catch (error) {
+      console.error('Error loading model:', error);
+      setDebugMsg('❌ Failed to load model.');
+    }
+  };
 
   const speak = (text: string) => {
     const utterance = new SpeechSynthesisUtterance(text);
