@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from '../../styles/Conversations.module.css';
 
-// Add TypeScript declarations for the Web Speech API
+// Add TypeScript declarations
 declare global {
   interface Window {
     SpeechRecognition: typeof SpeechRecognition;
@@ -10,51 +10,47 @@ declare global {
   }
 }
 
+type Role = 'user' | 'assistant';
+type Message = { role: Role; content: string };
+
 export default function ConversationsPage() {
   const [pipeline, setPipeline] = useState<any>(null);
-  const [history, setHistory] = useState<{ role: 'user' | 'assistant'; content: string }[]>([]);
+  const [history, setHistory] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [listening, setListening] = useState(false);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
 
-  // Load available voices when component mounts
+  // Load voices
   useEffect(() => {
     const loadVoices = () => {
       const availableVoices = window.speechSynthesis.getVoices();
       setVoices(availableVoices);
     };
-
     if (window.speechSynthesis.onvoiceschanged !== undefined) {
       window.speechSynthesis.onvoiceschanged = loadVoices;
     }
     loadVoices();
   }, []);
 
+  // Load the model
   useEffect(() => {
-    // Load the model using Transformers.js
     async function loadModel() {
       try {
-        const { pipeline } = await window.transformers.load();
-        const generator = await pipeline('text-generation', 'facebook/xglm-564M');
+        const generator = await window.transformers.pipeline('text-generation', 'facebook/xglm-564M');
         setPipeline(generator);
       } catch (error) {
         console.error('Error loading model:', error);
       }
     }
-
     loadModel();
   }, []);
 
   const speak = (text: string) => {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'ru-RU';
-    
     const ruVoice = voices.find(v => v.lang === 'ru-RU');
-    if (ruVoice) {
-      utterance.voice = ruVoice;
-    }
-
+    if (ruVoice) utterance.voice = ruVoice;
     window.speechSynthesis.speak(utterance);
   };
 
@@ -71,31 +67,23 @@ export default function ConversationsPage() {
       recognition.interimResults = false;
       recognition.maxAlternatives = 1;
 
-      recognition.onstart = () => {
-        setListening(true);
-      };
+      const timeoutId = setTimeout(() => recognition.stop(), 8000);
 
+      recognition.onstart = () => setListening(true);
       recognition.onend = () => {
+        clearTimeout(timeoutId);
         setListening(false);
       };
-
+      recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
+        console.error('Speech recognition error:', event.error);
+        setListening(false);
+      };
       recognition.onresult = (event: SpeechRecognitionEvent) => {
         const text = event.results[0][0].transcript;
         setInput(text);
       };
 
-      recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
-        console.error('Speech recognition error:', event.error);
-        setListening(false);
-      };
-
       recognition.start();
-
-      setTimeout(() => {
-        if (listening) {
-          recognition.stop();
-        }
-      }, 8000);
     } catch (err) {
       console.error('Error initializing speech recognition:', err);
     }
@@ -104,8 +92,8 @@ export default function ConversationsPage() {
   const handleSubmit = async () => {
     if (!pipeline || !input) return;
 
-    const updatedHistory = [...history, { role: 'user', content: input }];
-    const context = updatedHistory.slice(-10).map(msg => 
+    const updatedHistory: Message[] = [...history, { role: 'user', content: input }];
+    const context = updatedHistory.slice(-10).map(msg =>
       `${msg.role === 'user' ? 'User' : 'Assistant'}: ${msg.content}`
     ).join('\n') + '\nAssistant:';
 
@@ -114,11 +102,11 @@ export default function ConversationsPage() {
       const result = await pipeline(context, { max_new_tokens: 60 });
       const output = result[0].generated_text.replace(context, '').trim();
       setHistory([...updatedHistory, { role: 'assistant', content: output }]);
-      speak(output); // Speak the assistant's response
+      speak(output);
+      setInput('');
     } catch (error) {
       console.error('Error generating response:', error);
     }
-    setInput('');
     setLoading(false);
   };
 
@@ -128,7 +116,7 @@ export default function ConversationsPage() {
       <p className={styles.description}>
         דבר או הקלד ברוסית כדי לשוחח עם המודל
       </p>
-      
+
       <div className={styles.chatBox}>
         {history.map((msg, i) => (
           <div key={i} className={msg.role === 'user' ? styles.userMsg : styles.assistantMsg}>
@@ -138,24 +126,24 @@ export default function ConversationsPage() {
       </div>
 
       <div className={styles.controls}>
-        <button 
+        <button
           className={`${styles.recordButton} ${listening ? styles.recording : ''}`}
-          onClick={startRecognition} 
+          onClick={startRecognition}
           disabled={listening}
         >
           {listening ? 'מקשיב...' : 'לחץ ודבר'}
         </button>
-        
+
         <div className={styles.inputGroup}>
-          <input 
+          <input
             type="text"
             placeholder="הקלד ברוסית..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && handleSubmit()}
+            onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
           />
-          <button 
-            onClick={handleSubmit} 
+          <button
+            onClick={handleSubmit}
             disabled={loading || !input}
             className={styles.sendButton}
           >
@@ -165,4 +153,4 @@ export default function ConversationsPage() {
       </div>
     </div>
   );
-} 
+}
