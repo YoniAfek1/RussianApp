@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import styles from '../../styles/Conversations.module.css';
 
 declare global {
@@ -18,7 +18,16 @@ export default function ConversationsPage() {
   const [loading, setLoading] = useState(false);
   const [listening, setListening] = useState(false);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const chatRef = useRef<HTMLDivElement>(null);
 
+  // Scroll to bottom on new message
+  useEffect(() => {
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    }
+  }, [history]);
+
+  // Load TTS voices
   useEffect(() => {
     const loadVoices = () => {
       const availableVoices = window.speechSynthesis.getVoices();
@@ -30,6 +39,7 @@ export default function ConversationsPage() {
     loadVoices();
   }, []);
 
+  // Load Transformers model
   useEffect(() => {
     async function loadModel() {
       try {
@@ -96,7 +106,7 @@ export default function ConversationsPage() {
       };
       recognition.onresult = (event: SpeechRecognitionEvent) => {
         const text = event.results[0][0].transcript;
-        handleRecognizedText(text); // send to model automatically
+        handleRecognizedText(text);
       };
 
       recognition.start();
@@ -109,10 +119,10 @@ export default function ConversationsPage() {
     <div className={styles.container} dir="rtl">
       <h1 className={styles.title}>שיחה ברוסית 🤖</h1>
       <p className={styles.description}>
-        לחץ ודבר ברוסית. המודל יגיב מיד בקול.
+        לחץ ודבר ברוסית. המודל יגיב מיד בקול ובטקסט.
       </p>
 
-      <div className={styles.chatBox}>
+      <div className={styles.chatBox} ref={chatRef}>
         {history.map((msg, i) => (
           <div key={i} className={msg.role === 'user' ? styles.userMsg : styles.assistantMsg}>
             <strong>{msg.role === 'user' ? 'אתה' : 'המודל'}:</strong> {msg.content}
