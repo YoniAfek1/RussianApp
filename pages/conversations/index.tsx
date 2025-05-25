@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from '../../styles/Conversations.module.css';
 
-// Add TypeScript declarations
 declare global {
   interface Window {
     SpeechRecognition: typeof SpeechRecognition;
@@ -16,12 +15,10 @@ type Message = { role: Role; content: string };
 export default function ConversationsPage() {
   const [pipeline, setPipeline] = useState<any>(null);
   const [history, setHistory] = useState<Message[]>([]);
-  const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [listening, setListening] = useState(false);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
 
-  // Load voices
   useEffect(() => {
     const loadVoices = () => {
       const availableVoices = window.speechSynthesis.getVoices();
@@ -33,7 +30,6 @@ export default function ConversationsPage() {
     loadVoices();
   }, []);
 
-  // Load the model
   useEffect(() => {
     async function loadModel() {
       try {
@@ -52,6 +48,26 @@ export default function ConversationsPage() {
     const ruVoice = voices.find(v => v.lang === 'ru-RU');
     if (ruVoice) utterance.voice = ruVoice;
     window.speechSynthesis.speak(utterance);
+  };
+
+  const handleRecognizedText = async (text: string) => {
+    if (!pipeline || !text) return;
+
+    const updatedHistory: Message[] = [...history, { role: 'user', content: text }];
+    const context = updatedHistory.slice(-10).map(msg =>
+      `${msg.role === 'user' ? 'User' : 'Assistant'}: ${msg.content}`
+    ).join('\n') + '\nAssistant:';
+
+    setLoading(true);
+    try {
+      const result = await pipeline(context, { max_new_tokens: 60 });
+      const output = result[0].generated_text.replace(context, '').trim();
+      setHistory([...updatedHistory, { role: 'assistant', content: output }]);
+      speak(output);
+    } catch (error) {
+      console.error('Error generating response:', error);
+    }
+    setLoading(false);
   };
 
   const startRecognition = () => {
@@ -80,7 +96,7 @@ export default function ConversationsPage() {
       };
       recognition.onresult = (event: SpeechRecognitionEvent) => {
         const text = event.results[0][0].transcript;
-        setInput(text);
+        handleRecognizedText(text); // send to model automatically
       };
 
       recognition.start();
@@ -89,32 +105,11 @@ export default function ConversationsPage() {
     }
   };
 
-  const handleSubmit = async () => {
-    if (!pipeline || !input) return;
-
-    const updatedHistory: Message[] = [...history, { role: 'user', content: input }];
-    const context = updatedHistory.slice(-10).map(msg =>
-      `${msg.role === 'user' ? 'User' : 'Assistant'}: ${msg.content}`
-    ).join('\n') + '\nAssistant:';
-
-    setLoading(true);
-    try {
-      const result = await pipeline(context, { max_new_tokens: 60 });
-      const output = result[0].generated_text.replace(context, '').trim();
-      setHistory([...updatedHistory, { role: 'assistant', content: output }]);
-      speak(output);
-      setInput('');
-    } catch (error) {
-      console.error('Error generating response:', error);
-    }
-    setLoading(false);
-  };
-
   return (
     <div className={styles.container} dir="rtl">
       <h1 className={styles.title}>שיחה ברוסית 🤖</h1>
       <p className={styles.description}>
-        דבר או הקלד ברוסית כדי לשוחח עם המודל
+        לחץ ודבר ברוסית. המודל יגיב מיד בקול.
       </p>
 
       <div className={styles.chatBox}>
@@ -129,27 +124,10 @@ export default function ConversationsPage() {
         <button
           className={`${styles.recordButton} ${listening ? styles.recording : ''}`}
           onClick={startRecognition}
-          disabled={listening}
+          disabled={listening || loading}
         >
-          {listening ? 'מקשיב...' : 'לחץ ודבר'}
+          {listening ? 'מקשיב...' : '🎤 דבר'}
         </button>
-
-        <div className={styles.inputGroup}>
-          <input
-            type="text"
-            placeholder="הקלד ברוסית..."
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
-          />
-          <button
-            onClick={handleSubmit}
-            disabled={loading || !input}
-            className={styles.sendButton}
-          >
-            {loading ? '⏳' : 'שלח'}
-          </button>
-        </div>
       </div>
     </div>
   );
