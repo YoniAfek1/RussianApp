@@ -21,14 +21,12 @@ export default function ConversationsPage() {
   const [debugMsg, setDebugMsg] = useState<string>('Initializing...');
   const chatRef = useRef<HTMLDivElement>(null);
 
-  // Scroll to bottom when history updates
   useEffect(() => {
     if (chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
   }, [history]);
 
-  // Load voices for TTS
   useEffect(() => {
     const loadVoices = () => {
       const availableVoices = window.speechSynthesis.getVoices();
@@ -40,14 +38,20 @@ export default function ConversationsPage() {
     loadVoices();
   }, []);
 
-  // Dynamically load transformers.js script and then load model
   useEffect(() => {
+    // Load transformers.js from CDN (v2.7.0)
+    if (window.transformers) {
+      setDebugMsg('📦 Transformers already loaded.');
+      loadModel();
+      return;
+    }
+
     const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/@xenova/transformers@3/dist/transformers.min.js';
+    script.src = 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.7.0/dist/transformers.min.js';
     script.async = true;
 
     script.onload = () => {
-      setDebugMsg('📦 Transformers.js loaded, loading model...');
+      setDebugMsg('📦 Transformers loaded, loading model...');
       loadModel();
     };
 
@@ -59,11 +63,10 @@ export default function ConversationsPage() {
     document.body.appendChild(script);
   }, []);
 
-  // Load model function
   const loadModel = async () => {
     try {
       setDebugMsg('📦 Loading model...');
-      const generator = await window.transformers.pipeline('text-generation', 'facebook/xglm-564M');
+      const generator = await window.transformers.pipeline('text-generation', 'Xenova/distilGPT2');
       setPipeline(generator);
       setDebugMsg('✅ Model loaded and ready!');
     } catch (error) {
@@ -74,9 +77,9 @@ export default function ConversationsPage() {
 
   const speak = (text: string) => {
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'ru-RU';
-    const ruVoice = voices.find(v => v.lang === 'ru-RU');
-    if (ruVoice) utterance.voice = ruVoice;
+    utterance.lang = 'en-US'; // או 'ru-RU' אם הקלט ברוסית
+    const voice = voices.find(v => v.lang.startsWith('en') || v.lang.startsWith('ru'));
+    if (voice) utterance.voice = voice;
     window.speechSynthesis.speak(utterance);
   };
 
@@ -87,7 +90,7 @@ export default function ConversationsPage() {
     }
 
     const updatedHistory: Message[] = [...history, { role: 'user', content: text }];
-    const context = updatedHistory.slice(-10).map(msg =>
+    const context = updatedHistory.slice(-3).map(msg =>
       `${msg.role === 'user' ? 'User' : 'Assistant'}: ${msg.content}`
     ).join('\n') + '\nAssistant:';
 
@@ -116,7 +119,7 @@ export default function ConversationsPage() {
 
     try {
       const recognition = new SpeechRecognition();
-      recognition.lang = 'ru-RU';
+      recognition.lang = 'en-US'; // או 'ru-RU'
       recognition.interimResults = false;
       recognition.maxAlternatives = 1;
 
@@ -150,16 +153,16 @@ export default function ConversationsPage() {
   };
 
   return (
-    <div className={styles.container} dir="rtl">
-      <h1 className={styles.title}>שיחה ברוסית 🤖</h1>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Chat with DistilGPT2 🤖</h1>
       <p className={styles.description}>
-        לחץ ודבר ברוסית. המודל יגיב מיד בקול ובטקסט.
+        Press and speak. The model will reply instantly.
       </p>
 
       <div className={styles.chatBox} ref={chatRef}>
         {history.map((msg, i) => (
           <div key={i} className={msg.role === 'user' ? styles.userMsg : styles.assistantMsg}>
-            <strong>{msg.role === 'user' ? 'אתה' : 'המודל'}:</strong> {msg.content}
+            <strong>{msg.role === 'user' ? 'You' : 'Bot'}:</strong> {msg.content}
           </div>
         ))}
       </div>
@@ -170,7 +173,7 @@ export default function ConversationsPage() {
           onClick={startRecognition}
           disabled={listening || loading}
         >
-          {listening ? 'מקשיב...' : '🎤 דבר'}
+          {listening ? 'Listening...' : '🎤 Speak'}
         </button>
       </div>
 
