@@ -39,6 +39,10 @@ export default function Home() {
           <span className={styles.iconCircle}>🗣️</span>
           <span className={styles.buttonText}>דיבור</span>
         </Link>
+        <Link href="/conversations" className={styles.navButton}>
+          <span className={styles.iconCircle}>💬</span>
+          <span className={styles.buttonText}>שיחות</span>
+        </Link>
       </main>
       <div className={styles.bottomAnim}>
         <video src="/animations/waves2.mp4" autoPlay loop muted playsInline className={styles.wavingAnim} />
