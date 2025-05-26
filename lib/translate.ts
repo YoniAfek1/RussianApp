@@ -2,10 +2,14 @@ export async function translateToHebrew(text: string): Promise<string> {
   console.log("🌐 Translating:", text);
 
   try {
-    const url = `https://translate.terraprint.co/api/v1/ru/he/${encodeURIComponent(text)}`;
-    console.log("📤 Requesting:", url);
+    const response = await fetch('/api/translate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ text }),
+    });
 
-    const response = await fetch(url);
     console.log("📥 Response status:", response.status);
 
     if (!response.ok) {
