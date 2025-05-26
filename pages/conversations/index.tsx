@@ -8,8 +8,7 @@ declare global {
     webkitSpeechRecognition: typeof SpeechRecognition;
   }
 }
-const AP_KEY = "AIzaSyABxxoBc20ZUjU8FYnHab0";
-const API_KEY = "AIzaSyA1MUHts75rFBYBxxoBc20ZUjU8FYnHab0";
+const API_KEY = "AIzaSyBJjYZif960Nh_FccIVcngUZcSFfPq_tgA";
 
 type Role = 'user' | 'assistant';
 type Message = { role: Role; content: string };
