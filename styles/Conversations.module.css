@@ -68,7 +68,7 @@
 
 .messageContent {
   flex: 1;
-  min-width: 0; /* Prevents flex item from overflowing */
+  min-width: 0;
 }
 
 .messageText {
@@ -99,16 +99,6 @@
 
 .iconButton:hover {
   opacity: 1;
-}
-
-.translation {
-  margin-top: 0.5rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  font-size: 0.9rem;
-  color: #666;
-  direction: rtl;
-  text-align: right;
 }
 
 .controls {

@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import styles from '../../styles/Conversations.module.css';
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { translateToHebrew } from '../../lib/translate';
 
 declare global {
   interface Window {
@@ -23,7 +22,6 @@ export default function ConversationsPage() {
   const [listening, setListening] = useState(false);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [debugMsg, setDebugMsg] = useState<string>('Initializing...');
-  const [translations, setTranslations] = useState<{ [index: number]: string }>({});
   const chatRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -149,16 +147,8 @@ export default function ConversationsPage() {
     }
   };
 
-  const handleTranslate = async (index: number, text: string) => {
-    if (!translations[index]) {
-      const translated = await translateToHebrew(text);
-      setTranslations(prev => ({ ...prev, [index]: translated }));
-    }
-  };
-
   const startNewConversation = async () => {
     setHistory([]);
-    setTranslations({});
     setDebugMsg('🔄 Starting new conversation...');
     
     try {
@@ -197,21 +187,11 @@ export default function ConversationsPage() {
             <div className={styles.msgHeader}>
               <div className={styles.messageContent}>
                 <div className={styles.messageText}>
-                  <span className={styles.roleLabel}>
-                    {msg.role === 'assistant' ? '🛒' : '👤'}
-                  </span>
-                  <span>{msg.content}</span>
+                  {msg.content}
                 </div>
               </div>
               {msg.role === 'assistant' && (
                 <div className={styles.messageActions}>
-                  <button 
-                    className={styles.iconButton}
-                    onClick={() => handleTranslate(i, msg.content)}
-                    title="Show translation"
-                  >
-                    ❓
-                  </button>
                   <button 
                     className={styles.iconButton}
                     onClick={() => speak(msg.content)}
@@ -222,11 +202,6 @@ export default function ConversationsPage() {
                 </div>
               )}
             </div>
-            {msg.role === 'assistant' && translations[i] && (
-              <div className={styles.translation}>
-                <strong>תרגום:</strong> {translations[i]}
-              </div>
-            )}
           </div>
         ))}
       </div>
