@@ -49,7 +49,7 @@ const conversations: Conversation[] = [
   },
   {
     id: 'friend',
-    title: 'חבר',
+    title: 'עם חבר',
     emoji: '👋',
     description: 'שיחה ידידותית עם חבר ',
     prompt: `Ты играешь роль хорошего друга. Говори неформально, тепло и по-русски. Спрашивай, как у меня дела, и делись своими.`
@@ -69,11 +69,12 @@ const conversations: Conversation[] = [
     prompt: `Ты кассир в кинотеатре. Говори по-русски, профессионально и просто. Помоги выбрать сеанс и купить билет.`
   },
   {
-    id: 'metro',
-    title: 'בתחנת רכבת',
+    id: 'street',
+    title: 'ברחוב',
     emoji: '🚇',
-    description: 'התמצאות בתחנת רכבת',
-    prompt: `Ты сотрудник станции метро. Объясняй, как добраться до нужного места. Отвечай на вопросы по-русски, коротко и понятно.`
+    description: 'התמצאות ברחוב',
+    prompt: `Ты житель города и помогаешь туристу сориентироваться на улице и найти нужное место.
+    Отвечай дружелюбно, понятно и по делу.`
   },
   {
     id: 'hotel',
@@ -359,36 +360,15 @@ export default function ConversationsIndex() {
           <div 
             key={conv.id}
             onClick={() => setSelectedConversation(conv)}
-            className={conv.id === 'market' ? styles.conversationCardWithImage : undefined}
-            style={conv.id === 'market' ? {
-              backgroundImage: `url("/animations/conversation/Market.png")`,
+            className={styles.conversationCard}
+            style={{
+              backgroundImage: `url("/animations/conversation/${conv.id.charAt(0).toUpperCase() + conv.id.slice(1)}.png")`,
               backgroundSize: "cover",
               backgroundPosition: "center",
               position: "relative"
-            } : {
-              background: 'white',
-              padding: '1.5rem',
-              borderRadius: '1rem',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-              transition: 'transform 0.2s, box-shadow 0.2s',
-              cursor: 'pointer',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '0.5rem'
             }}
           >
-            {conv.id === 'market' ? (
-              <div className={styles.cardLabel}>{conv.title}</div>
-            ) : (
-              <>
-                <div style={{ fontSize: '2rem' }}>{conv.emoji}</div>
-                <h3 style={{ margin: 0, fontSize: '1.2rem', color: '#1976D2' }}>{conv.title}</h3>
-                <p style={{ margin: 0, fontSize: '0.9rem', color: '#666', textAlign: 'center' }}>
-                  {conv.description}
-                </p>
-              </>
-            )}
+            <div className={styles.cardLabel}>{conv.title}</div>
           </div>
         ))}
       </div>
