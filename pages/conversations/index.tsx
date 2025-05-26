@@ -8,7 +8,9 @@ declare global {
     webkitSpeechRecognition: typeof SpeechRecognition;
   }
 }
+
 const API_KEY = "AIzaSyBJjYZif960Nh_FccIVcngUZcSFfPq_tgA";
+const MAX_MESSAGES = 10;
 
 type Role = 'user' | 'assistant';
 type Message = { role: Role; content: string };
@@ -20,6 +22,7 @@ export default function ConversationsPage() {
   const [listening, setListening] = useState(false);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [debugMsg, setDebugMsg] = useState<string>('Initializing...');
+  const [showTranslations, setShowTranslations] = useState<boolean[]>([]);
   const chatRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -85,6 +88,7 @@ export default function ConversationsPage() {
 
     const updatedHistory: Message[] = [...history, { role: 'user', content: text }];
     setHistory(updatedHistory);
+    setShowTranslations([...showTranslations, false]);
 
     setDebugMsg('💬 Sending to Gemini...');
     setLoading(true);
@@ -93,6 +97,7 @@ export default function ConversationsPage() {
       const reply = result.response.text();
       
       setHistory([...updatedHistory, { role: 'assistant', content: reply }]);
+      setShowTranslations([...showTranslations, false, false]);
       speak(reply);
       setDebugMsg('✅ Response complete');
     } catch (error) {
@@ -145,6 +150,40 @@ export default function ConversationsPage() {
     }
   };
 
+  const toggleTranslation = (index: number) => {
+    const newShowTranslations = [...showTranslations];
+    newShowTranslations[index] = !newShowTranslations[index];
+    setShowTranslations(newShowTranslations);
+  };
+
+  const startNewConversation = async () => {
+    setHistory([]);
+    setShowTranslations([]);
+    setDebugMsg('🔄 Starting new conversation...');
+    
+    try {
+      const genAI = new GoogleGenerativeAI(API_KEY);
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const chat = await model.startChat({
+        history: [{
+          role: "user",
+          parts: [{ text: "You are a friendly Russian market vendor. Keep responses short, conversational, and in Russian. Use simple vocabulary suitable for language learners." }]
+        }],
+        generationConfig: {
+          maxOutputTokens: 100,
+          temperature: 0.7,
+        },
+      });
+      setChatSession(chat);
+      setDebugMsg('✅ Ready for new conversation!');
+    } catch (error) {
+      console.error('Error starting new conversation:', error);
+      setDebugMsg('❌ Failed to start new conversation');
+    }
+  };
+
+  const isConversationEnded = history.length >= MAX_MESSAGES;
+
   return (
     <div className={styles.container} dir="rtl">
       <h1 className={styles.title}>שיחה עם מוכר בשוק הרוסי 🛍️</h1>
@@ -155,19 +194,58 @@ export default function ConversationsPage() {
       <div className={styles.chatBox} ref={chatRef}>
         {history.map((msg, i) => (
           <div key={i} className={msg.role === 'user' ? styles.userMsg : styles.assistantMsg}>
-            <strong>{msg.role === 'user' ? 'אתה' : 'המוכר'}:</strong> {msg.content}
+            <div className={styles.messageContent}>
+              <strong>{msg.role === 'user' ? 'אתה' : 'המוכר'}:</strong> {msg.content}
+            </div>
+            {msg.role === 'assistant' && (
+              <div className={styles.messageActions}>
+                <button 
+                  className={styles.iconButton}
+                  onClick={() => toggleTranslation(i)}
+                  title="Show translation"
+                >
+                  ❓
+                </button>
+                <button 
+                  className={styles.iconButton}
+                  onClick={() => speak(msg.content)}
+                  title="Replay audio"
+                >
+                  🔊
+                </button>
+              </div>
+            )}
+            {msg.role === 'assistant' && showTranslations[i] && (
+              <div className={styles.translation}>
+                <strong>Translation:</strong> {msg.content} {/* For now, just showing the same text */}
+              </div>
+            )}
           </div>
         ))}
       </div>
 
       <div className={styles.controls}>
-        <button
-          className={`${styles.recordButton} ${listening ? styles.recording : ''}`}
-          onClick={startRecognition}
-          disabled={listening || loading}
-        >
-          {listening ? 'מקשיב...' : 'לחץ ודבר'}
-        </button>
+        {isConversationEnded ? (
+          <>
+            <div className={styles.conversationEnded}>
+              🔁 השיחה הסתיימה. לחץ למטה כדי להתחיל שיחה חדשה
+            </div>
+            <button 
+              className={styles.newConversationButton}
+              onClick={startNewConversation}
+            >
+              התחל שיחה חדשה
+            </button>
+          </>
+        ) : (
+          <button
+            className={`${styles.recordButton} ${listening ? styles.recording : ''}`}
+            onClick={startRecognition}
+            disabled={listening || loading}
+          >
+            {listening ? 'מקשיב...' : 'לחץ ודבר'}
+          </button>
+        )}
       </div>
 
       <div style={{ marginTop: '1rem', fontSize: '1rem', color: '#666' }}>
