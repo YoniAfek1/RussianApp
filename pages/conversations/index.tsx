@@ -42,23 +42,23 @@ interface Conversation {
 const conversations: Conversation[] = [
   {
     id: 'market',
-    title: 'מוכר בשוק',
+    title: 'בשוק',
     emoji: '🛍️',
-    description: 'שיחה עם מוכר בשוק הרוסי',
+    description: 'שיחה עם מוכר בשוק',
     prompt: `Ты играешь роль продавца на рынке. Говори по-русски, дружелюбно, просто и с юмором. Отвечай по делу, как настоящий продавец.`
   },
   {
     id: 'friend',
     title: 'חבר',
     emoji: '👋',
-    description: 'שיחה עם חבר ',
+    description: 'שיחה ידידותית עם חבר ',
     prompt: `Ты играешь роль хорошего друга. Говори неформально, тепло и по-русски. Спрашивай, как у меня дела, и делись своими.`
   },
   {
     id: 'restaurant',
-    title: 'מלצר במסעדה',
+    title: 'במסעדה',
     emoji: '🍽️',
-    description: 'הזמנת אוכל במסעדה רוסית',
+    description: 'הזמנת אוכל ממלצר במסעדה ',
     prompt: `Ты официант в русском кафе. Обслуживай вежливо, просто, по-русски. Спрашивай, что я хочу заказать, и предлагай блюда.`
   },
   {
@@ -72,7 +72,7 @@ const conversations: Conversation[] = [
     id: 'metro',
     title: 'בתחנת רכבת',
     emoji: '🚇',
-    description: 'התמצאות במטרו',
+    description: 'התמצאות בתחנת רכבת',
     prompt: `Ты сотрудник станции метро. Объясняй, как добраться до нужного места. Отвечай на вопросы по-русски, коротко и понятно.`
   },
   {
@@ -84,9 +84,9 @@ const conversations: Conversation[] = [
   },
   {
     id: 'doctor',
-    title: 'אצל הרופא',
+    title: 'במרפאה',
     emoji: '👨‍⚕️',
-    description: 'ביקור אצל רופא',
+    description: 'ביקור אצל הרופא',
     prompt: `Ты врач в клинике. Спрашивай о симптомах, отвечай спокойно, по-русски и профессионально.`
   },
   {
@@ -359,7 +359,13 @@ export default function ConversationsIndex() {
           <div 
             key={conv.id}
             onClick={() => setSelectedConversation(conv)}
-            style={{
+            className={conv.id === 'market' ? styles.conversationCardWithImage : undefined}
+            style={conv.id === 'market' ? {
+              backgroundImage: `url("/animations/conversation/Market.png")`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              position: "relative"
+            } : {
               background: 'white',
               padding: '1.5rem',
               borderRadius: '1rem',
@@ -372,11 +378,17 @@ export default function ConversationsIndex() {
               gap: '0.5rem'
             }}
           >
-            <div style={{ fontSize: '2rem' }}>{conv.emoji}</div>
-            <h3 style={{ margin: 0, fontSize: '1.2rem', color: '#1976D2' }}>{conv.title}</h3>
-            <p style={{ margin: 0, fontSize: '0.9rem', color: '#666', textAlign: 'center' }}>
-              {conv.description}
-            </p>
+            {conv.id === 'market' ? (
+              <div className={styles.cardLabel}>{conv.title}</div>
+            ) : (
+              <>
+                <div style={{ fontSize: '2rem' }}>{conv.emoji}</div>
+                <h3 style={{ margin: 0, fontSize: '1.2rem', color: '#1976D2' }}>{conv.title}</h3>
+                <p style={{ margin: 0, fontSize: '0.9rem', color: '#666', textAlign: 'center' }}>
+                  {conv.description}
+                </p>
+              </>
+            )}
           </div>
         ))}
       </div>
