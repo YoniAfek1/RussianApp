@@ -35,10 +35,6 @@ export default function Home() {
         </span>        
         <span className={styles.buttonText}>האזנה</span>
         </Link>
-        <Link href="/speak" className={styles.navButton}>
-          <span className={styles.iconCircle}>🗣️</span>
-          <span className={styles.buttonText}>דיבור</span>
-        </Link>
         <Link href="/conversations" className={styles.navButton}>
           <span className={styles.iconCircle}>💬</span>
           <span className={styles.buttonText}>שיחות</span>
