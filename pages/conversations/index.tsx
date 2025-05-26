@@ -197,7 +197,10 @@ export default function ConversationsPage() {
             <div className={styles.msgHeader}>
               <div className={styles.messageContent}>
                 <div className={styles.messageText}>
-                  <strong>{msg.role === 'user' ? 'אתה' : 'המוכר'}:</strong> {msg.content}
+                  <span className={styles.roleLabel}>
+                    {msg.role === 'assistant' ? '🛒' : '👤'}
+                  </span>
+                  <span>{msg.content}</span>
                 </div>
               </div>
               {msg.role === 'assistant' && (

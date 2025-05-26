@@ -223,6 +223,12 @@
   cursor: not-allowed;
 }
 
+.roleLabel {
+  font-size: 1.2rem;
+  margin-right: 0.5rem;
+  opacity: 0.8;
+}
+
 @media (max-width: 600px) {
   .container {
     padding: 1rem;
