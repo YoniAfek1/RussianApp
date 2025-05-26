@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import styles from '../../styles/Conversations.module.css';
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { translateToHebrew } from '../../lib/translate';
 
 declare global {
   interface Window {
@@ -22,7 +23,7 @@ export default function ConversationsPage() {
   const [listening, setListening] = useState(false);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [debugMsg, setDebugMsg] = useState<string>('Initializing...');
-  const [showTranslations, setShowTranslations] = useState<boolean[]>([]);
+  const [translations, setTranslations] = useState<{ [index: number]: string }>({});
   const chatRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -88,7 +89,6 @@ export default function ConversationsPage() {
 
     const updatedHistory: Message[] = [...history, { role: 'user', content: text }];
     setHistory(updatedHistory);
-    setShowTranslations([...showTranslations, false]);
 
     setDebugMsg('💬 Sending to Gemini...');
     setLoading(true);
@@ -97,7 +97,6 @@ export default function ConversationsPage() {
       const reply = result.response.text();
       
       setHistory([...updatedHistory, { role: 'assistant', content: reply }]);
-      setShowTranslations([...showTranslations, false, false]);
       speak(reply);
       setDebugMsg('✅ Response complete');
     } catch (error) {
@@ -150,15 +149,16 @@ export default function ConversationsPage() {
     }
   };
 
-  const toggleTranslation = (index: number) => {
-    const newShowTranslations = [...showTranslations];
-    newShowTranslations[index] = !newShowTranslations[index];
-    setShowTranslations(newShowTranslations);
+  const handleTranslate = async (index: number, text: string) => {
+    if (!translations[index]) {
+      const translated = await translateToHebrew(text);
+      setTranslations(prev => ({ ...prev, [index]: translated }));
+    }
   };
 
   const startNewConversation = async () => {
     setHistory([]);
-    setShowTranslations([]);
+    setTranslations({});
     setDebugMsg('🔄 Starting new conversation...');
     
     try {
@@ -194,30 +194,34 @@ export default function ConversationsPage() {
       <div className={styles.chatBox} ref={chatRef}>
         {history.map((msg, i) => (
           <div key={i} className={msg.role === 'user' ? styles.userMsg : styles.assistantMsg}>
-            <div className={styles.messageContent}>
-              <strong>{msg.role === 'user' ? 'אתה' : 'המוכר'}:</strong> {msg.content}
-            </div>
-            {msg.role === 'assistant' && (
-              <div className={styles.messageActions}>
-                <button 
-                  className={styles.iconButton}
-                  onClick={() => toggleTranslation(i)}
-                  title="Show translation"
-                >
-                  ❓
-                </button>
-                <button 
-                  className={styles.iconButton}
-                  onClick={() => speak(msg.content)}
-                  title="Replay audio"
-                >
-                  🔊
-                </button>
+            <div className={styles.msgHeader}>
+              <div className={styles.messageContent}>
+                <div className={styles.messageText}>
+                  <strong>{msg.role === 'user' ? 'אתה' : 'המוכר'}:</strong> {msg.content}
+                </div>
               </div>
-            )}
-            {msg.role === 'assistant' && showTranslations[i] && (
+              {msg.role === 'assistant' && (
+                <div className={styles.messageActions}>
+                  <button 
+                    className={styles.iconButton}
+                    onClick={() => handleTranslate(i, msg.content)}
+                    title="Show translation"
+                  >
+                    ❓
+                  </button>
+                  <button 
+                    className={styles.iconButton}
+                    onClick={() => speak(msg.content)}
+                    title="Replay audio"
+                  >
+                    🔊
+                  </button>
+                </div>
+              )}
+            </div>
+            {msg.role === 'assistant' && translations[i] && (
               <div className={styles.translation}>
-                <strong>Translation:</strong> {msg.content} {/* For now, just showing the same text */}
+                <strong>תרגום:</strong> {translations[i]}
               </div>
             )}
           </div>

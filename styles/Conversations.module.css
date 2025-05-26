@@ -39,7 +39,6 @@
   padding: 1rem;
   border-radius: 1rem;
   max-width: 80%;
-  text-align: right;
   line-height: 1.5;
   position: relative;
 }
@@ -48,24 +47,38 @@
   background-color: #1976D2;
   color: white;
   align-self: flex-end;
+  direction: rtl;
+  text-align: right;
 }
 
 .assistantMsg {
   background-color: #e3f2fd;
   color: #333;
   align-self: flex-start;
+  direction: ltr;
+  text-align: left;
+}
+
+.msgHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
 }
 
 .messageContent {
-  margin-right: 2rem;
+  flex: 1;
+  min-width: 0; /* Prevents flex item from overflowing */
+}
+
+.messageText {
+  word-break: break-word;
 }
 
 .messageActions {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
   display: flex;
   gap: 0.5rem;
+  flex-shrink: 0;
 }
 
 .iconButton {
@@ -77,6 +90,11 @@
   color: inherit;
   opacity: 0.7;
   transition: opacity 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
 }
 
 .iconButton:hover {
@@ -89,6 +107,8 @@
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   font-size: 0.9rem;
   color: #666;
+  direction: rtl;
+  text-align: right;
 }
 
 .controls {
@@ -222,10 +242,14 @@
     font-size: 1.6rem;
   }
 
+  .msgHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .messageActions {
-    position: static;
     margin-top: 0.5rem;
-    justify-content: flex-end;
+    align-self: flex-end;
   }
 
   .inputGroup {
