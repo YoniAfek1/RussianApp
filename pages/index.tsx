@@ -37,7 +37,7 @@ export default function Home() {
         </Link>
         <Link href="/conversations" className={styles.navButton}>
         <span className={styles.icon}>
-        <img src="/animations/headphone.png" alt="hearing Icon" className={styles.iconImage} />
+        <img src="/animations/mask.png" alt="mask Icon" className={styles.iconImage} />
         </span>           
         <span className={styles.buttonText}>שיחות</span>
         </Link>
