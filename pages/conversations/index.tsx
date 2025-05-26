@@ -13,19 +13,21 @@ declare global {
 const API_KEY = "AIzaSyBJjYZif960Nh_FccIVcngUZcSFfPq_tgA";
 const MAX_MESSAGES = 10;
 
-const globalPrompt = `
+const basePrompt = `
 Ты чат-бот, помогающий человеку учить русский язык через ролевые диалоги.
 Всегда говори по-русски, избегай английского.
 
-Если пользователь делает ошибку — сначала повтори его фразу в правильной и естественной форме.
-Начни это предложение словами: "Правильнее сказать...".
-Если ошибки нет — не повторяй его фразу.
-
-Затем ответь по смыслу — коротко, понятно, не более 12 слов.
+Отвечай по смыслу — коротко, понятно, не более 12 слов.
 Избегай сложных конструкций и редких слов.
 Каждое твоё сообщение должно заканчиваться вопросом, чтобы продолжить диалог.
 
 Будь вежливым, живым и терпеливым — как хороший учитель, который играет роль.
+`;
+
+const correctionAddon = `
+Если пользователь делает ошибку — сначала повтори его фразу в правильной и естественной форме.
+Начни это предложение словами: "Правильнее сказать...".
+Если ошибки нет — не повторяй его фразу.
 `;
 
 type Role = 'user' | 'assistant';
@@ -107,6 +109,7 @@ export default function ConversationsIndex() {
   const [listening, setListening] = useState(false);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [debugMsg, setDebugMsg] = useState<string>('Initializing...');
+  const [correctionEnabled, setCorrectionEnabled] = useState(true);
   const chatRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -134,13 +137,17 @@ export default function ConversationsIndex() {
           const genAI = new GoogleGenerativeAI(API_KEY);
           const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
           
+          const globalPrompt = correctionEnabled
+            ? basePrompt + "\n\n" + correctionAddon
+            : basePrompt;
+          
           const chat = await model.startChat({
             history: [{
               role: "user",
               parts: [{ text: globalPrompt + '\n\n' + selectedConversation.prompt }]
             }],
             generationConfig: {
-              maxOutputTokens: 100,
+              maxOutputTokens: 50,
               temperature: 0.7,
             },
           });
@@ -155,7 +162,7 @@ export default function ConversationsIndex() {
 
       initGemini();
     }
-  }, [selectedConversation]);
+  }, [selectedConversation, correctionEnabled]);
 
   const speak = (text: string) => {
     const utterance = new SpeechSynthesisUtterance(text);
@@ -241,13 +248,16 @@ export default function ConversationsIndex() {
       try {
         const genAI = new GoogleGenerativeAI(API_KEY);
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const globalPrompt = correctionEnabled
+          ? basePrompt + "\n\n" + correctionAddon
+          : basePrompt;
         const chat = await model.startChat({
           history: [{
             role: "user",
             parts: [{ text: globalPrompt + '\n\n' + selectedConversation.prompt }]
           }],
           generationConfig: {
-            maxOutputTokens: 100,
+            maxOutputTokens: 50,
             temperature: 0.7,
           },
         });
@@ -269,6 +279,17 @@ export default function ConversationsIndex() {
         <p className={styles.description}>
           לחץ ודבר ברוסית. השיחה תתנהל ברוסית
         </p>
+
+        <div className={styles.correctionToggle}>
+          <label>
+            האם תרצה לקבל תיקונים שלך בשיחה?
+            <input
+              type="checkbox"
+              checked={correctionEnabled}
+              onChange={() => setCorrectionEnabled(!correctionEnabled)}
+            />
+          </label>
+        </div>
 
         <div className={styles.chatBox} ref={chatRef}>
           {history.map((msg, i) => (
