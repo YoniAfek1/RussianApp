@@ -11,7 +11,18 @@ declare global {
 }
 
 const API_KEY = "AIzaSyBJjYZif960Nh_FccIVcngUZcSFfPq_tgA";
-const MAX_MESSAGES = 10;
+const MAX_MESSAGES = 12;
+
+const globalPrompt = `
+Ты чат-бот, помогающий человеку учить русский язык через ролевые диалоги.
+Всегда говори по-русски, избегай английского.
+Отвечай просто, понятно и не слишком длинно.
+Если пользователь делает ошибку — повтори его фразу, но правильно и естественно.
+Потом отвечай по смыслу, дружелюбно и по делу.
+
+Каждое твоё сообщение должно заканчиваться вопросом, чтобы продолжить диалог.
+Будь вежливым, живым и терпеливым — как хороший учитель, который играет роль.
+`;
 
 type Role = 'user' | 'assistant';
 type Message = { role: Role; content: string };
@@ -36,7 +47,7 @@ const conversations: Conversation[] = [
     id: 'friend',
     title: 'חבר',
     emoji: '👋',
-    description: 'שיחה עם חבר רוסי',
+    description: 'שיחה עם חבר ',
     prompt: `Ты играешь роль хорошего друга. Говори неформально, тепло и по-русски. Спрашивай, как у меня дела, и делись своими.`
   },
   {
@@ -54,13 +65,6 @@ const conversations: Conversation[] = [
     prompt: `Ты кассир в кинотеатре. Говори по-русски, профессионально и просто. Помоги выбрать сеанс и купить билет.`
   },
   {
-    id: 'pharmacy',
-    title: 'בבית מרקחת',
-    emoji: '💊',
-    description: 'שיחה עם רוקח',
-    prompt: `Ты фармацевт в аптеке. Отвечай на вопросы о лекарствах по-русски, спокойно и ясно.`
-  },
-  {
     id: 'metro',
     title: 'בתחנת רכבת',
     emoji: '🚇',
@@ -70,7 +74,7 @@ const conversations: Conversation[] = [
   {
     id: 'hotel',
     title: 'בבית מלון',
-    emoji: '🏨',
+    emoji: '🎬',
     description: 'צ\'ק אין במלון',
     prompt: `Ты администратор отеля. Говори по-русски вежливо, помогай с заселением, отвечай на вопросы.`
   },
@@ -128,7 +132,7 @@ export default function ConversationsIndex() {
           const chat = await model.startChat({
             history: [{
               role: "user",
-              parts: [{ text: selectedConversation.prompt }]
+              parts: [{ text: globalPrompt + '\n\n' + selectedConversation.prompt }]
             }],
             generationConfig: {
               maxOutputTokens: 100,
@@ -235,7 +239,7 @@ export default function ConversationsIndex() {
         const chat = await model.startChat({
           history: [{
             role: "user",
-            parts: [{ text: selectedConversation.prompt }]
+            parts: [{ text: globalPrompt + '\n\n' + selectedConversation.prompt }]
           }],
           generationConfig: {
             maxOutputTokens: 100,
