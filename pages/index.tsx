@@ -36,8 +36,10 @@ export default function Home() {
         <span className={styles.buttonText}>האזנה</span>
         </Link>
         <Link href="/conversations" className={styles.navButton}>
-          <span className={styles.iconCircle}>💬</span>
-          <span className={styles.buttonText}>שיחות</span>
+        <span className={styles.icon}>
+        <img src="/animations/headphone.png" alt="hearing Icon" className={styles.iconImage} />
+        </span>           
+        <span className={styles.buttonText}>שיחות</span>
         </Link>
       </main>
       <div className={styles.bottomAnim}>
