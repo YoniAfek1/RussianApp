@@ -43,8 +43,10 @@ export default function Home() {
         <span className={styles.icon}>
         <img src="/animations/mask.png" alt="mask Icon" className={styles.iconImage} />
         </span>           
-        <span className={styles.buttonText}>שיחות</span>
-        <span className={styles.buttonSubtext}>התנסו בשיחות הכוללות משחקי תפקידים</span>
+        <div>
+          <span className={styles.buttonText}>שיחות</span>
+          <span className={styles.buttonSubtext}>התנסו בשיחות הכוללות משחקי תפקידים</span>
+        </div>
         </Link>
       </main>
       <div className={styles.bottomAnim}>

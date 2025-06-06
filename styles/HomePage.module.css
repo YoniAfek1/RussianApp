@@ -18,7 +18,7 @@
 }
 
 .header {
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   margin-bottom: 0.5rem;
   color: #1a237e;
 }
@@ -45,12 +45,12 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 1rem;
-  border-radius: 20px;
+  padding: 0.8rem;
+  border-radius: 16px;
   background: white;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   transition: all 0.2s ease;
-  height: 140px;
+  height: 130px;
   border: 2px solid #e0e0e0;
   text-decoration: none;
   color: inherit;
@@ -70,9 +70,9 @@
   grid-column: 1 / -1;
   flex-direction: row-reverse;
   justify-content: space-between;
-  padding: 1rem 1.5rem;
+  padding: 0.8rem 1.2rem;
   height: auto;
-  min-height: 80px;
+  min-height: 70px;
 }
 
 .fullWidthButton .icon {
@@ -85,11 +85,17 @@
   align-items: flex-end;
 }
 
+.fullWidthButton > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
 .iconCircle {
-  width: 42px;
-  height: 42px;
-  min-width: 42px;
-  min-height: 42px;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
   border-radius: 50%;
   background-color: #f4f6fa;
   display: flex;
@@ -99,8 +105,8 @@
 }
 
 .iconImage {
-  width: 26px;
-  height: 26px;
+  width: 32px;
+  height: 32px;
 }
 
 .buttonText {
@@ -206,23 +212,23 @@
   }
 
   .navButton {
-    padding: 0.9rem;
-    height: 130px;
+    padding: 0.7rem;
+    height: 120px;
   }
 
   .fullWidthButton {
-    padding: 0.8rem 1.2rem;
-    min-height: 70px;
+    padding: 0.7rem 1rem;
+    min-height: 65px;
   }
 
   .iconCircle {
-    width: 38px;
-    height: 38px;
+    width: 42px;
+    height: 42px;
   }
 
   .iconImage {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
   }
 
   .buttonText {
@@ -258,12 +264,12 @@
   }
 
   .navButton {
-    padding: 0.8rem;
-    height: 120px;
+    padding: 0.6rem;
+    height: 110px;
   }
 
   .fullWidthButton {
-    padding: 0.7rem 1rem;
+    padding: 0.6rem 0.9rem;
     min-height: 60px;
   }
 
@@ -273,5 +279,15 @@
 
   .buttonSubtext {
     font-size: 0.75rem;
+  }
+
+  .iconCircle {
+    width: 38px;
+    height: 38px;
+  }
+
+  .iconImage {
+    width: 24px;
+    height: 24px;
   }
 }
