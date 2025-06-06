@@ -23,11 +23,11 @@ export default function AdjectiveGame() {
   const [showRussian, setShowRussian] = useState(false);
   const [showHebrew, setShowHebrew] = useState(false);
   const [disableButtons, setDisableButtons] = useState(false);
+  const [isCorrectOnLeft, setIsCorrectOnLeft] = useState(false);
   const ttsRef = useRef<SpeechSynthesisUtterance | null>(null);
 
-  // Load Excel data
   useEffect(() => {
-    fetch('/data/Russian_Nouns.xlsx') // 👈 שים לב שהקובץ עכשיו בשם הזה
+    fetch('/data/Russian_Nouns.xlsx')
       .then(res => res.arrayBuffer())
       .then(buffer => {
         const workbook = XLSX.read(buffer, { type: 'array' });
@@ -48,11 +48,11 @@ export default function AdjectiveGame() {
       });
   }, []);
 
-  // New round: pick question, reset state, play TTS
   useEffect(() => {
     if (!loading && data.length > 0 && round <= ROUNDS) {
       const idx = Math.floor(Math.random() * data.length);
       setQuestion(data[idx]);
+      setIsCorrectOnLeft(Math.random() < 0.5); // ✅ רנדומליות
       setFeedback('');
       setAttempts(0);
       setShowRussian(false);
@@ -110,6 +110,7 @@ export default function AdjectiveGame() {
   if (loading) {
     return <div className={styles.gameContainer}>טוען נתונים...</div>;
   }
+
   if (gameOver) {
     return (
       <div className={styles.gameContainer}>
@@ -119,39 +120,68 @@ export default function AdjectiveGame() {
       </div>
     );
   }
+
   return (
     <div className={styles.gameContainer}>
       <h1>התאם תואר לאימוג׳י</h1>
+
       <div style={{ fontSize: '2.2rem', margin: '1.5rem 0', color: '#1a237e', fontWeight: 600 }}>
         {showRussian ? question?.russian : ''}
       </div>
+
       <div style={{ display: 'flex', gap: '2.5rem', justifyContent: 'center', marginBottom: '1.5rem' }}>
-        <button
-          className={styles.emojiButton + (feedback === 'incorrect' && attempts > 0 ? ' ' + styles.incorrect : '')}
-          onClick={() => handleClick(false)}
-          aria-label="wrong-icon"
-          disabled={disableButtons}
-        >
-          {question?.wrongIcon}
-        </button>
-        <button
-          className={styles.emojiButton + (feedback === 'correct' ? ' ' + styles.correct : '')}
-          onClick={() => handleClick(true)}
-          aria-label="correct-icon"
-          disabled={disableButtons}
-        >
-          {question?.correctIcon}
-        </button>
+        {isCorrectOnLeft ? (
+          <>
+            <button
+              className={styles.emojiButton + (feedback === 'correct' ? ' ' + styles.correct : '')}
+              onClick={() => handleClick(true)}
+              aria-label="correct-icon"
+              disabled={disableButtons}
+            >
+              {question?.correctIcon}
+            </button>
+            <button
+              className={styles.emojiButton + (feedback === 'incorrect' && attempts > 0 ? ' ' + styles.incorrect : '')}
+              onClick={() => handleClick(false)}
+              aria-label="wrong-icon"
+              disabled={disableButtons}
+            >
+              {question?.wrongIcon}
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              className={styles.emojiButton + (feedback === 'incorrect' && attempts > 0 ? ' ' + styles.incorrect : '')}
+              onClick={() => handleClick(false)}
+              aria-label="wrong-icon"
+              disabled={disableButtons}
+            >
+              {question?.wrongIcon}
+            </button>
+            <button
+              className={styles.emojiButton + (feedback === 'correct' ? ' ' + styles.correct : '')}
+              onClick={() => handleClick(true)}
+              aria-label="correct-icon"
+              disabled={disableButtons}
+            >
+              {question?.correctIcon}
+            </button>
+          </>
+        )}
       </div>
+
       <div className={styles.feedback + (feedback === 'incorrect' ? ' ' + styles.incorrect : '')}>
         {feedback === 'correct' && 'נכון!'}
         {feedback === 'incorrect' && 'נסה שוב'}
         {!feedback && '\u00A0'}
       </div>
+
       {showHebrew && (
         <div className={styles.russianHint}>{question?.hebrew}</div>
       )}
-      <RoundProgress round={round-1} total={ROUNDS} />
-      </div>
+
+      <RoundProgress round={round - 1} total={ROUNDS} />
+    </div>
   );
 }

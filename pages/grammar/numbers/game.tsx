@@ -208,7 +208,7 @@ export default function NumbersGame() {
           pattern="[0-9]*"
           value={input}
           onChange={handleInputChange}
-          placeholder="הקלד מספר..."
+          placeholder="הקלד..."
           autoFocus
         />
         <button className={styles.gameButton} type="submit">בדוק</button>
