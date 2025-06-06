@@ -44,8 +44,8 @@
 
 .topicsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
   width: 100%;
   max-width: 1200px;
   padding: 1rem;
@@ -56,14 +56,15 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 1.5rem;
   background: white;
   border-radius: 16px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   text-decoration: none;
   color: #2c3e50;
-  min-height: 200px;
+  min-height: 160px;
+  min-width: 0;
 }
 
 .topicCard:hover {
@@ -72,20 +73,21 @@
 }
 
 .icon {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
   color: #2196F3;
 }
 
 .topicTitle {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
   text-align: center;
+  line-height: 1.3;
 }
 
 .topicDescription {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #666;
   text-align: center;
   line-height: 1.4;
@@ -289,36 +291,27 @@
 }
 
 @media (max-width: 768px) {
-  .container {
-    padding: 3.5rem 0.75rem 0.75rem;
-  }
-
-  .title {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-  }
-
   .topicsGrid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    gap: 0.75rem;
     padding: 0.75rem;
   }
 
   .topicCard {
-    padding: 1.5rem;
-    min-height: 180px;
+    padding: 1rem;
+    min-height: 140px;
   }
 
   .icon {
-    font-size: 2rem;
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
   }
 
   .topicTitle {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
   }
 
   .topicDescription {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 
   .tableContainer {
@@ -382,36 +375,27 @@
 }
 
 @media (max-width: 480px) {
-  .container {
-    padding: 3rem 0.5rem 0.5rem;
-  }
-
-  .title {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-  }
-
   .topicsGrid {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
+    gap: 0.5rem;
     padding: 0.5rem;
   }
 
   .topicCard {
-    padding: 1.25rem;
-    min-height: 160px;
+    padding: 0.75rem;
+    min-height: 120px;
   }
 
   .icon {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
+    margin-bottom: 0.4rem;
   }
 
   .topicTitle {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 
   .topicDescription {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
   }
 
   .consonantRow {
@@ -1659,29 +1643,12 @@
 }
 
 /* Case-specific row colors */
-.summaryTable tr[data-case="1"] {
-  background-color: #e3f2fd;
-}
-
-.summaryTable tr[data-case="2"] {
-  background-color: #e8f5e9;
-}
-
-.summaryTable tr[data-case="3"] {
-  background-color: #fff3e0;
-}
-
-.summaryTable tr[data-case="4"] {
-  background-color: #fde0e0;
-}
-
-.summaryTable tr[data-case="5"] {
-  background-color: #ede7f6;
-}
-
-.summaryTable tr[data-case="6"] {
-  background-color: #e0f7fa;
-}
+.summaryTable tr[data-case="1"] { background-color: #e3f2fd; }
+.summaryTable tr[data-case="2"] { background-color: #e8f5e9; }
+.summaryTable tr[data-case="3"] { background-color: #fff3e0; }
+.summaryTable tr[data-case="4"] { background-color: #fde0e0; }
+.summaryTable tr[data-case="5"] { background-color: #ede7f6; }
+.summaryTable tr[data-case="6"] { background-color: #e0f7fa; }
 
 /* Case name styling */
 .caseSummaryName {
@@ -1699,29 +1666,12 @@
 }
 
 /* Case-specific text colors */
-.summaryTable tr[data-case="1"] .caseSummaryName div {
-  color: #1976D2;
-}
-
-.summaryTable tr[data-case="2"] .caseSummaryName div {
-  color: #2e7d32;
-}
-
-.summaryTable tr[data-case="3"] .caseSummaryName div {
-  color: #ef6c00;
-}
-
-.summaryTable tr[data-case="4"] .caseSummaryName div {
-  color: #c62828;
-}
-
-.summaryTable tr[data-case="5"] .caseSummaryName div {
-  color: #6a1b9a;
-}
-
-.summaryTable tr[data-case="6"] .caseSummaryName div {
-  color: #00838f;
-}
+.summaryTable tr[data-case="1"] .caseSummaryName div { color: #1976D2; }
+.summaryTable tr[data-case="2"] .caseSummaryName div { color: #2e7d32; }
+.summaryTable tr[data-case="3"] .caseSummaryName div { color: #ef6c00; }
+.summaryTable tr[data-case="4"] .caseSummaryName div { color: #c62828; }
+.summaryTable tr[data-case="5"] .caseSummaryName div { color: #6a1b9a; }
+.summaryTable tr[data-case="6"] .caseSummaryName div { color: #00838f; }
 
 .commonWordsCell {
   min-width: 200px;

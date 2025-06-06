@@ -46,9 +46,9 @@ const TOPICS: Topic[] = [
 ];
 
 const DIFFICULTY_LEVELS = [
-  { id: 'easy', name: 'קלה' },
-  { id: 'medium', name: 'בינונית' },
-  { id: 'hard', name: 'קשה' }
+  { id: 'easy', name: 'קל' },
+  { id: 'medium', name: 'בינוני - בהמשך' },
+  { id: 'hard', name: 'מתקדם - בהמשך' }
 ];
 
 const topicNameToIdMap = Object.fromEntries(
