@@ -16,14 +16,14 @@ export default function Home() {
         <img src="/animations/book.png" alt="vocabulary Icon" className={styles.iconImage} />
         </span>           
         <span className={styles.buttonText}>אוצר מילים</span>
-        <span className={styles.buttonSubtext}>התנסו ביותר מ־700 מילים שימושיות</span>
+        <span className={styles.buttonSubtext}>1000+ מילים</span>
         </Link>
         <Link href="/exercise" className={styles.navButton}>
         <span className={styles.icon}>
         <img src="/animations/play.png" alt="practice Icon" className={styles.iconImage} />
         </span>        
         <span className={styles.buttonText}>תרגול</span>
-        <span className={styles.buttonSubtext}>שפרו את הזיהוי שלכם בעזרת משחקי אימוג'י</span>
+        <span className={styles.buttonSubtext}>תרגלו שמות עצם, תואר, פועל ומספרים</span>
         </Link>
         <Link href="/grammar" className={styles.navButton}>
         <span className={styles.icon}>
@@ -37,14 +37,14 @@ export default function Home() {
         <img src="/animations/headphone.png" alt="hearing Icon" className={styles.iconImage} />
         </span>        
         <span className={styles.buttonText}>האזנה</span>
-        <span className={styles.buttonSubtext}>הקשיבו לדוברים טבעיים בתרגול יומיומי</span>
+        <span className={styles.buttonSubtext}>הקשיבו לשיחות יומיומיות  </span>
         </Link>
-        <Link href="/conversations" className={styles.navButton}>
+        <Link href="/conversations" className={`${styles.navButton} ${styles.fullWidthButton}`}>
         <span className={styles.icon}>
         <img src="/animations/mask.png" alt="mask Icon" className={styles.iconImage} />
         </span>           
         <span className={styles.buttonText}>שיחות</span>
-        <span className={styles.buttonSubtext}>שחקו דיאלוגים מרתקים במצבים יומיומיים</span>
+        <span className={styles.buttonSubtext}>התנסו בשיחות הכוללות משחקי תפקידים</span>
         </Link>
       </main>
       <div className={styles.bottomAnim}>

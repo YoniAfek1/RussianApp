@@ -30,14 +30,13 @@
 }
 
 .mainNav {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  max-width: 600px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  max-width: 700px;
   margin: 0 auto 1rem;
   padding: 0 1rem;
   width: 100%;
-  align-items: center;
 }
 
 .navButton {
@@ -45,17 +44,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1.2rem 1.5rem;
-  font-size: 1.1rem;
-  background-color: #ffffff;
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: 20px;
+  background: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+  height: 160px;
   border: 2px solid #e0e0e0;
-  border-radius: 12px;
-  color: #333;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  width: 100%;
-  min-height: 120px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .navButton:hover {
@@ -64,8 +60,23 @@
   border-color: #007bff;
 }
 
-.navButton:active {
-  transform: scale(0.98);
+.fullWidthButton {
+  grid-column: 1 / -1;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  height: auto;
+  min-height: 80px;
+}
+
+.fullWidthButton .icon {
+  margin-left: 1rem;
+}
+
+.fullWidthButton .buttonText,
+.fullWidthButton .buttonSubtext {
+  text-align: right;
+  align-items: flex-end;
 }
 
 .iconCircle {
@@ -184,14 +195,18 @@
   }
 
   .mainNav {
-    gap: 0.6rem;
-    margin-bottom: 1rem;
+    gap: 0.75rem;
     padding: 0 0.75rem;
   }
 
   .navButton {
-    padding: 1rem 1.2rem;
-    min-height: 110px;
+    padding: 1.2rem;
+    height: 140px;
+  }
+
+  .fullWidthButton {
+    padding: 0.9rem 1.2rem;
+    min-height: 70px;
   }
 
   .iconCircle {
@@ -231,9 +246,19 @@
 }
 
 @media (max-width: 430px) {
+  .mainNav {
+    gap: 0.6rem;
+    padding: 0 0.6rem;
+  }
+
   .navButton {
-    padding: 0.9rem 1rem;
-    min-height: 100px;
+    padding: 1rem;
+    height: 130px;
+  }
+
+  .fullWidthButton {
+    padding: 0.8rem 1rem;
+    min-height: 60px;
   }
 
   .buttonText {
