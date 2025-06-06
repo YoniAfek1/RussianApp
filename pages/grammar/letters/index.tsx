@@ -119,11 +119,6 @@ export default function LettersPage() {
           </div>
         ))}
       </div>
-      <div className={styles.pronunciationRules}>
-        <h2 className={styles.ruleTitle}>כללי הגייה בולטים</h2>
-        <div className={styles.lightbulbContainer}>
-        </div>
-      </div>
     </div>
   );
 } 
