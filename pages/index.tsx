@@ -7,8 +7,8 @@ export default function Home() {
   return (
     <div className={styles.homeBg}>
       <header className={styles.headerSection}>
-        <h1 className={styles.header}>ברוכים הבאים - Добро пожаловать</h1>
-        <h2 className={styles.subheader}>מה נלמד היום ? Что мы узнаем сегодня</h2>
+        <h1 className={styles.header}>Добро пожаловать - ברוכים הבאים </h1>
+        <h2 className={styles.subheader}>мы узнаем сегодня ? מה נלמד היום</h2>
       </header>
       <main className={styles.mainNav}>
         <Link href="/vocabulary" className={styles.navButton}>
@@ -16,21 +16,21 @@ export default function Home() {
         <img src="/animations/book.png" alt="vocabulary Icon" className={styles.iconImage} />
         </span>           
         <span className={styles.buttonText}>אוצר מילים</span>
-        <span className={styles.buttonSubtext}>1000+ מילים</span>
+        <span className={styles.buttonSubtext}>מילים +1000</span>
         </Link>
         <Link href="/exercise" className={styles.navButton}>
         <span className={styles.icon}>
         <img src="/animations/play.png" alt="practice Icon" className={styles.iconImage} />
         </span>        
         <span className={styles.buttonText}>תרגול</span>
-        <span className={styles.buttonSubtext}>תרגלו שמות עצם, תואר, פועל ומספרים</span>
+        <span className={styles.buttonSubtext}>שמות עצם, תואר, פועל ומספרים</span>
         </Link>
         <Link href="/grammar" className={styles.navButton}>
         <span className={styles.icon}>
         <img src="/animations/rule.png" alt="Grammar Icon" className={styles.iconImage} />
         </span>        
         <span className={styles.buttonText}>דקדוק</span>
-        <span className={styles.buttonSubtext}>יסודות הדקדוק הרוסי בצורה פשוטה</span>
+        <span className={styles.buttonSubtext}>יסודות הדקדוק הרוסי בפשטות</span>
         </Link>
         <Link href="/hearing" className={styles.navButton}>
         <span className={styles.icon}>

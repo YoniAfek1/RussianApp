@@ -32,7 +32,7 @@
 .mainNav {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  gap: 1.5rem;
   max-width: 700px;
   margin: 0 auto 1rem;
   padding: 0 1rem;
@@ -45,13 +45,19 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 1.5rem;
+  padding: 1rem;
   border-radius: 20px;
   background: white;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   transition: all 0.2s ease;
-  height: 160px;
+  height: 140px;
   border: 2px solid #e0e0e0;
+  text-decoration: none;
+  color: inherit;
+}
+
+.navButton * {
+  text-decoration: none !important;
 }
 
 .navButton:hover {
@@ -195,17 +201,17 @@
   }
 
   .mainNav {
-    gap: 0.75rem;
+    gap: 1.25rem;
     padding: 0 0.75rem;
   }
 
   .navButton {
-    padding: 1.2rem;
-    height: 140px;
+    padding: 0.9rem;
+    height: 130px;
   }
 
   .fullWidthButton {
-    padding: 0.9rem 1.2rem;
+    padding: 0.8rem 1.2rem;
     min-height: 70px;
   }
 
@@ -247,17 +253,17 @@
 
 @media (max-width: 430px) {
   .mainNav {
-    gap: 0.6rem;
+    gap: 1rem;
     padding: 0 0.6rem;
   }
 
   .navButton {
-    padding: 1rem;
-    height: 130px;
+    padding: 0.8rem;
+    height: 120px;
   }
 
   .fullWidthButton {
-    padding: 0.8rem 1rem;
+    padding: 0.7rem 1rem;
     min-height: 60px;
   }
 
