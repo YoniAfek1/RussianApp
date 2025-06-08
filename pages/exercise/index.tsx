@@ -43,6 +43,7 @@ export default function Exercise() {
             <span className={styles.icon}>
               <img src={option.icon} alt={option.title} className={styles.iconImage} />
             </span>
+            <img src="/animations/anna.png" alt="Anna" className={styles.annaImage} />
           </Link>
         ))}
       </div>
