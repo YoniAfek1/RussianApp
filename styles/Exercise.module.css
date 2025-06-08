@@ -17,7 +17,7 @@
 .optionsGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
+  gap: 1.5rem 2.5rem;
   justify-items: center;
   max-width: 700px;
   width: 100%;
@@ -29,26 +29,29 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: white;
-  border: 2px solid #ddd;
-  border-radius: 24px;
-  padding: 1.2rem;
+  background: #fff;
+  border: 2px solid #dcdfe6;
+  border-radius: 1.8rem;
+  padding: 1.5rem;
   text-align: center;
   text-decoration: none;
-  width: 200px;
-  height: 200px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-width: 250px;
+  min-height: 250px;
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.1);
+  transition: all 0.2s ease-in-out;
 }
 
 .optionCard:hover {
+  background-color: #f1f5ff;
+  border-color: #90caf9;
   transform: translateY(-4px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .optionText {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 700;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.5rem;
   color: #1a237e;
 }
 
@@ -60,9 +63,30 @@
 }
 
 .iconImage {
-  width: 80px;
-  height: 80px;
+  width: 6rem;
+  height: 6rem;
   object-fit: contain;
+}
+
+@media (max-width: 600px) {
+  .optionsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+  .optionCard {
+    min-width: 120px;
+    min-height: 120px;
+    padding: 1rem;
+    border-radius: 1.2rem;
+  }
+  .optionText {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+  .iconImage {
+    width: 4rem;
+    height: 4rem;
+  }
 }
 
 @media (max-width: 768px) {
