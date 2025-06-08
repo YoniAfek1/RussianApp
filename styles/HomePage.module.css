@@ -119,12 +119,13 @@
 }
 
 .buttonSubtext {
+  flex: 1;
   font-size: 0.85rem;
   color: #666;
   text-align: center;
   margin-top: 0.3rem;
   line-height: 1.3;
-  max-width: 90%;
+  max-width: 100%;
 }
 
 .bottomAnim {
