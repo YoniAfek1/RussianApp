@@ -171,7 +171,7 @@ export default function VerbGame() {
         ))}
       </div>
       <div className={styles.feedback + (feedback === 'incorrect' ? ' ' + styles.incorrect : '')}>
-        {feedback === 'correct' && 'נכון!'}
+        {feedback === 'correct' && '!נכון'}
         {feedback === 'incorrect' && 'נסה שוב'}
         {!feedback && '\u00A0'}
       </div>
