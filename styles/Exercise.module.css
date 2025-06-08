@@ -69,11 +69,24 @@
   object-fit: contain;
 }
 
+.bottomAnim {
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  width: fit-content;
+  max-width: 95%;
+}
+
 .annaImage {
   display: block;
-  margin: 1.2rem auto 0 auto;
-  width: 54px;
-  height: 54px;
+  width: 90px;
+  height: 90px;
   object-fit: contain;
   filter: drop-shadow(0 2px 6px rgba(30,64,175,0.10));
 }
@@ -98,9 +111,8 @@
     height: 4rem;
   }
   .annaImage {
-    width: 38px;
-    height: 38px;
-    margin-top: 0.8rem;
+    width: 60px;
+    height: 60px;
   }
 }
 
