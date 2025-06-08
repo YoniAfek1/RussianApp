@@ -39,7 +39,7 @@ export default function Home() {
         <span className={styles.buttonText}>האזנה</span>
         <span className={styles.buttonSubtext}>הקשיבו לשיחות יומיומיות  </span>
         </Link>
-        <Link href="/conversations" className={`${styles.navButton} ${styles.fullWidthButton}`}>
+        <Link href="/conversations" className={styles.navButton}>
         <span className={styles.icon}>
         <img src="/animations/mask.png" alt="mask Icon" className={styles.iconImage} />
         </span>           
