@@ -84,9 +84,10 @@
 }
 
 .annaImage {
+  width: 180px;
+  height: 180px;
+  border-radius: 20px;
   display: block;
-  width: 90px;
-  height: 90px;
   object-fit: contain;
   filter: drop-shadow(0 2px 6px rgba(30,64,175,0.10));
 }
@@ -111,8 +112,8 @@
     height: 4rem;
   }
   .annaImage {
-    width: 60px;
-    height: 60px;
+    width: 180px;
+    height: 180px;
   }
 }
 
@@ -149,8 +150,8 @@
   }
 
   .annaImage {
-    width: 64px;
-    height: 64px;
+    width: 180px;
+    height: 180px;
   }
 }
 
@@ -187,7 +188,7 @@
   }
 
   .annaImage {
-    width: 56px;
-    height: 56px;
+    width: 180px;
+    height: 180px;
   }
 } 
