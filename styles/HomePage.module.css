@@ -32,7 +32,7 @@
 .mainNav {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
+  gap: 2rem;
   max-width: 700px;
   margin: 0 auto 1rem;
   padding: 0 1rem;
@@ -68,27 +68,28 @@
 
 .fullWidthButton {
   grid-column: 1 / -1;
-  flex-direction: row-reverse;
-  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   padding: 0.8rem 1.2rem;
   height: auto;
   min-height: 70px;
+  gap: 1rem;
 }
 
 .fullWidthButton .icon {
-  margin-left: 1rem;
-}
-
-.fullWidthButton .buttonText,
-.fullWidthButton .buttonSubtext {
-  text-align: right;
-  align-items: flex-end;
+  margin: 0;
 }
 
 .fullWidthButton > div {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
+}
+
+.fullWidthButton .buttonText,
+.fullWidthButton .buttonSubtext {
+  text-align: left;
 }
 
 .iconCircle {
@@ -207,18 +208,19 @@
   }
 
   .mainNav {
-    gap: 1.25rem;
+    gap: 1.5rem;
     padding: 0 0.75rem;
   }
 
   .navButton {
-    padding: 0.7rem;
-    height: 120px;
+    padding: 0.6rem;
+    height: 110px;
   }
 
   .fullWidthButton {
-    padding: 0.7rem 1rem;
-    min-height: 65px;
+    padding: 0.6rem 1rem;
+    min-height: 60px;
+    gap: 0.8rem;
   }
 
   .iconCircle {
@@ -259,18 +261,19 @@
 
 @media (max-width: 430px) {
   .mainNav {
-    gap: 1rem;
+    gap: 1.25rem;
     padding: 0 0.6rem;
   }
 
   .navButton {
     padding: 0.6rem;
-    height: 110px;
+    height: 100px;
   }
 
   .fullWidthButton {
     padding: 0.6rem 0.9rem;
-    min-height: 60px;
+    min-height: 55px;
+    gap: 0.7rem;
   }
 
   .buttonText {
