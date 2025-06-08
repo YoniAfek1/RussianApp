@@ -8,7 +8,7 @@ export default function Home() {
     <div className={styles.homeBg}>
       <header className={styles.headerSection}>
         <h1 className={styles.header}>Добро пожаловать - ברוכים הבאים </h1>
-        <h2 className={styles.subheader}>мы узнаем сегодня ? מה נלמד היום</h2>
+        <h2 className={styles.subheader}>что мы узнаем сегодня ? מה נלמד היום</h2>
       </header>
       <main className={styles.mainNav}>
         <Link href="/vocabulary" className={styles.navButton}>
