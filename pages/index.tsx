@@ -41,10 +41,12 @@ export default function Home() {
         </Link>
         <Link href="/conversations" className={`${styles.navButton} ${styles.fullWidthButton}`}>
         <span className={styles.icon}>
-        <img src="/animations/mask.png" alt="mask Icon" className={styles.iconImage} />
-        </span>           
-        <span className={styles.buttonText}>שיחות</span>
-        <span className={styles.buttonSubtext}>התנסו בשיחות הכוללות משחקי תפקידים</span>
+          <img src="/animations/mask.png" alt="mask Icon" className={styles.iconImage} />
+        </span>
+        <div className={styles.textColumn}>
+          <span className={styles.buttonText}>שיחות</span>
+          <span className={styles.buttonSubtext}>התנסו בשיחות הכוללות משחקי תפקידים</span>
+        </div>
         </Link>
       </main>
       <div className={styles.bottomAnim}>
