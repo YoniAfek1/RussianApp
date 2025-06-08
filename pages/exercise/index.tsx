@@ -39,10 +39,10 @@ export default function Exercise() {
             href={option.path}
             className={styles.optionCard}
           >
+            <span className={styles.optionText}>{option.title}</span>
             <span className={styles.icon}>
               <img src={option.icon} alt={option.title} className={styles.iconImage} />
             </span>
-            <span className={styles.optionText}>{option.title}</span>
           </Link>
         ))}
       </div>
