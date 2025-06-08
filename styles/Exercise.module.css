@@ -86,10 +86,9 @@
 .annaImage {
   width: 180px;
   height: 180px;
-  border-radius: 20px;
+  border-radius: 0px;
   display: block;
   object-fit: contain;
-  filter: drop-shadow(0 2px 6px rgba(30,64,175,0.10));
 }
 
 @media (max-width: 600px) {
