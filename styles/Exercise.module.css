@@ -21,7 +21,7 @@
   justify-items: center;
   max-width: 700px;
   width: 100%;
-  padding: 0 1rem;
+  padding: 1 1rem;
   margin: 2rem 0 1rem 0;
 }
 
@@ -102,7 +102,7 @@
 
   .optionsGrid {
     gap: 1rem;
-    padding: 0 0.75rem;
+    padding: 0.75 0.75rem;
   }
 
   .optionCard {
@@ -135,7 +135,7 @@
 
   .optionsGrid {
     gap: 1rem;
-    padding: 0 0.6rem;
+    padding: 0.6 0.6rem;
   }
 
   .optionCard {
@@ -151,7 +151,7 @@
   }
 
   .iconImage {
-    width: 48px;
-    height: 48px;
+    width: 56px;
+    height: 56px;
   }
 } 
