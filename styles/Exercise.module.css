@@ -72,7 +72,7 @@
 @media (max-width: 600px) {
   .optionsGrid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
+    gap: 1rem;
   }
   .optionCard {
     min-width: 120px;
@@ -101,7 +101,7 @@
   }
 
   .optionsGrid {
-    gap: 1.5rem;
+    gap: 1rem;
     padding: 0 0.75rem;
   }
 
