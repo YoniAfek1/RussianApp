@@ -45,7 +45,7 @@ export default function Home() {
         </span>
         <div className={styles.textColumn}>
           <span className={styles.buttonText}>שיחות</span>
-          <span className={styles.buttonSubtext}>התנסו בשיחות הכוללות משחקי תפקידים עם ai</span>
+          <span className={styles.buttonSubtext}>ai התנסו בשיחות הכוללות משחקי תפקידים עם</span>
         </div>
         </Link>
       </main>
