@@ -50,10 +50,10 @@
 }
 
 .optionText {
-  font-size: 1.3rem;
+  font-size: 2rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
-  color: #1a237e;
+  color: #6A1B9A;
 }
 
 .icon {
@@ -64,8 +64,8 @@
 }
 
 .iconImage {
-  width: 6rem;
-  height: 6rem;
+  width: 7rem;
+  height: 7rem;
   object-fit: contain;
 }
 
@@ -103,12 +103,12 @@
     border-radius: 1.2rem;
   }
   .optionText {
-    font-size: 1.1rem;
+    font-size: 1.6rem;
     margin-bottom: 1rem;
   }
   .iconImage {
-    width: 4rem;
-    height: 4rem;
+    width: 5rem;
+    height: 5rem;
   }
   .annaImage {
     width: 180px;
@@ -139,13 +139,13 @@
   }
 
   .optionText {
-    font-size: 1.2rem;
+    font-size: 1.8rem;
     margin-bottom: 1rem;
   }
 
   .iconImage {
-    width: 64px;
-    height: 64px;
+    width: 70px;
+    height: 70px;
   }
 
   .annaImage {
@@ -177,13 +177,13 @@
   }
 
   .optionText {
-    font-size: 1rem;
+    font-size: 1.5rem;
     margin-bottom: 0.7rem;
   }
 
   .iconImage {
-    width: 56px;
-    height: 56px;
+    width: 62px;
+    height: 62px;
   }
 
   .annaImage {
