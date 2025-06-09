@@ -230,7 +230,7 @@ export default function Hearing() {
   return (
     <div className={styles.container}>
       <div className={styles.mainContent}>
-        <h1 className={styles.title}>🟣 האזנה 🟣</h1>
+        <h1 className={styles.title}>האזנה 🟣</h1>
         
         <div className={styles.filterSection}>
           <div className={styles.filterGroup}>

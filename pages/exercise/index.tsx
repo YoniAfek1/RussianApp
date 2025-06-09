@@ -47,7 +47,7 @@ export default function Exercise() {
         ))}
       </div>
       <div className={styles.bottomAnim}>
-        <video src="/animations/annaV.mp4" autoPlay loop muted playsInline className={styles.annaImage} />
+        <video src="/animations/annaV2.mp4" autoPlay loop muted playsInline className={styles.annaImage} />
       </div>
     </div>
   );
