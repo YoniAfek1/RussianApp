@@ -234,7 +234,7 @@ export default function Hearing() {
         
         <div className={styles.filterSection}>
           <div className={styles.filterGroup}>
-            <label htmlFor="level">Difficulty Level</label>
+            <label htmlFor="level">רמה</label>
             <select 
               id="level"
               value={selectedLevel}
@@ -251,7 +251,7 @@ export default function Hearing() {
           </div>
 
           <div className={styles.filterGroup}>
-            <label htmlFor="topic">Conversation Topic</label>
+            <label htmlFor="topic">נושא</label>
             <select 
               id="topic"
               value={selectedTopic}
