@@ -89,7 +89,6 @@
   border-radius: 0px;
   display: block;
   object-fit: contain;
-  mix-blend-mode: lighten;
 }
 
 @media (max-width: 600px) {
