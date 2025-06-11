@@ -39,6 +39,13 @@ export default function Home() {
         <span className={styles.buttonText}>האזנה</span>
         <span className={styles.buttonSubtext}>הקשיבו לשיחות יומיומיות  </span>
         </Link>
+        <Link href="/dailyWord" className={styles.navButton}>
+        <span className={styles.icon}>
+        <img src="/animations/calendar.png" alt="daily word Icon" className={styles.iconImage} />
+        </span>        
+        <span className={styles.buttonText}>מילה יומית</span>
+        <span className={styles.buttonSubtext}>למדו מילה חדשה בכל יום</span>
+        </Link>
         <Link href="/conversations" className={`${styles.navButton} ${styles.fullWidthButton}`}>
         <span className={styles.icon}>
           <img src="/animations/mask.png" alt="mask Icon" className={styles.iconImage} />
