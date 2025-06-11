@@ -25,6 +25,8 @@ export default function DailyWordPage() {
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
         const data: DailyWordRow[] = XLSX.utils.sheet_to_json(sheet, { defval: '' });
         setWords(data);
+        console.log("Keys:", Object.keys(data[0]));
+
       } catch (err) {
         console.error('Failed to load daily words:', err);
       }
