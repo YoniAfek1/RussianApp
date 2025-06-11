@@ -23,10 +23,39 @@ export default function DailyWordPage() {
         setError(null);
         console.log('Starting to fetch Excel file...');
         
-        // First try to fetch the file
-        const response = await fetch('/data/Russian_Daily_Word.xlsx');
+        // Debug: Log the current URL and path
+        console.log('Current URL:', window.location.href);
+        console.log('Attempting to fetch from:', '/data/Russian_Daily_Word.xlsx');
+        
+        // Try to fetch the file
+        let response;
+        try {
+          response = await fetch('/data/Russian_Daily_Word.xlsx', {
+            method: 'GET',
+            headers: {
+              'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            }
+          });
+          
+          if (!response.ok) {
+            console.error('Response not OK:', {
+              status: response.status,
+              statusText: response.statusText,
+              headers: Object.fromEntries(response.headers.entries())
+            });
+            throw new Error(`Failed to fetch Excel file: ${response.status} ${response.statusText}`);
+          }
+        } catch (err: any) {
+          console.error('Error details:', {
+            name: err?.name || 'Unknown error',
+            message: err?.message || 'No error message',
+            stack: err?.stack || 'No stack trace'
+          });
+          throw new Error('Failed to access the Excel file. Please check the browser console for details.');
+        }
+
         if (!response.ok) {
-          throw new Error(`Failed to fetch Excel file: ${response.status} ${response.statusText}`);
+          throw new Error(`Failed to fetch Excel file: ${response.status} ${response.statusText}. Please ensure the file exists in the public/data directory.`);
         }
         
         // Get the file as array buffer
