@@ -23,7 +23,7 @@ export default function DailyWord() {
       try {
         const response = await fetch('/data/Russian_Daily_Word.xlsx');
         const arrayBuffer = await response.arrayBuffer();
-        const workbook = XLSX.read(arrayBuffer);
+        const workbook = XLSX.read(arrayBuffer, { type: 'array' });
         const worksheet = workbook.Sheets[workbook.SheetNames[0]];
         const data = XLSX.utils.sheet_to_json(worksheet);
 
