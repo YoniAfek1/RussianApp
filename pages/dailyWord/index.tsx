@@ -15,34 +15,62 @@ export default function DailyWordPage() {
   const [words, setWords] = useState<DailyWordRow[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadExcel = async () => {
       try {
-        const res = await fetch('/data/Russian_Daily_Word.xlsx');
-        const arrayBuffer = await res.arrayBuffer();
-        const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+        setError(null);
+        console.log('Starting to fetch Excel file...');
         
-        // Log sheet names
-        console.log('Available sheets:', workbook.SheetNames);
+        // First try to fetch the file
+        const response = await fetch('/data/Russian_Daily_Word.xlsx');
+        if (!response.ok) {
+          throw new Error(`Failed to fetch Excel file: ${response.status} ${response.statusText}`);
+        }
         
-        const sheet = workbook.Sheets[workbook.SheetNames[0]];
+        // Get the file as array buffer
+        const arrayBuffer = await response.arrayBuffer();
+        if (!arrayBuffer || arrayBuffer.byteLength === 0) {
+          throw new Error('Received empty file');
+        }
         
-        // Log the range of the sheet
-        console.log('Sheet range:', sheet['!ref']);
+        // Parse the Excel file
+        const workbook = XLSX.read(new Uint8Array(arrayBuffer), { type: 'array' });
+        if (!workbook.SheetNames || workbook.SheetNames.length === 0) {
+          throw new Error('No sheets found in workbook');
+        }
         
-        // Get headers from the first row
-        const headers = XLSX.utils.sheet_to_json(sheet, { header: 1 })[0];
-        console.log('Column headers:', headers);
+        // Get the first sheet
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
         
-        // Get the data
-        const data: DailyWordRow[] = XLSX.utils.sheet_to_json(sheet, { defval: '' });
-        console.log('First row of data:', data[0]);
-        console.log('Total rows loaded:', data.length);
+        // Convert to JSON
+        const jsonData = XLSX.utils.sheet_to_json(worksheet);
+        if (!jsonData || jsonData.length === 0) {
+          throw new Error('No data found in sheet');
+        }
         
-        setWords(data);
-      } catch (err) {
-        console.error('Failed to load daily words:', err);
+        // Log the data structure
+        console.log('First row of raw data:', jsonData[0]);
+        
+        // Transform the data to match our interface
+        const transformedData = jsonData.map((row: any) => ({
+          Russian: row['מילה אחת'] || row['Russian'] || '',
+          Hebrew: row['Hebrew'] || '',
+          Transliteration: row['Transliteration'] || '',
+          Association: row['Association'] || '',
+          Icon: row['Icon'] || ''
+        }));
+        
+        console.log('Transformed first row:', transformedData[0]);
+        console.log('Total rows:', transformedData.length);
+        
+        setWords(transformedData);
+      } catch (err: any) {
+        const errorMessage = err?.message || 'Unknown error occurred';
+        console.error('Error loading Excel file:', errorMessage);
+        setError(errorMessage);
       }
     };
 
@@ -66,7 +94,20 @@ export default function DailyWordPage() {
     setFlipped(false);
   };
 
-  if (!words.length) return <div className={styles.loading}>טוען...</div>;
+  if (error) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.error}>
+          <h2>שגיאה בטעינת הנתונים</h2>
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!words.length) {
+    return <div className={styles.loading}>טוען...</div>;
+  }
 
   const word = words[currentIndex];
 

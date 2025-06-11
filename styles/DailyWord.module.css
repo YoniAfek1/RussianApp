@@ -115,6 +115,34 @@
   transform: scale(1.1);
 }
 
+.error {
+  text-align: center;
+  padding: 2rem;
+  background-color: var(--error-background, #ffebee);
+  border-radius: 8px;
+  margin: 2rem;
+  max-width: 600px;
+}
+
+.error h2 {
+  color: var(--error-text, #c62828);
+  margin-bottom: 1rem;
+}
+
+.error p {
+  color: var(--error-text, #c62828);
+  font-size: 1.1rem;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+}
+
 @media (max-width: 768px) {
   .word {
     font-size: 2.5rem;
