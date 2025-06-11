@@ -22,11 +22,25 @@ export default function DailyWordPage() {
         const res = await fetch('/data/Russian_Daily_Word.xlsx');
         const arrayBuffer = await res.arrayBuffer();
         const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+        
+        // Log sheet names
+        console.log('Available sheets:', workbook.SheetNames);
+        
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
+        
+        // Log the range of the sheet
+        console.log('Sheet range:', sheet['!ref']);
+        
+        // Get headers from the first row
+        const headers = XLSX.utils.sheet_to_json(sheet, { header: 1 })[0];
+        console.log('Column headers:', headers);
+        
+        // Get the data
         const data: DailyWordRow[] = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+        console.log('First row of data:', data[0]);
+        console.log('Total rows loaded:', data.length);
+        
         setWords(data);
-        console.log("Keys:", Object.keys(data[0]));
-
       } catch (err) {
         console.error('Failed to load daily words:', err);
       }
