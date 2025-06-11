@@ -1,126 +1,84 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import styles from '../../styles/DailyWord.module.css';
 import * as XLSX from 'xlsx';
+import { FaVolumeUp, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
-interface WordData {
-  word: string;
-  hebrew: string;
-  transliteration: string;
-  association: string;
-  icon: string;
-  type?: string;
-  difficulty?: string;
+interface DailyWordRow {
+  Russian: string;
+  Hebrew: string;
+  Transliteration: string;
+  Association: string;
+  Icon: string;
 }
 
-export default function DailyWord() {
-  const [words, setWords] = useState<WordData[]>([]);
+export default function DailyWordPage() {
+  const [words, setWords] = useState<DailyWordRow[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isFlipped, setIsFlipped] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [flipped, setFlipped] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const loadExcel = async () => {
       try {
-        const response = await fetch('/data/Russian_Daily_Word.xlsx');
-        const arrayBuffer = await response.arrayBuffer();
+        const res = await fetch('/data/Russian_Daily_Word.xlsx');
+        const arrayBuffer = await res.arrayBuffer();
         const workbook = XLSX.read(arrayBuffer, { type: 'array' });
-        const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-        const data = XLSX.utils.sheet_to_json(worksheet);
-
-        const formattedData = data.map((row: any) => ({
-          word: row['מילה אחת'],
-          hebrew: row['Hebrew'],
-          transliteration: row['Transliteration'],
-          association: row['Association'],
-          icon: row['Icon'],
-          type: row['Type'],
-          difficulty: row['Difficulty']
-        }));
-
-        setWords(formattedData);
-      } catch (error) {
-        console.error('Error loading word data:', error);
+        const sheet = workbook.Sheets[workbook.SheetNames[0]];
+        const data: DailyWordRow[] = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+        setWords(data);
+      } catch (err) {
+        console.error('Failed to load daily words:', err);
       }
     };
 
-    fetchData();
+    loadExcel();
   }, []);
 
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.play().catch(error => {
-        console.error('Error playing audio:', error);
-      });
-    }
-  }, [currentIndex]);
-
-  const handleCardClick = () => {
-    setIsFlipped(!isFlipped);
+  const speak = (text: string) => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'ru-RU';
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
   };
 
-  const handlePrevious = () => {
-    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : words.length - 1));
-    setIsFlipped(false);
+  const next = () => {
+    setCurrentIndex((prev) => (prev + 1) % words.length);
+    setFlipped(false);
   };
 
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev < words.length - 1 ? prev + 1 : 0));
-    setIsFlipped(false);
+  const prev = () => {
+    setCurrentIndex((prev) => (prev - 1 + words.length) % words.length);
+    setFlipped(false);
   };
 
-  const handlePlayAudio = () => {
-    if (audioRef.current) {
-      audioRef.current.play().catch(error => {
-        console.error('Error playing audio:', error);
-      });
-    }
-  };
+  if (!words.length) return <div className={styles.loading}>טוען...</div>;
 
-  if (words.length === 0) {
-    return <div className={styles.container}>Loading...</div>;
-  }
-
-  const currentWord = words[currentIndex];
+  const word = words[currentIndex];
 
   return (
     <div className={styles.container}>
-      <div className={styles.cardContainer}>
-        <div
-          className={`${styles.card} ${isFlipped ? styles.cardFlipped : ''}`}
-          onClick={handleCardClick}
-        >
-          <div className={styles.cardFront}>
-            <div className={styles.word}>{currentWord.word}</div>
-            <div className={styles.translation}>{currentWord.hebrew}</div>
-            <div className={styles.icon}>{currentWord.icon}</div>
-            <button className={styles.speakerButton} onClick={(e) => {
-              e.stopPropagation();
-              handlePlayAudio();
-            }}>
-              🔊
+      <h1 className={styles.title}>מילה יומית 💡</h1>
+      <div className={styles.card} onClick={() => setFlipped(!flipped)}>
+        {!flipped ? (
+          <div className={styles.front}>
+            <div className={styles.bigWord}>{word.Hebrew}</div>
+            <div className={styles.icon}>{word.Icon}</div>
+            <button className={styles.speakButton} onClick={(e) => { e.stopPropagation(); speak(word.Russian); }}>
+              <FaVolumeUp />
             </button>
-            <audio
-              ref={audioRef}
-              src={`/audio/words/${currentWord.word}.mp3`}
-              preload="auto"
-            />
           </div>
-          <div className={styles.cardBack}>
-            <div className={styles.word}>{currentWord.word}</div>
-            <div className={styles.translation}>{currentWord.hebrew}</div>
-            <div className={styles.transliteration}>{currentWord.transliteration}</div>
-            <div className={styles.association}>{currentWord.association}</div>
+        ) : (
+          <div className={styles.back}>
+            <div className={styles.russian}>{word.Russian}</div>
+            <div className={styles.transliteration}>{word.Transliteration}</div>
+            <div className={styles.association}>{word.Association}</div>
           </div>
-        </div>
+        )}
       </div>
+
       <div className={styles.navigation}>
-        <button className={styles.navButton} onClick={handlePrevious}>
-          ←
-        </button>
-        <button className={styles.navButton} onClick={handleNext}>
-          →
-        </button>
+        <button onClick={prev}><FaArrowLeft /></button>
+        <button onClick={next}><FaArrowRight /></button>
       </div>
     </div>
   );
-} 
+}
