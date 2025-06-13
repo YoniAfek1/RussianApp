@@ -1,162 +1,116 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 2rem;
-  background-color: var(--background-color);
-}
-
-.cardContainer {
-  perspective: 1000px;
-  width: 100%;
-  max-width: 600px;
-  height: 70vh;
-  margin: 2rem 0;
-}
-
-.card {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 0.6s;
-  cursor: pointer;
-}
-
-.cardFlipped {
-  transform: rotateY(180deg);
-}
-
-.cardFront,
-.cardBack {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  border-radius: 20px;
-  background-color: var(--card-background);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.cardBack {
-  transform: rotateY(180deg);
-}
-
-.word {
-  font-size: 3rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-.translation {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-.transliteration {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  text-align: center;
-  color: var(--text-secondary);
-}
-
-.association {
-  font-size: 1.2rem;
-  text-align: center;
-  color: var(--text-secondary);
-}
-
-.icon {
-  font-size: 4rem;
-  margin: 1rem 0;
-}
-
-.speakerButton {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 2rem;
-  padding: 0.5rem;
-  margin: 1rem 0;
-  color: var(--text-primary);
-  transition: transform 0.2s;
-}
-
-.speakerButton:hover {
-  transform: scale(1.1);
-}
-
-.navigation {
-  display: flex;
-  gap: 2rem;
-  margin-top: 2rem;
-}
-
-.navButton {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 2rem;
-  padding: 0.5rem;
-  color: var(--text-primary);
-  transition: transform 0.2s;
-}
-
-.navButton:hover {
-  transform: scale(1.1);
-}
-
-.error {
-  text-align: center;
-  padding: 2rem;
-  background-color: var(--error-background, #ffebee);
-  border-radius: 8px;
-  margin: 2rem;
-  max-width: 600px;
-}
-
-.error h2 {
-  color: var(--error-text, #c62828);
-  margin-bottom: 1rem;
-}
-
-.error p {
-  color: var(--error-text, #c62828);
-  font-size: 1.1rem;
-}
-
-.loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  font-size: 1.5rem;
-  color: var(--text-primary);
-}
-
-@media (max-width: 768px) {
-  .word {
-    font-size: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    font-family: sans-serif;
   }
   
-  .translation {
-    font-size: 1.8rem;
+  .title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .loading {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-top: 4rem;
+  }
+  
+  .cardContainer {
+    perspective: 1000px;
+    width: 90%;
+    max-width: 400px;
+    height: 350px;
+    margin-bottom: 2rem;
+  }
+  
+  .card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+    cursor: pointer;
+  }
+  
+  .cardFlipped {
+    transform: rotateY(180deg);
+  }
+  
+  .cardFront, .cardBack {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+  }
+  
+  .cardBack {
+    transform: rotateY(180deg);
+  }
+  
+  .word {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-align: center;
   }
   
   .transliteration {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #666;
+    text-align: center;
+  }
+  
+  .association {
+    font-size: 1rem;
+    color: #999;
+    text-align: center;
   }
   
   .icon {
-    font-size: 3rem;
+    font-size: 6rem;
+    margin-bottom: 1rem;
   }
-} 
+  
+  .speakerButton {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    color: #555;
+  }
+  
+  .speakerButton:hover {
+    color: #000;
+  }
+  
+  .navigation {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+  }
+  
+  .navigation button {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #444;
+  }
+  
+  .navigation button:hover {
+    color: #000;
+  }
+  
