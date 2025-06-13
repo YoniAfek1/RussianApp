@@ -24,7 +24,6 @@ export default function DailyWordPage() {
         const workbook = XLSX.read(arrayBuffer, { type: 'array' });
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
         const data: DailyWordRow[] = XLSX.utils.sheet_to_json(sheet, { defval: '' });
-        console.log("Loaded words:", data);
         setWords(data);
       } catch (err) {
         console.error('Failed to load daily words:', err);
@@ -37,7 +36,6 @@ export default function DailyWordPage() {
   const speak = (text: string) => {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'ru-RU';
-    utterance.rate = 0.85;
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(utterance);
   };
@@ -52,12 +50,6 @@ export default function DailyWordPage() {
     setFlipped(false);
   };
 
-  useEffect(() => {
-    if (words.length) {
-      speak(words[currentIndex].Russian);
-    }
-  }, [currentIndex]);
-
   if (!words.length) return <div className={styles.loading}>טוען...</div>;
 
   const word = words[currentIndex];
@@ -65,14 +57,15 @@ export default function DailyWordPage() {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>מילה יומית 💡</h1>
-
       <div className={styles.cardContainer}>
         <div
           className={`${styles.card} ${flipped ? styles.cardFlipped : ''}`}
           onClick={() => setFlipped(!flipped)}
         >
+          {/* Front Side */}
           <div className={styles.cardFront}>
             <div className={styles.word}>{word.Hebrew}</div>
+            <div className={styles.word}>{word.Russian}</div>
             <div className={styles.icon}>{word.Icon}</div>
             <button
               className={styles.speakerButton}
@@ -85,6 +78,7 @@ export default function DailyWordPage() {
             </button>
           </div>
 
+          {/* Back Side */}
           <div className={styles.cardBack}>
             <div className={styles.word}>{word.Russian}</div>
             <div className={styles.transliteration}>{word.Transliteration}</div>
