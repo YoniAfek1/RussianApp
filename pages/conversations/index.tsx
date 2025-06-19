@@ -138,23 +138,34 @@ export default function ConversationsIndex() {
           setDebugMsg('📦 Initializing Gemini...');
           const genAI = new GoogleGenerativeAI(API_KEY);
           const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-          
+
           const globalPrompt = correctionEnabled
             ? basePrompt + "\n\n" + correctionAddon
             : basePrompt;
-          
+
+          // Add instruction for varied greeting
+          const promptWithGreeting = `${globalPrompt}\n\n${selectedConversation.prompt}\n\nНачни диалог с подходящего приветствия, соответствующего твоей роли. Не используй всегда одно и то же приветствие.`;
+
           const chat = await model.startChat({
             history: [{
               role: "user",
-              parts: [{ text: globalPrompt + '\n\n' + selectedConversation.prompt }]
+              parts: [{ text: promptWithGreeting }]
             }],
             generationConfig: {
               maxOutputTokens: 50,
               temperature: 0.7,
             },
           });
-          
+
           setChatSession(chat);
+
+          // Send a dummy message to trigger the assistant's greeting
+          const dummyInputs = ["...", "—", "🔊", "👋"];
+          const dummy = dummyInputs[Math.floor(Math.random() * dummyInputs.length)];
+          const initialResponse = await chat.sendMessage(dummy);
+          const assistantMessage = initialResponse.response.text();
+          setHistory([{ role: 'assistant', content: assistantMessage }]);
+          speak(assistantMessage);
           setDebugMsg('✅ Gemini ready!');
         } catch (error) {
           console.error('Error initializing Gemini:', error);

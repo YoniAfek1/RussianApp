@@ -44,7 +44,7 @@ export default async function handler(
       const id = index.toString();
       return {
         id,
-        russianWord: row['Russian Word'] || '',
+        russianWord: row['Russian'] || '',
         hebrewTranslation: row['Hebrew Translation'] || '',
         hebrewTransliteration: row['תעתיק'] || '',
         status: savedStatuses[id] || 'red',

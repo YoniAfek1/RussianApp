@@ -11,12 +11,19 @@ export default function Home() {
         <h2 className={styles.subheader}>что мы узнаем сегодня ? מה נלמד היום</h2>
       </header>
       <main className={styles.mainNav}>
-        <Link href="/vocabulary" className={styles.navButton}>
+      <Link href="/dailyWord" className={styles.navButton}>
         <span className={styles.icon}>
-        <img src="/animations/book.png" alt="vocabulary Icon" className={styles.iconImage} />
-        </span>           
-        <span className={styles.buttonText}>אוצר מילים</span>
-        <span className={styles.buttonSubtext}>מילים +1000</span>
+        <img src="/animations/clock.png" alt="daily word Icon" className={styles.iconImage} />
+        </span>        
+        <span className={styles.buttonText}>מילה יומית</span>
+        <span className={styles.buttonSubtext}>למדו מילה חדשה בכל יום</span>
+        </Link>
+        <Link href="/dailySong" className={styles.navButton}>
+        <span className={styles.icon}>
+        <img src="/animations/song.png" alt="daily song Icon" className={styles.iconImage} />
+        </span>
+        <span className={styles.buttonText}>שיר יומי</span>
+        <span className={styles.buttonSubtext}>נחשו את השיר שתורגם לרוסית</span>
         </Link>
         <Link href="/exercise" className={styles.navButton}>
         <span className={styles.icon}>
@@ -31,20 +38,6 @@ export default function Home() {
         </span>        
         <span className={styles.buttonText}>דקדוק</span>
         <span className={styles.buttonSubtext}>יסודות הדקדוק הרוסי בפשטות</span>
-        </Link>
-        <Link href="/hearing" className={styles.navButton}>
-        <span className={styles.icon}>
-        <img src="/animations/headphone.png" alt="hearing Icon" className={styles.iconImage} />
-        </span>        
-        <span className={styles.buttonText}>האזנה</span>
-        <span className={styles.buttonSubtext}>הקשיבו לשיחות יומיומיות  </span>
-        </Link>
-        <Link href="/dailyWord" className={styles.navButton}>
-        <span className={styles.icon}>
-        <img src="/animations/calendar.png" alt="daily word Icon" className={styles.iconImage} />
-        </span>        
-        <span className={styles.buttonText}>מילה יומית</span>
-        <span className={styles.buttonSubtext}>למדו מילה חדשה בכל יום</span>
         </Link>
         <Link href="/conversations" className={`${styles.navButton} ${styles.fullWidthButton}`}>
         <span className={styles.icon}>

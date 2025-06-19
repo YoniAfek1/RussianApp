@@ -45,6 +45,20 @@ export default function Exercise() {
             </span>
           </Link>
         ))}
+        {/* Listening Button */}
+        <Link href="/hearing" className={styles.optionCard} style={{ pointerEvents: 'auto', opacity: 1 }}>
+          <span className={styles.optionText}>האזנה</span>
+          <span className={styles.icon}>
+            <img src="/animations/headphone.png" alt="Listening Icon" className={styles.iconImage} />
+          </span>
+        </Link>
+        {/* Speaking Placeholder Button */}
+        <div className={styles.optionCard} style={{ opacity: 0.5, pointerEvents: 'none', cursor: 'not-allowed' }}>
+          <span className={styles.optionText}>דיבור – בקרוב</span>
+          <span className={styles.icon}>
+            <img src="/animations/mic.png" alt="Speaking Icon" className={styles.iconImage} />
+          </span>
+        </div>
       </div>
       <div className={styles.bottomAnim}>
         <video src="/animations/annaV2.mp4" autoPlay loop muted playsInline className={styles.annaImage} />
