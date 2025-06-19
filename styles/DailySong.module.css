@@ -192,6 +192,47 @@
   z-index: 9999;
 }
 
+.youtubeWrapper {
+  margin-top: 2rem;
+  border-radius: 1.2rem;
+  overflow: visible;
+  box-shadow: none;
+  width: 100%;
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.youtubeButton {
+  display: inline-block;
+  margin: 0 auto;
+  margin-top: 0.5rem;
+  padding: 0.8rem 2.2rem;
+  background: #ff1744;
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 8px rgba(30, 64, 175, 0.10);
+  text-decoration: none;
+  text-align: center;
+  transition: background 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+}
+
+.youtubeButton:hover, .youtubeButton:focus {
+  background: #d50032;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(30, 64, 175, 0.13);
+  text-decoration: none;
+}
+
 @media (max-width: 600px) {
   .container {
     padding: 1.2rem 0.2rem;

@@ -8,6 +8,7 @@ interface SongRow {
   Line3: string;
   SongTitle: string;
   Artist: string;
+  Link?: string;
 }
 
 export default function DailySong() {
@@ -242,6 +243,18 @@ export default function DailySong() {
       </div>
       {success && <div className={styles.successMsg}>נכון! כל הכבוד! 🎉</div>}
       <Confetti />
+      {success && song.Link && (
+        <div className={styles.youtubeWrapper}>
+          <a
+            href={song.Link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.youtubeButton}
+          >
+            🎵 לצפייה בשיר
+          </a>
+        </div>
+      )}
     </div>
   );
 } 
