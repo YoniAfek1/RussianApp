@@ -32,6 +32,7 @@ export default function NounsGame() {
   const [showRussian, setShowRussian] = useState(false);
   const [showHebrew, setShowHebrew] = useState(false);
   const ttsRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   // Load Excel data
   useEffect(() => {
@@ -78,6 +79,7 @@ export default function NounsGame() {
       setAttempts(0);
       setShowRussian(false);
       setShowHebrew(false);
+      setSelectedIndex(null);
       setTimeout(() => playTTS(correct.russian), 400);
     }
     if (round > ROUNDS) setGameOver(true);
@@ -95,8 +97,9 @@ export default function NounsGame() {
     }
   }
 
-  function handleOptionClick(option: NounRow) {
+  function handleOptionClick(option: NounRow, idx: number) {
     if (disableOptions) return;
+    setSelectedIndex(idx);
     if (option.icon === question?.icon) {
       setFeedback('correct');
       setShowHebrew(true);
@@ -155,10 +158,11 @@ export default function NounsGame() {
             key={i}
             className={
               styles.emojiButton +
+              (selectedIndex === i ? ' ' + styles.selected : '') +
               (feedback === 'correct' && opt.icon === question?.icon ? ' ' + styles.correct : '') +
               (feedback === 'incorrect' && attempts > 0 && opt.icon !== question?.icon ? '' : '')
             }
-            onClick={() => handleOptionClick(opt)}
+            onClick={() => handleOptionClick(opt, i)}
             disabled={disableOptions}
             aria-label={opt.russian}
           >
@@ -175,6 +179,6 @@ export default function NounsGame() {
         <div className={styles.russianHint}>{question?.hebrew}</div>
       )}
       <RoundProgress round={round-1} total={ROUNDS} />
-      </div>
+    </div>
   );
 } 

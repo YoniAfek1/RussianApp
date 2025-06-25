@@ -25,6 +25,7 @@ export default function AdjectiveGame() {
   const [disableButtons, setDisableButtons] = useState(false);
   const [isCorrectOnLeft, setIsCorrectOnLeft] = useState(false);
   const ttsRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   useEffect(() => {
     fetch('/data/Russian_Nouns.xlsx')
@@ -58,6 +59,7 @@ export default function AdjectiveGame() {
       setShowRussian(false);
       setShowHebrew(false);
       setDisableButtons(false);
+      setSelectedIndex(null);
       setTimeout(() => playTTS(data[idx].russian), 400);
     }
     if (round > ROUNDS) setGameOver(true);
@@ -75,8 +77,9 @@ export default function AdjectiveGame() {
     }
   }
 
-  function handleClick(isCorrect: boolean) {
+  function handleClick(isCorrect: boolean, idx: number) {
     if (disableButtons) return;
+    setSelectedIndex(idx);
     if (isCorrect) {
       setFeedback('correct');
       setShowHebrew(true);
@@ -133,16 +136,16 @@ export default function AdjectiveGame() {
         {isCorrectOnLeft ? (
           <>
             <button
-              className={styles.emojiButton + (feedback === 'correct' ? ' ' + styles.correct : '')}
-              onClick={() => handleClick(true)}
+              className={styles.emojiButton + (selectedIndex === 0 ? ' ' + styles.selected : '') + (feedback === 'correct' ? ' ' + styles.correct : '')}
+              onClick={() => handleClick(true, 0)}
               aria-label="correct-icon"
               disabled={disableButtons}
             >
               {question?.correctIcon}
             </button>
             <button
-              className={styles.emojiButton + (feedback === 'incorrect' && attempts > 0 ? ' ' + styles.incorrect : '')}
-              onClick={() => handleClick(false)}
+              className={styles.emojiButton + (selectedIndex === 1 ? ' ' + styles.selected : '') + (feedback === 'incorrect' && attempts > 0 ? ' ' + styles.incorrect : '')}
+              onClick={() => handleClick(false, 1)}
               aria-label="wrong-icon"
               disabled={disableButtons}
             >
@@ -152,16 +155,16 @@ export default function AdjectiveGame() {
         ) : (
           <>
             <button
-              className={styles.emojiButton + (feedback === 'incorrect' && attempts > 0 ? ' ' + styles.incorrect : '')}
-              onClick={() => handleClick(false)}
+              className={styles.emojiButton + (selectedIndex === 0 ? ' ' + styles.selected : '') + (feedback === 'incorrect' && attempts > 0 ? ' ' + styles.incorrect : '')}
+              onClick={() => handleClick(false, 0)}
               aria-label="wrong-icon"
               disabled={disableButtons}
             >
               {question?.wrongIcon}
             </button>
             <button
-              className={styles.emojiButton + (feedback === 'correct' ? ' ' + styles.correct : '')}
-              onClick={() => handleClick(true)}
+              className={styles.emojiButton + (selectedIndex === 1 ? ' ' + styles.selected : '') + (feedback === 'correct' ? ' ' + styles.correct : '')}
+              onClick={() => handleClick(true, 1)}
               aria-label="correct-icon"
               disabled={disableButtons}
             >

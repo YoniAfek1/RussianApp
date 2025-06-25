@@ -32,6 +32,7 @@ export default function VerbGame() {
   const [showRussian, setShowRussian] = useState(false);
   const [showHebrew, setShowHebrew] = useState(false);
   const ttsRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   // Load Excel data
   useEffect(() => {
@@ -82,6 +83,7 @@ export default function VerbGame() {
       setAttempts(0);
       setShowRussian(false);
       setShowHebrew(false);
+      setSelectedIndex(null);
       setTimeout(() => playTTS(correct.russian), 400);
     }
     if (round > ROUNDS) setGameOver(true);
@@ -99,8 +101,9 @@ export default function VerbGame() {
     }
   }
 
-  function handleOptionClick(option: VerbRow) {
+  function handleOptionClick(option: VerbRow, idx: number) {
     if (disableOptions) return;
+    setSelectedIndex(idx);
     if (option.icon === question?.icon) {
       setFeedback('correct');
       setShowHebrew(true);
@@ -159,10 +162,11 @@ export default function VerbGame() {
             key={i}
             className={
               styles.emojiButton +
+              (selectedIndex === i ? ' ' + styles.selected : '') +
               (feedback === 'correct' && opt.icon === question?.icon ? ' ' + styles.correct : '') +
               (feedback === 'incorrect' && attempts > 0 && opt.icon !== question?.icon ? '' : '')
             }
-            onClick={() => handleOptionClick(opt)}
+            onClick={() => handleOptionClick(opt, i)}
             disabled={disableOptions}
             aria-label={opt.russian}
           >

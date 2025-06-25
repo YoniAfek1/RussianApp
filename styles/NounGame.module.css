@@ -228,3 +228,10 @@
     font-size: 0.95rem;
   }
 }
+
+.selected {
+  border: 2.5px solid #2196f3;
+  background: #e3f2fd;
+  box-shadow: 0 0 0 2px #90caf9;
+  z-index: 1;
+}
