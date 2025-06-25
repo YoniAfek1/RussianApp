@@ -86,9 +86,9 @@ export default function DailyWordPage() {
           {/* Back Side */}
           <div className={styles.cardBack}>
             <div className={styles.wordRow}>
-              <span className={styles.word}>{word.Hebrew}</span>
-              <span className={styles.separator}>–</span>
               <span className={styles.word}>{word.Russian}</span>
+              <span className={styles.separator}>–</span>
+              <span className={styles.word}>{word.Hebrew}</span>
             </div>
             <div className={styles.transliteration}>{word.Transliteration}</div>
             <div className={styles.associationBlock}>
