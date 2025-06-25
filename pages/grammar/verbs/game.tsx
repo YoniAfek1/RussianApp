@@ -156,7 +156,7 @@ export default function VerbGame() {
       <div style={{ fontSize: '2.2rem', margin: '1.5rem 0', color: '#1a237e', fontWeight: 600 }}>
         {showRussian ? question?.russian : ''}
       </div>
-      <div className={styles.emojiOptions}>
+      <div className={styles.emojiOptions} key={round}>
         {options.map((opt, i) => (
           <button
             key={i}

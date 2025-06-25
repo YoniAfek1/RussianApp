@@ -132,7 +132,7 @@ export default function AdjectiveGame() {
         {showRussian ? question?.russian : ''}
       </div>
 
-      <div style={{ display: 'flex', gap: '2.5rem', justifyContent: 'center', marginBottom: '1.5rem' }}>
+      <div style={{ display: 'flex', gap: '2.5rem', justifyContent: 'center', marginBottom: '1.5rem' }} key={round}>
         {isCorrectOnLeft ? (
           <>
             <button
