@@ -50,6 +50,7 @@ export default async function handler(
         status: savedStatuses[id] || 'red',
         topic: row['Topic'] || '',
         hasAssociation: Boolean(row['Association Word']),
+        Association: row['Association sentence'] || '',
         associationSentence: row['Association sentence'] || ''
       };
     }).filter(word => word.russianWord && word.hebrewTranslation);
