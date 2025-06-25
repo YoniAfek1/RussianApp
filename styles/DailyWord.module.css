@@ -101,10 +101,11 @@
 .associationBlock {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  align-items: flex-end;
+  text-align: right;
   margin-top: 1rem;
   gap: 0.5rem;
+  width: 100%;
 }
 
 .associationRow {
@@ -132,6 +133,8 @@
   font-size: 1rem;
   color: #666;
   direction: rtl;
+  text-align: right;
+  width: 100%;
 }
 
 .icon {
