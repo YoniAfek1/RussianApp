@@ -18,7 +18,15 @@ export default function DailyWordPage() {
   const [flipped, setFlipped] = useState(false);
   const [cardColor, setCardColor] = useState<string>('');
 
-  const pastelColors = ['#FFF5E5', '#E8F8F5', '#FDE2FF', '#E0F7FA', '#FFF0F0'];
+  const pastelColors = [
+    '#FFF5E5', '#E8F8F5', '#FDE2FF', '#E0F7FA', '#FFF0F0',
+    '#F5FAD1', '#E9F7EF', '#F9EBFF', '#FFEFD5', '#F0F8FF'
+  ];
+
+  const getNewColor = (currentColor: string): string => {
+    const options = pastelColors.filter(c => c !== currentColor);
+    return options[Math.floor(Math.random() * options.length)];
+  };
 
   useEffect(() => {
     const loadExcel = async () => {
@@ -39,8 +47,7 @@ export default function DailyWordPage() {
 
   useEffect(() => {
     if (words.length > 0) {
-      const randomColor = pastelColors[Math.floor(Math.random() * pastelColors.length)];
-      setCardColor(randomColor);
+      setCardColor(prev => getNewColor(prev));
     }
   }, [currentIndex, words.length]);
 
