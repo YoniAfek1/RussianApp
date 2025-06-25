@@ -92,6 +92,11 @@ export default function DailyWordPage() {
             </div>
             <div className={styles.transliteration}>{word.Transliteration}</div>
             <div className={styles.associationBlock}>
+              <div className={styles.associationRow}>
+                <span className={styles.associationLabel}>האסוציאציה:</span>
+                {/* TODO: Replace word.Association with Association Word from Russian_Similar_Words.xlsx */}
+                <span className={styles.associationValue}>{word.Association}</span>
+              </div>
               <div className={styles.associationSentence}>
                 {word.AssociationSentence}
               </div>

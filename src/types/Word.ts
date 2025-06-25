@@ -8,5 +8,7 @@ export interface Word {
   status: WordStatus;
   topic?: string;
   hasAssociation?: boolean;
+  associationWord?: string;
+  association?: string;
   associationSentence?: string;
 } 
