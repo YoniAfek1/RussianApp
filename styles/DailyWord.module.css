@@ -101,30 +101,25 @@
 .associationBlock {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-end; /* יישור לימין */
   text-align: right;
-  direction: rtl;
   margin-top: 1rem;
   gap: 0.5rem;
   width: 100%;
 }
 
 .associationRow {
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
-  justify-content: flex-start;
-  text-align: right;
-  width: 100%;
+  direction: rtl;
   gap: 0.5rem;
-  direction: ltr;
+  font-size: 1rem;
 }
 
 .associationLabel {
   font-weight: bold;
   color: #333;
-  direction: rtl;
-  text-align: right;
-  unicode-bidi: plaintext;
+  white-space: nowrap;
 }
 
 .associationValue {
@@ -179,16 +174,20 @@
     font-size: 1.2rem;
     margin-bottom: 0.3rem;
   }
+
   .separator {
     font-size: 1.1rem;
   }
+
   .associationBlock {
     margin-top: 0.5rem;
     gap: 0.3rem;
   }
+
   .associationRow {
     font-size: 1rem;
   }
+
   .associationSentence {
     font-size: 0.85rem;
   }
