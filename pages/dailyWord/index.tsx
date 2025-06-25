@@ -56,7 +56,8 @@ export default function DailyWordPage() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>מילה יומית 💡</h1>
+      <h1 className={styles.title}>🧩מילה יומית🧩</h1>
+      <p className={styles.subtitle}>לחצו על הקלף לחשיפת האסוציאציה</p>
       <div className={styles.cardContainer}>
         <div
           className={`${styles.card} ${flipped ? styles.cardFlipped : ''}`}
