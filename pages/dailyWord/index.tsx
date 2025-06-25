@@ -67,9 +67,9 @@ export default function DailyWordPage() {
           {/* Front Side */}
           <div className={styles.cardFront}>
             <div className={styles.wordRow}>
-              <span className={styles.word}>{word.Hebrew}</span>
-              <span className={styles.separator}>–</span>
               <span className={styles.word}>{word.Russian}</span>
+              <span className={styles.separator}>–</span>
+              <span className={styles.word}>{word.Hebrew}</span>
             </div>
             <div className={styles.icon}>{word.Icon}</div>
             <button
@@ -94,6 +94,7 @@ export default function DailyWordPage() {
             <div className={styles.associationBlock}>
               <div className={styles.associationRow}>
                 <span className={styles.associationLabel}>האסוציאציה:</span>
+                {/* TODO: Replace word.Association with Association Word from Russian_Similar_Words.xlsx */}
                 <span className={styles.associationValue}>{word.Association}</span>
               </div>
               <div className={styles.associationSentence}>
