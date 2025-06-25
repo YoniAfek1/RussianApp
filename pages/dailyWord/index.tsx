@@ -93,8 +93,8 @@ export default function DailyWordPage() {
             <div className={styles.transliteration}>{word.Transliteration}</div>
             <div className={styles.associationBlock}>
               <div className={styles.associationRow}>
-              <span className={styles.associationValue}>{word.AssociationWord}</span>
               <span className={styles.associationLabel}>האסוציאציה:</span>
+              <span className={styles.associationValue}>{word.AssociationWord}</span>
               </div>
               <div className={styles.associationSentence}>
                 {word.Association}
