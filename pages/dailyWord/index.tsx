@@ -8,7 +8,7 @@ interface DailyWordRow {
   Hebrew: string;
   Transliteration: string;
   Association: string;
-  AssociationSentence: string; // הוספה
+  AssociationSentence: string;
   Icon: string;
 }
 
