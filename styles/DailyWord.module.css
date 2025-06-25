@@ -162,3 +162,23 @@
 .navigation button:hover {
   color: #000;
 }
+
+@media (max-width: 768px) {
+  .wordRow {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+  }
+  .separator {
+    font-size: 1.1rem;
+  }
+  .associationBlock {
+    margin-top: 0.5rem;
+    gap: 0.3rem;
+  }
+  .associationRow {
+    font-size: 1rem;
+  }
+  .associationSentence {
+    font-size: 0.85rem;
+  }
+}
