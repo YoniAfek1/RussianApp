@@ -16,6 +16,9 @@ export default function DailyWordPage() {
   const [words, setWords] = useState<DailyWordRow[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
+  const [cardColor, setCardColor] = useState<string>('');
+
+  const pastelColors = ['#FFF5E5', '#E8F8F5', '#FDE2FF', '#E0F7FA', '#FFF0F0'];
 
   useEffect(() => {
     const loadExcel = async () => {
@@ -33,6 +36,13 @@ export default function DailyWordPage() {
 
     loadExcel();
   }, []);
+
+  useEffect(() => {
+    if (words.length > 0) {
+      const randomColor = pastelColors[Math.floor(Math.random() * pastelColors.length)];
+      setCardColor(randomColor);
+    }
+  }, [currentIndex, words.length]);
 
   const speak = (text: string) => {
     const utterance = new SpeechSynthesisUtterance(text);
@@ -62,10 +72,11 @@ export default function DailyWordPage() {
       <div className={styles.cardContainer}>
         <div
           className={`${styles.card} ${flipped ? styles.cardFlipped : ''}`}
+          style={{ backgroundColor: cardColor }}
           onClick={() => setFlipped(!flipped)}
         >
           {/* Front Side */}
-          <div className={styles.cardFront}>
+          <div className={styles.cardFront} style={{ backgroundColor: cardColor }}>
             <div className={styles.wordRow}>
               <span className={styles.word}>{word.Russian}</span>
               <span className={styles.separator}>–</span>
@@ -84,7 +95,7 @@ export default function DailyWordPage() {
           </div>
 
           {/* Back Side */}
-          <div className={styles.cardBack}>
+          <div className={styles.cardBack} style={{ backgroundColor: cardColor }}>
             <div className={styles.wordRow}>
               <span className={styles.word}>{word.Russian}</span>
               <span className={styles.separator}>–</span>
@@ -93,8 +104,8 @@ export default function DailyWordPage() {
             <div className={styles.transliteration}>{word.Transliteration}</div>
             <div className={styles.associationBlock}>
               <div className={styles.associationRow}>
-              <span className={styles.associationLabel}>האסוציאציה:</span>
-              <span className={styles.associationValue}>{word.AssociationWord}</span>
+                <span className={styles.associationLabel}>האסוציאציה:</span>
+                <span className={styles.associationValue}>{word.AssociationWord}</span>
               </div>
               <div className={styles.associationSentence}>
                 {word.Association}
