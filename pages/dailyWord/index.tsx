@@ -8,6 +8,7 @@ interface DailyWordRow {
   Hebrew: string;
   Transliteration: string;
   Association: string;
+  AssociationSentence: string; // הוספה
   Icon: string;
 }
 
@@ -56,7 +57,7 @@ export default function DailyWordPage() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>🧩מילה יומית🧩</h1>
+      <h1 className={styles.title}>🧩 מילה יומית 🧩</h1>
       <p className={styles.subtitle}>לחצו על הקלף לחשיפת האסוציאציה</p>
       <div className={styles.cardContainer}>
         <div
@@ -65,8 +66,11 @@ export default function DailyWordPage() {
         >
           {/* Front Side */}
           <div className={styles.cardFront}>
-            <div className={styles.word}>{word.Hebrew}</div>
-            <div className={styles.word}>{word.Russian}</div>
+            <div className={styles.wordRow}>
+              <span className={styles.word}>{word.Hebrew}</span>
+              <span className={styles.separator}>–</span>
+              <span className={styles.word}>{word.Russian}</span>
+            </div>
             <div className={styles.icon}>{word.Icon}</div>
             <button
               className={styles.speakerButton}
@@ -81,12 +85,20 @@ export default function DailyWordPage() {
 
           {/* Back Side */}
           <div className={styles.cardBack}>
-            <div className={styles.word}>{word.Hebrew}</div>
-            <div className={styles.word}>{word.Russian}</div>
+            <div className={styles.wordRow}>
+              <span className={styles.word}>{word.Hebrew}</span>
+              <span className={styles.separator}>–</span>
+              <span className={styles.word}>{word.Russian}</span>
+            </div>
             <div className={styles.transliteration}>{word.Transliteration}</div>
-            <div className={styles.associationRow}>
-              <span className={styles.associationLabel}>האסוציאציה:</span>
-              <span className={styles.associationValue}>{word.Association}</span>
+            <div className={styles.associationBlock}>
+              <div className={styles.associationRow}>
+                <span className={styles.associationLabel}>האסוציאציה:</span>
+                <span className={styles.associationValue}>{word.Association}</span>
+              </div>
+              <div className={styles.associationSentence}>
+                {word.AssociationSentence}
+              </div>
             </div>
           </div>
         </div>
