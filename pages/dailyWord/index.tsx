@@ -7,8 +7,8 @@ interface DailyWordRow {
   Russian: string;
   Hebrew: string;
   Transliteration: string;
+  AssociationWord: string;
   Association: string;
-  AssociationSentence: string;
   Icon: string;
 }
 
@@ -92,8 +92,13 @@ export default function DailyWordPage() {
             </div>
             <div className={styles.transliteration}>{word.Transliteration}</div>
             <div className={styles.associationBlock}>
+              <div className={styles.associationRow}>
+                <span className={styles.associationLabel}>האסוציאציה:</span>
+                {/* TODO: Replace word.Association with Association Word from Russian_Similar_Words.xlsx */}
+                <span className={styles.associationValue}>{word.AssociationWord}</span>
+              </div>
               <div className={styles.associationSentence}>
-                {word.AssociationSentence}
+                {word.Association}
               </div>
             </div>
           </div>
