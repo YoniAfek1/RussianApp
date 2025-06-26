@@ -12,6 +12,19 @@ interface DailyWordRow {
   Icon: string;
 }
 
+// Helper to get voices, waiting for them to load if needed
+async function getVoices(): Promise<SpeechSynthesisVoice[]> {
+  const synth = window.speechSynthesis;
+  let voices = synth.getVoices();
+  if (voices.length) return voices;
+  return new Promise(resolve => {
+    synth.onvoiceschanged = () => {
+      voices = synth.getVoices();
+      if (voices.length) resolve(voices);
+    };
+  });
+}
+
 export default function DailyWordPage() {
   const [words, setWords] = useState<DailyWordRow[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -51,11 +64,19 @@ export default function DailyWordPage() {
     }
   }, [currentIndex, words.length]);
 
-  const speak = (text: string) => {
+  const speak = async (text: string) => {
+    const synth = window.speechSynthesis;
+    const voices = await getVoices();
+    const ruVoice = voices.find(v => v.lang?.toLowerCase().startsWith('ru') || v.name?.toLowerCase().includes('russian'));
+    if (!ruVoice) {
+      alert('⚠️ Russian voice not available on this device. Please install Russian language voices in your system settings.');
+      return;
+    }
+    synth.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'ru-RU';
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(utterance);
+    utterance.voice = ruVoice;
+    utterance.lang = ruVoice.lang;
+    synth.speak(utterance);
   };
 
   const next = () => {
