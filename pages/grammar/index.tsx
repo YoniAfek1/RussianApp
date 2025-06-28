@@ -39,7 +39,7 @@ const topics = [
   },
   {
     id: 'prepositions',
-    title: 'מילות יחס וקישור',
+    title: 'יחס וקישור',
     description: 'כי גם למילים מגיע קצת יחס',
     icon: '/animations/grammar/connect.png',
     path: '/grammar/prepositions'
@@ -54,7 +54,7 @@ const topics = [
   {
     id: 'adverbs',
     title: 'תואר הפועל',
-    description: 'הפועל מבשל את המשפט, תואר הפועל מתבל אותו',
+    description: 'המתבל של המשפט',
     icon: '/animations/grammar/salt.png',
     path: '/grammar/adverbs'
   },
