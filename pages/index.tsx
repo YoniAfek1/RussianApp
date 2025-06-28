@@ -45,7 +45,7 @@ export default function Home() {
         </span>
         <div className={styles.textColumn}>
           <span className={styles.buttonText}>שיחות</span>
-          <span className={styles.buttonSubtext}>התנסו בשיחות ברוסית עם משחקי תפקידים לשיפור והדיבור והשמיעה</span>
+          <span className={styles.buttonSubtext}>התנסו בשיחות ברוסית עם משחקי תפקידים</span>
         </div>
         </Link>
       </main>
