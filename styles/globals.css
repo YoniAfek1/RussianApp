@@ -1,6 +1,7 @@
 html {
   font-size: 16px;
   box-sizing: border-box;
+  direction: rtl;
 }
 
 *, *:before, *:after {
@@ -15,6 +16,25 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  direction: rtl;
+  text-align: right;
+}
+
+/* Ensure all text elements default to RTL */
+h1, h2, h3, h4, h5, h6, p, span, div, li, td, th {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Center align specific elements that should remain centered */
+.center-text {
+  text-align: center;
+}
+
+/* Left align specific elements that need to be left-aligned (like Russian text) */
+.left-text {
+  text-align: left;
+  direction: ltr;
 }
 
 img {
@@ -25,6 +45,7 @@ img {
 button {
   min-height: 44px;
   cursor: pointer;
+  direction: rtl;
 }
 
 @media (max-width: 768px) {
