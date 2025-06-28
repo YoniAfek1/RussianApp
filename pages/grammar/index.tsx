@@ -17,18 +17,18 @@ const topics = [
     path: '/grammar/pronouns'
   },
   {
-    id: 'numbers',
-    title: 'מספרים',
-    description: 'אם אי פעם רצית לספור תפוחי אדמה ברוסית ולא ידעת איך',
-    icon: '/animations/grammar/numbers.png',
-    path: '/grammar/numbers'
-  },
-  {
     id: 'nouns',
     title: 'שם עצם',
     description: 'איך נכין לימונדה בלי לדעת להגיד לימון?',
     icon: '/animations/grammar/bone.png',
     path: '/grammar/nouns'
+  },
+  {
+    id: 'numbers',
+    title: 'מספרים',
+    description: 'אם אי פעם רצית לספור תפוחי אדמה ברוסית ולא ידעת איך',
+    icon: '/animations/grammar/numbers.png',
+    path: '/grammar/numbers'
   },
   {
     id: 'possessive',
