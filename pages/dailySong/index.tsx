@@ -251,7 +251,7 @@ export default function DailySong() {
             rel="noopener noreferrer"
             className={styles.youtubeButton}
           >
-            🎵 לצפייה בשיר
+            לצפייה בשיר🎵
           </a>
         </div>
       )}
