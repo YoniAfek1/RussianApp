@@ -9,7 +9,7 @@
 
 .title {
   font-size: 2.2rem;
-  color: #6A1B9A;
+  color: #2c3e50;
   margin-bottom: 1.2rem;
   text-align: center;
 }
@@ -212,7 +212,7 @@
   margin: 0 auto;
   margin-top: 0.5rem;
   padding: 0.8rem 2.2rem;
-  background: #ff1744;
+  background: #2c3e50;
   color: #fff;
   font-size: 1.25rem;
   font-weight: 600;
@@ -227,7 +227,7 @@
 }
 
 .youtubeButton:hover, .youtubeButton:focus {
-  background: #d50032;
+  background: #2c3e50;
   color: #fff;
   box-shadow: 0 4px 16px rgba(30, 64, 175, 0.13);
   text-decoration: none;
