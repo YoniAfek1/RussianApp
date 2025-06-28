@@ -7,8 +7,8 @@ export default function Home() {
   return (
     <div className={styles.homeBg}>
       <header className={styles.headerSection}>
-        <h1 className={styles.header}>Добро пожаловать - ברוכים הבאים </h1>
-        <h2 className={styles.subheader}>что мы узнаем сегодня ? מה נלמד היום</h2>
+        <h1 className={styles.header}>ברוכים הבאים - Добро пожаловать</h1>
+        <h2 className={styles.subheader}>מה נלמד היום - что мы узнаем сегодня ?</h2>
       </header>
       <main className={styles.mainNav}>
       <Link href="/dailyWord" className={styles.navButton}>
@@ -30,7 +30,7 @@ export default function Home() {
         <img src="/animations/play.png" alt="practice Icon" className={styles.iconImage} />
         </span>        
         <span className={styles.buttonText}>תרגול</span>
-        <span className={styles.buttonSubtext}>שמות עצם, תואר, פועל ומספרים</span>
+        <span className={styles.buttonSubtext}>שמות עצם, תואר, פועל ועוד</span>
         </Link>
         <Link href="/grammar" className={styles.navButton}>
         <span className={styles.icon}>
@@ -45,7 +45,7 @@ export default function Home() {
         </span>
         <div className={styles.textColumn}>
           <span className={styles.buttonText}>שיחות</span>
-          <span className={styles.buttonSubtext}>ai התנסו בשיחות הכוללות משחקי תפקידים עם</span>
+          <span className={styles.buttonSubtext}>התנסו בשיחות ברוסית עם משחקי תפקידים לשיפור והדיבור והשמיעה</span>
         </div>
         </Link>
       </main>
