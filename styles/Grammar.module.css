@@ -4,7 +4,7 @@
   align-items: center;
   min-height: 100vh;
   padding: 4rem 1rem 1rem;
-  background: radial-gradient(circle at 50% 30%, #ffffff 0%, #c5f0f5 60%, #94dfe9 100%);
+  background-color: #94dfe9;
   direction: rtl;
   text-align: right;
 }
