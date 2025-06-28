@@ -97,9 +97,9 @@
 }
 
 .topicTitle {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 600;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0rem;
   text-align: center;
   line-height: 1.3;
   direction: rtl;
@@ -1708,7 +1708,7 @@
   }
 
   .topicTitle {
-    font-size: 0.9rem;
+    font-size: 1rem;
     direction: rtl;
   }
 
@@ -1811,7 +1811,7 @@
   }
 
   .topicTitle {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     direction: rtl;
   }
 
