@@ -26,14 +26,14 @@ const topics = [
   {
     id: 'numbers',
     title: 'מספרים',
-    description: 'אם אי פעם רצית לספור תפוחי אדמה ברוסית ולא ידעת איך',
+    description: 'ללמוד לספור כבשים לפניי השינה',
     icon: '/animations/grammar/numbers.png',
     path: '/grammar/numbers'
   },
   {
     id: 'possessive',
     title: 'שייכות',
-    description: 'לדעת מה שלי, מה שלך, ומה בכלל שייך לחתול',
+    description: 'לדעת מה שלי, מה שלך, ומה שייך לחתול',
     icon: '/animations/grammar/key.png',
     path: '/grammar/possessive'
   },
