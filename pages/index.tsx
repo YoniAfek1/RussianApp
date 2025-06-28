@@ -49,9 +49,7 @@ export default function Home() {
         </div>
         </Link>
       </main>
-      <div className={styles.bottomAnim}>
-        <img src="/animations/waves3.gif" alt="waves animation" className={styles.wavingAnim} />
-      </div>
+      <img src="/animations/waves.gif" alt="waves animation" className={styles.wavingAnim} />
       {/* TODO: Add 'ראשי' (Home) to the sidebar navigation with a home icon */}
     </div>
   );
