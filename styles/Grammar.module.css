@@ -49,12 +49,13 @@
 
 .topicsGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 1rem;
   width: 100%;
   max-width: 1200px;
   padding: 1rem;
   direction: rtl;
+  justify-items: center;
 }
 
 .topicCard {
@@ -62,15 +63,17 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
+  padding: 1rem;
   background: white;
   border-radius: 16px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   text-decoration: none;
   color: #2c3e50;
-  min-height: 160px;
+  min-height: 120px;
   min-width: 0;
+  width: 100%;
+  max-width: 200px;
   direction: rtl;
   text-align: center;
 }
@@ -87,7 +90,7 @@
 }
 
 .topicTitle {
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
   text-align: center;
@@ -96,7 +99,7 @@
 }
 
 .topicDescription {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: #666;
   text-align: center;
   line-height: 1.4;
@@ -1678,30 +1681,32 @@
 /* Mobile responsive styles */
 @media (max-width: 768px) {
   .topicsGrid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 0.75rem;
     padding: 0.75rem;
     direction: rtl;
+    justify-items: center;
   }
 
   .topicCard {
-    padding: 1rem;
-    min-height: 140px;
+    padding: 0.75rem;
+    min-height: 100px;
+    max-width: 120px;
     direction: rtl;
   }
 
   .icon {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     margin-bottom: 0.5rem;
   }
 
   .topicTitle {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     direction: rtl;
   }
 
   .topicDescription {
-    font-size: 0.85rem;
+    font-size: 0.7rem;
     direction: rtl;
   }
 
@@ -1779,30 +1784,32 @@
 
 @media (max-width: 480px) {
   .topicsGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 0.5rem;
     padding: 0.5rem;
     direction: rtl;
+    justify-items: center;
   }
 
   .topicCard {
-    padding: 0.75rem;
-    min-height: 120px;
+    padding: 0.5rem;
+    min-height: 80px;
+    max-width: 100px;
     direction: rtl;
   }
 
   .icon {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     margin-bottom: 0.4rem;
   }
 
   .topicTitle {
-    font-size: 1rem;
+    font-size: 0.8rem;
     direction: rtl;
   }
 
   .topicDescription {
-    font-size: 0.8rem;
+    font-size: 0.65rem;
     direction: rtl;
   }
 
