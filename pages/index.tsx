@@ -50,7 +50,7 @@ export default function Home() {
         </Link>
       </main>
       <div className={styles.bottomAnim}>
-        <video src="/animations/waves.gif" autoPlay loop muted playsInline className={styles.wavingAnim} />
+        <video src="/animations/waves.mp4" autoPlay loop muted playsInline className={styles.wavingAnim} />
       </div>
       {/* TODO: Add 'ראשי' (Home) to the sidebar navigation with a home icon */}
     </div>
