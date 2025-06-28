@@ -49,7 +49,7 @@ export default function Home() {
         </div>
         </Link>
       </main>
-      <video src="/animations/wave3.webm" autoPlay loop muted playsInline className={styles.annaImage} />
+      <video src="/animations/wave3.webm" autoPlay loop muted playsInline className={styles.wavingAnim} />
       {/* TODO: Add 'ראשי' (Home) to the sidebar navigation with a home icon */}
     </div>
   );
