@@ -146,6 +146,8 @@
   object-fit: contain;
   display: block;
   margin: 0 auto;
+  background: transparent;
+  mix-blend-mode: normal; 
 }
 
 .bottomNav {
