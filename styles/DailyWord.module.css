@@ -123,6 +123,8 @@
 }
 
 .associationValue {
+  direction: rtl;
+  text-align: right;
   color: #444;
 }
 
