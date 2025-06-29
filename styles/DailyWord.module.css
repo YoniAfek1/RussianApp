@@ -101,7 +101,6 @@
 .associationBlock {
   display: flex;
   flex-direction: column;
-  align-items: flex-end; /* יישור לימין */
   text-align: right;
   margin-top: 1rem;
   gap: 0.5rem;
@@ -111,6 +110,7 @@
 .associationRow {
   display: inline-flex;
   flex-direction: row;
+  text-align: right;
   direction: rtl;
   gap: 0.5rem;
   font-size: 1rem;
@@ -123,8 +123,6 @@
 }
 
 .associationValue {
-  direction: rtl;
-  text-align: right;
   color: #444;
 }
 
