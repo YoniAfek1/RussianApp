@@ -12,7 +12,6 @@ interface DailyWordRow {
   Icon: string;
 }
 
-// Helper to get voices, waiting for them to load if needed
 async function getVoices(): Promise<SpeechSynthesisVoice[]> {
   const synth = window.speechSynthesis;
   let voices = synth.getVoices();
@@ -30,6 +29,7 @@ export default function DailyWordPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [cardColor, setCardColor] = useState<string>('');
+  const [imageExists, setImageExists] = useState(false);
 
   const pastelColors = [
     '#FFF5E5', '#E8F8F5', '#FDE2FF', '#E0F7FA', '#FFF0F0',
@@ -39,6 +39,13 @@ export default function DailyWordPage() {
   const getNewColor = (currentColor: string): string => {
     const options = pastelColors.filter(c => c !== currentColor);
     return options[Math.floor(Math.random() * options.length)];
+  };
+
+  const checkImageExists = (filename: string) => {
+    const img = new Image();
+    img.src = `/animations/assosiations/${filename}`;
+    img.onload = () => setImageExists(true);
+    img.onerror = () => setImageExists(false);
   };
 
   useEffect(() => {
@@ -60,9 +67,11 @@ export default function DailyWordPage() {
 
   useEffect(() => {
     if (words.length > 0) {
+      const word = words[currentIndex];
       setCardColor(prev => getNewColor(prev));
+      checkImageExists(`${word.Russian}.png`);
     }
-  }, [currentIndex, words.length]);
+  }, [currentIndex, words]);
 
   const speak = async (text: string) => {
     const synth = window.speechSynthesis;
@@ -135,10 +144,17 @@ export default function DailyWordPage() {
                 <span className={styles.associationLabel}>האסוציאציה:</span>
                 <span className={styles.associationValue}>{word.AssociationWord}</span>
               </div>
-              <div className={styles.associationSentence}>
-                {word.Association}
-              </div>
+              <div className={styles.associationSentence}>{word.Association}</div>
             </div>
+            {imageExists && (
+              <div className={styles.imageContainer}>
+                <img
+                  src={`/animations/assosiations/${word.Russian}.png`}
+                  alt={`illustration for ${word.Russian}`}
+                  className={styles.wordImage}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
