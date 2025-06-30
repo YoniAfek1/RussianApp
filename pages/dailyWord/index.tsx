@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from '../../styles/DailyWord.module.css';
 import * as XLSX from 'xlsx';
-import { FaVolumeUp, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { FaVolumeUp, FaArrowLeft, FaArrowRight, FaArrowCircleLeft, FaArrowAltCircleLeft } from 'react-icons/fa';
 
 interface DailyWordRow {
   Russian: string;
@@ -69,7 +69,7 @@ export default function DailyWordPage() {
     if (words.length > 0) {
       const word = words[currentIndex];
       setCardColor(prev => getNewColor(prev));
-      checkImageExists(`${word.Russian}.png`);
+      checkImageExists(`${word.Russian.toLowerCase()}.png`);
     }
   }, [currentIndex, words]);
 
@@ -149,7 +149,7 @@ export default function DailyWordPage() {
             {imageExists && (
               <div className={styles.imageContainer}>
                 <img
-                  src={`/animations/assosiations/${word.Russian}.png`}
+                  src={`/animations/assosiations/${word.Russian.toLowerCase()}.png`}
                   alt={`illustration for ${word.Russian}`}
                   className={styles.wordImage}
                 />
@@ -160,8 +160,8 @@ export default function DailyWordPage() {
       </div>
 
       <div className={styles.navigation}>
-        <button onClick={prev}><FaArrowLeft /></button>
-        <button onClick={next}><FaArrowRight /></button>
+        <button onClick={prev}><FaArrowRight /></button>
+        <button onClick={next}><FaArrowLeft /></button>
       </div>
     </div>
   );
