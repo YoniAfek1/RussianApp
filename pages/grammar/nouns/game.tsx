@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import * as XLSX from 'xlsx';
 import styles from '@/styles/NounGame.module.css';
 import RoundProgress from '@/components/RoundProgress';
+import Confetti from 'react-confetti';
 
 interface NounRow {
   icon: string;
@@ -140,6 +141,7 @@ export default function NounsGame() {
   if (gameOver) {
     return (
       <div className={styles.gameContainer}>
+        <Confetti recycle={true} numberOfPieces={300} />
         <h1>🎉 כל הכבוד!</h1>
         <p>סיימת את כל 10 הסיבובים!</p>
         <button onClick={() => { setRound(1); setUsedIndices([]); setGameOver(false); }}>שחק שוב</button>

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from '@/styles/NounGame.module.css';
 import RoundProgress from '@/components/RoundProgress';
+import Confetti from 'react-confetti';
 
 // --- Number to Russian/Hebrew mapping ---
 // For brevity, only a few numbers are mapped. Expand as needed.
@@ -148,9 +149,14 @@ export default function NumbersGame() {
   }
 
   if (gameOver) {
+    const allCorrect = results.length === 10 && results.every(r => r.correct);
     return (
       <div className={styles.numbersGameContainer}>
+        {allCorrect && <Confetti recycle={true} numberOfPieces={300} />}
         <h1>סיכום המשחק</h1>
+        {allCorrect ? (
+          <p>כל הכבוד! אפס טעויות!</p>
+        ) : null}
         <table className={styles.summaryTable}>
           <thead>
             <tr>
