@@ -1,4 +1,3 @@
-// pages/practice.tsx
 import { useState, useEffect } from 'react';
 import styles from '../styles/Practice.module.css';
 import Confetti from 'react-confetti';
@@ -13,7 +12,10 @@ interface Word {
   Topic: string;
 }
 
-const ROUNDS = 10;
+interface ErrorRecord {
+  word: Word;
+  attempts: number;
+}
 
 export default function Practice() {
   const [words, setWords] = useState<Word[]>([]);
@@ -24,6 +26,10 @@ export default function Practice() {
   const [isSessionStarted, setIsSessionStarted] = useState(false);
   const [topics, setTopics] = useState<string[]>([]);
   const [selectedTopic, setSelectedTopic] = useState<string>('הכל');
+  const [showSummary, setShowSummary] = useState(false);
+  const [correctCount, setCorrectCount] = useState(0);
+  const [errors, setErrors] = useState<ErrorRecord[]>([]);
+  const [roundsCount, setRoundsCount] = useState(0); // actual number of rounds
 
   useEffect(() => {
     const loadWords = async () => {
@@ -39,7 +45,6 @@ export default function Practice() {
           Topic: row.Topic,
         }));
         setWords(data);
-
         const topicSet = new Set(data.map(word => word.Topic).filter(Boolean));
         setTopics(['הכל', ...Array.from(topicSet)]);
       } catch (err) {
@@ -62,15 +67,26 @@ export default function Practice() {
     }
 
     const shuffled = [...availableWords].sort(() => Math.random() - 0.5);
-    const selected = shuffled.slice(0, ROUNDS);
+    const selected = shuffled.slice(0, Math.min(10, shuffled.length)); // max 10
     setSessionWords(selected);
     setCurrentWord(selected[0]);
     setCurrentWordIndex(0);
     setIsSessionStarted(true);
+    setCorrectCount(0);
+    setErrors([]);
+    setShowSummary(false);
+    setRoundsCount(selected.length); // update real rounds
   };
 
-  const handleWordComplete = (result: { isCorrect: boolean }) => {
+  const handleWordComplete = (result: { isCorrect: boolean; attempts: number }) => {
+    if (!currentWord) return;
+
+    if (result.attempts > 1 || !result.isCorrect) {
+      setErrors(prev => [...prev, { word: currentWord, attempts: result.attempts }]);
+    }
+
     if (result.isCorrect) {
+      setCorrectCount(prev => prev + 1);
       setShowConfetti(true);
       setTimeout(() => {
         setShowConfetti(false);
@@ -88,10 +104,11 @@ export default function Practice() {
       setCurrentWordIndex(nextIndex);
     } else {
       setIsSessionStarted(false);
+      setShowSummary(true);
     }
   };
 
-  if (!isSessionStarted) {
+  if (!isSessionStarted && !showSummary) {
     return (
       <div className={styles.container}>
         <h1>תרגול מילים</h1>
@@ -103,13 +120,48 @@ export default function Practice() {
             onChange={e => setSelectedTopic(e.target.value)}
           >
             {topics.map(topic => (
-              <option key={topic} value={topic}>
-                {topic}
-              </option>
+              <option key={topic} value={topic}>{topic}</option>
             ))}
           </select>
         </div>
         <button className={styles.startButton} onClick={startSession}>התחל תרגול</button>
+      </div>
+    );
+  }
+
+  if (showSummary) {
+    const isPerfect = correctCount === roundsCount && roundsCount > 0;
+    return (
+      <div className={styles.container}>
+        {isPerfect && <Confetti recycle={true} numberOfPieces={300} />}
+        <h1>סיכום תרגול</h1>
+        <p>ענית נכון על {correctCount} מתוך {roundsCount} מילים</p>
+
+        {errors.length > 0 && (
+          <>
+            <h3>מילים בהן טעית:</h3>
+            <table className={styles.errorTable}>
+              <thead>
+                <tr>
+                  <th>רוסית</th>
+                  <th>עברית</th>
+                  <th>ניסיונות</th>
+                </tr>
+              </thead>
+              <tbody>
+                {errors.map((e, i) => (
+                  <tr key={i}>
+                    <td>{e.word.Russian}</td>
+                    <td>{e.word.Hebrew}</td>
+                    <td>{e.attempts}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        )}
+
+        <button className={styles.startButton} onClick={startSession}>התחל סבב נוסף</button>
       </div>
     );
   }
@@ -120,19 +172,16 @@ export default function Practice() {
       <div className={styles.practiceContainer}>
         {currentWord && (
           <PracticeBox
-          word={{
-            id: String(currentWord.id),
-            russian: currentWord.Russian,
-            translation: currentWord.Hebrew
-          }}
-          onComplete={handleWordComplete}
-        />
-        
+            word={{
+              id: String(currentWord.id),
+              russian: currentWord.Russian,
+              translation: currentWord.Hebrew
+            }}
+            onComplete={handleWordComplete}
+          />
         )}
-    <div className={styles.progressBar}>
-      <RoundProgress round={currentWordIndex + 1} total={ROUNDS} />
-    </div>
-    </div>
+        <RoundProgress round={currentWordIndex + 1} total={roundsCount} />
+      </div>
     </div>
   );
 }

@@ -234,9 +234,21 @@
   background: #388e3c;
 }
 
-.progressBar {
-  margin-top: 24px;
+.errorTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+}
+
+.errorTable th,
+.errorTable td {
+  border: 1px solid #ccc;
+  padding: 0.5rem 0.75rem;
   text-align: center;
+}
+
+.errorTable th {
+  background-color: #f8f8f8;
 }
 
 /* Animations */
