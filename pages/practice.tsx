@@ -151,7 +151,6 @@ export default function Practice() {
                     <tr>
                       <th>רוסית</th>
                       <th>עברית</th>
-                      <th>ניסיונות</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -159,7 +158,6 @@ export default function Practice() {
                       <tr key={i}>
                         <td>{e.word.Russian}</td>
                         <td>{e.word.Hebrew}</td>
-                        <td>{e.attempts}</td>
                       </tr>
                     ))}
                   </tbody>
