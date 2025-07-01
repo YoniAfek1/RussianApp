@@ -157,11 +157,11 @@ export default function NumbersGame() {
         {allCorrect ? (
           <>
             <p>כל הכבוד! אפס טעויות!</p>
-            <button className={styles.gameButton} onClick={() => {
+            <button className={styles.startButton} onClick={() => {
               setRound(1);
               setResults([]);
               setGameOver(false);
-            }}>שחק שוב</button>
+            }}>התחל סבב נוסף</button>
           </>
         ) : (
           <>
@@ -189,11 +189,11 @@ export default function NumbersGame() {
                 ))}
               </tbody>
             </table>
-            <button className={styles.gameButton} onClick={() => {
+            <button className={styles.startButton} onClick={() => {
               setRound(1);
               setResults([]);
               setGameOver(false);
-            }}>שחק שוב</button>
+            }}>התחל סבב נוסף</button>
           </>
         )}
       </div>

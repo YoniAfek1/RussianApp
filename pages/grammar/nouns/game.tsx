@@ -144,7 +144,7 @@ export default function NounsGame() {
         <Confetti recycle={true} numberOfPieces={300} />
         <h1>🎉 כל הכבוד!</h1>
         <p>סיימת את כל 10 הסיבובים!</p>
-        <button onClick={() => { setRound(1); setUsedIndices([]); setGameOver(false); }}>שחק שוב</button>
+        <button className={styles.startButton} onClick={() => { setRound(1); setUsedIndices([]); setGameOver(false); }}>התחל סבב נוסף</button>
       </div>
     );
   }
