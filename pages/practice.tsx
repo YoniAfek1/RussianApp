@@ -33,7 +33,7 @@ export default function Practice() {
         const arrayBuffer = await res.arrayBuffer();
         const workbook = XLSX.read(arrayBuffer, { type: 'array' });
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
-        const data: Word[] = XLSX.utils.sheet_to_json(sheet, { defval: '' }).map((row, index) => ({
+        const data: Word[] = XLSX.utils.sheet_to_json<any>(sheet, { defval: '' }).map((row: any, index: number) => ({
           id: index,
           Russian: row.Russian,
           Hebrew: row.Hebrew,
