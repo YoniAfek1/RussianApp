@@ -135,33 +135,40 @@ export default function Practice() {
       <div className={styles.container}>
         {isPerfect && <Confetti recycle={true} numberOfPieces={300} />}
         <h1>סיכום תרגול</h1>
-        <p>ענית נכון על {correctCount} מתוך {roundsCount} מילים</p>
-
-        {errors.length > 0 && (
+        {isPerfect ? (
           <>
-            <h3>מילים בהן טעית:</h3>
-            <table className={styles.errorTable}>
-              <thead>
-                <tr>
-                  <th>רוסית</th>
-                  <th>עברית</th>
-                  <th>ניסיונות</th>
-                </tr>
-              </thead>
-              <tbody>
-                {errors.map((e, i) => (
-                  <tr key={i}>
-                    <td>{e.word.Russian}</td>
-                    <td>{e.word.Hebrew}</td>
-                    <td>{e.attempts}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <p>כל הכבוד! אפס טעויות!</p>
+            <button className={styles.startButton} onClick={startSession}>התחל סבב נוסף</button>
+          </>
+        ) : (
+          <>
+            <p>ענית נכון על {correctCount} מתוך {roundsCount} מילים</p>
+            {errors.length > 0 && (
+              <>
+                <h3>מילים בהן טעית:</h3>
+                <table className={styles.errorTable}>
+                  <thead>
+                    <tr>
+                      <th>רוסית</th>
+                      <th>עברית</th>
+                      <th>ניסיונות</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {errors.map((e, i) => (
+                      <tr key={i}>
+                        <td>{e.word.Russian}</td>
+                        <td>{e.word.Hebrew}</td>
+                        <td>{e.attempts}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </>
+            )}
+            <button className={styles.startButton} onClick={startSession}>התחל סבב נוסף</button>
           </>
         )}
-
-        <button className={styles.startButton} onClick={startSession}>התחל סבב נוסף</button>
       </div>
     );
   }

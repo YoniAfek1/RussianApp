@@ -155,37 +155,47 @@ export default function NumbersGame() {
         {allCorrect && <Confetti recycle={true} numberOfPieces={300} />}
         <h1>סיכום המשחק</h1>
         {allCorrect ? (
-          <p>כל הכבוד! אפס טעויות!</p>
-        ) : null}
-        <table className={styles.summaryTable}>
-          <thead>
-            <tr>
-              <th>מספר</th>
-              <th>ברוסית</th>
-              <th>בעברית</th>
-              <th>תוצאה</th>
-              <th>תשובתך</th>
-            </tr>
-          </thead>
-          <tbody>
-            {results.map((r, i) => (
-              <tr key={i}>
-                <td>{r.number}</td>
-                <td>{r.russian}</td>
-                <td>{r.hebrew}</td>
-                <td className={r.correct ? styles.summaryCorrect : styles.summaryIncorrect}>
-                  {r.correct ? '✔️' : '❌'}
-                </td>
-                <td>{r.correct ? '' : r.userInput}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <button className={styles.gameButton} onClick={() => {
-          setRound(1);
-          setResults([]);
-          setGameOver(false);
-        }}>שחק שוב</button>
+          <>
+            <p>כל הכבוד! אפס טעויות!</p>
+            <button className={styles.gameButton} onClick={() => {
+              setRound(1);
+              setResults([]);
+              setGameOver(false);
+            }}>שחק שוב</button>
+          </>
+        ) : (
+          <>
+            <table className={styles.summaryTable}>
+              <thead>
+                <tr>
+                  <th>מספר</th>
+                  <th>ברוסית</th>
+                  <th>בעברית</th>
+                  <th>תוצאה</th>
+                  <th>תשובתך</th>
+                </tr>
+              </thead>
+              <tbody>
+                {results.map((r, i) => (
+                  <tr key={i}>
+                    <td>{r.number}</td>
+                    <td>{r.russian}</td>
+                    <td>{r.hebrew}</td>
+                    <td className={r.correct ? styles.summaryCorrect : styles.summaryIncorrect}>
+                      {r.correct ? '✔️' : '❌'}
+                    </td>
+                    <td>{r.correct ? '' : r.userInput}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <button className={styles.gameButton} onClick={() => {
+              setRound(1);
+              setResults([]);
+              setGameOver(false);
+            }}>שחק שוב</button>
+          </>
+        )}
       </div>
     );
   }
