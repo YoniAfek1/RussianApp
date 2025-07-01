@@ -25,7 +25,6 @@ export default function Practice() {
   const [topics, setTopics] = useState<string[]>([]);
   const [selectedTopic, setSelectedTopic] = useState<string>('הכל');
 
-  // Load Excel data
   useEffect(() => {
     const loadWords = async () => {
       try {
@@ -41,7 +40,6 @@ export default function Practice() {
         }));
         setWords(data);
 
-        // Extract unique topics
         const topicSet = new Set(data.map(word => word.Topic).filter(Boolean));
         setTopics(['הכל', ...Array.from(topicSet)]);
       } catch (err) {
@@ -122,7 +120,7 @@ export default function Practice() {
         {currentWord && (
           <PracticeBox
             word={{
-              id: currentWord.id,
+              id: currentWord.id.toString(), // 🔧 fix: convert number to string
               russian: currentWord.Russian,
               translation: currentWord.Hebrew
             }}
