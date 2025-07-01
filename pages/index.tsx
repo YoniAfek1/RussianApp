@@ -13,7 +13,7 @@ export default function Home() {
       <main className={styles.mainNav}>
       <Link href="/dailyWord" className={styles.navButton}>
         <span className={styles.icon}>
-        <img src="/animations/book.png" alt="daily word Icon" className={styles.iconImage} />
+        <img src="/animations/puzzle.png" alt="daily word Icon" className={styles.iconImage} />
         </span>        
         <span className={styles.buttonText}>אוצר מילים</span>
         <span className={styles.buttonSubtext}>למדו מילים בעזרת אסוציאציות</span>
