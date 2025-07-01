@@ -52,6 +52,13 @@ export default function Exercise() {
             <img src="/animations/headphone.png" alt="Listening Icon" className={styles.iconImage} />
           </span>
         </Link>
+        {/* Vocabulary Button */}
+        <Link href="/practice" className={styles.optionCard}>
+          <span className={styles.optionText}>מילים</span>
+          <span className={styles.icon}>
+            <img src="/animations/book.png" alt="Vocabulary Icon" className={styles.iconImage} />
+          </span>
+        </Link>
         {/* Speaking Placeholder Button */}
         <div className={styles.optionCard} style={{ opacity: 0.5, pointerEvents: 'none', cursor: 'not-allowed' }}>
           <span className={styles.optionText}>דיבור – בקרוב</span>

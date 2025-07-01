@@ -1,180 +1,84 @@
-// עמוד תרגול מילים: מציג מילה אקראית לבדיקה על ידי המשתמש
+// pages/practice.tsx
 import { useState, useEffect } from 'react';
 import styles from '../styles/Practice.module.css';
 import Confetti from 'react-confetti';
-import { useVocabularyStore } from '@/store/vocabularyStore';
-import { Word, WordStatus } from '@/types/Word';
+import * as XLSX from 'xlsx';
 import PracticeBox from '@/components/PracticeBox';
 import RoundProgress from '@/components/RoundProgress';
 
+interface Word {
+  id: number;
+  Russian: string;
+  Hebrew: string;
+  Topic: string;
+}
+
 const ROUNDS = 10;
 
-interface SessionStats {
-  total: number;
-  correct: number;
-  missedWords: Array<{
-    russianWord: string;
-    hebrewTranslation: string;
-    userAnswer: string;
-  }>;
-}
-
-interface FilterState {
-  red: boolean;
-  yellow: boolean;
-  green: boolean;
-}
-
-interface SessionSummary {
-  totalWords: number;
-  correctAnswers: number;
-  missedWords: Array<{
-    russianWord: string;
-    hebrewTranslation: string;
-    userAnswer: string;
-    attempts: number;
-  }>;
-  roundNumber: number;
-}
-
 export default function Practice() {
-  const { words, isLoading, error, loadWords, updateWordStatus } = useVocabularyStore();
+  const [words, setWords] = useState<Word[]>([]);
   const [currentWord, setCurrentWord] = useState<Word | null>(null);
-  const [showConfetti, setShowConfetti] = useState(false);
   const [sessionWords, setSessionWords] = useState<Word[]>([]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [sessionStats, setSessionStats] = useState<SessionStats>({ total: 0, correct: 0, missedWords: [] });
-  const [selectedFilters, setSelectedFilters] = useState<FilterState>({ red: false, yellow: false, green: false });
+  const [showConfetti, setShowConfetti] = useState(false);
   const [isSessionStarted, setIsSessionStarted] = useState(false);
-  const [previousMissedWords, setPreviousMissedWords] = useState<Word[]>([]);
-  const [roundNumber, setRoundNumber] = useState(1);
-  const [sessionHistory, setSessionHistory] = useState<SessionSummary[]>([]);
-  const [showSummary, setShowSummary] = useState(false);
+  const [topics, setTopics] = useState<string[]>([]);
+  const [selectedTopic, setSelectedTopic] = useState<string>('הכל');
 
-  // Load words from store
+  // Load Excel data
   useEffect(() => {
-    loadWords();
-  }, [loadWords]);
+    const loadWords = async () => {
+      try {
+        const res = await fetch('/data/Russian_Daily_Word.xlsx');
+        const arrayBuffer = await res.arrayBuffer();
+        const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+        const sheet = workbook.Sheets[workbook.SheetNames[0]];
+        const data: Word[] = XLSX.utils.sheet_to_json(sheet, { defval: '' }).map((row, index) => ({
+          id: index,
+          Russian: row.Russian,
+          Hebrew: row.Hebrew,
+          Topic: row.Topic,
+        }));
+        setWords(data);
 
-  const toggleFilter = (color: keyof FilterState) => {
-    setSelectedFilters(prev => ({
-      ...prev,
-      [color]: !prev[color]
-    }));
-  };
+        // Extract unique topics
+        const topicSet = new Set(data.map(word => word.Topic).filter(Boolean));
+        setTopics(['הכל', ...Array.from(topicSet)]);
+      } catch (err) {
+        console.error('שגיאה בטעינת הקובץ:', err);
+      }
+    };
+
+    loadWords();
+  }, []);
 
   const startSession = () => {
-    // If no filter selected, we'll use all words
     let availableWords = words;
-    
-    // If filters are selected, then filter the words
-    if (selectedFilters.red || selectedFilters.yellow || selectedFilters.green) {
-      availableWords = words.filter(word => {
-        const wordStatus = word.status || 'red'; // Default status is red
-        return (
-          (selectedFilters.red && (wordStatus === 'red' || !word.status)) ||
-          (selectedFilters.yellow && wordStatus === 'yellow') ||
-          (selectedFilters.green && wordStatus === 'green')
-        );
-      });
+    if (selectedTopic !== 'הכל') {
+      availableWords = words.filter(w => w.Topic === selectedTopic);
     }
 
     if (availableWords.length === 0) {
-      alert('אין מילים זמינות לתרגול');
+      alert('אין מילים זמינות בנושא הנבחר.');
       return;
     }
 
-    // Include previously missed words first
-    let selectedWords: Word[] = [];
-    
-    // Add missed words from previous session first
-    selectedWords.push(...previousMissedWords);
-
-    // Remove missed words from available pool
-    availableWords = availableWords.filter(word => 
-      !previousMissedWords.some(missed => missed.russianWord === word.russianWord)
-    );
-
-    // Randomly select remaining words to make total of 10
-    const remainingCount = ROUNDS - selectedWords.length;
-    if (remainingCount > 0) {
-      const shuffled = [...availableWords].sort(() => Math.random() - 0.5);
-      selectedWords.push(...shuffled.slice(0, remainingCount));
-    }
-
-    // Shuffle final selection
-    selectedWords = selectedWords.sort(() => Math.random() - 0.5);
-    
-    setSessionWords(selectedWords);
+    const shuffled = [...availableWords].sort(() => Math.random() - 0.5);
+    const selected = shuffled.slice(0, ROUNDS);
+    setSessionWords(selected);
+    setCurrentWord(selected[0]);
     setCurrentWordIndex(0);
-    setCurrentWord(selectedWords[0]);
-    setSessionStats({ total: 0, correct: 0, missedWords: [] });
     setIsSessionStarted(true);
-    setShowSummary(false);
   };
 
-  const handleEndSession = () => {
-    // Create session summary
-    const summary: SessionSummary = {
-      totalWords: sessionStats.total,
-      correctAnswers: sessionStats.correct,
-      missedWords: sessionStats.missedWords.map(word => ({
-        ...word,
-        attempts: 2 // Now we track actual attempts in PracticeBox
-      })),
-      roundNumber
-    };
-
-    // Update session history
-    setSessionHistory(prev => [...prev, summary]);
-    
-    // Store missed words for next session
-    setPreviousMissedWords(
-      sessionStats.missedWords.map(missed => ({
-        ...words.find(w => w.russianWord === missed.russianWord)!
-      }))
-    );
-
-    // Reset session
-    setIsSessionStarted(false);
-    setShowSummary(true);
-    setRoundNumber(prev => prev + 1);
-  };
-
-  const handleWordComplete = (result: { isCorrect: boolean; attempts: number; userAnswer: string }) => {
-    if (!currentWord) return;
-
+  const handleWordComplete = (result: { isCorrect: boolean }) => {
     if (result.isCorrect) {
       setShowConfetti(true);
-      setSessionStats(prev => ({
-        ...prev,
-        total: prev.total + 1,
-        correct: prev.correct + 1
-      }));
-
-      // Update word status to green if correct on first try
-      if (result.attempts === 1) {
-        updateWordStatus(currentWord.id, 'green');
-      }
-
       setTimeout(() => {
         setShowConfetti(false);
         getNextWord();
       }, 2000);
     } else {
-      setSessionStats(prev => ({
-        ...prev,
-        total: prev.total + 1,
-        missedWords: [...prev.missedWords, {
-          russianWord: currentWord.russianWord,
-          hebrewTranslation: currentWord.hebrewTranslation,
-          userAnswer: result.userAnswer
-        }]
-      }));
-
-      // Update word status to red if failed after max attempts
-      updateWordStatus(currentWord.id, 'red');
-      
       setTimeout(getNextWord, 2000);
     }
   };
@@ -185,73 +89,27 @@ export default function Practice() {
       setCurrentWord(sessionWords[nextIndex]);
       setCurrentWordIndex(nextIndex);
     } else {
-      handleEndSession();
+      setIsSessionStarted(false);
     }
   };
 
-  if (isLoading) {
-    return <div className={styles.loading}>טוען...</div>;
-  }
-
-  if (error) {
-    return <div className={styles.error}>{error}</div>;
-  }
-
-  if (!isSessionStarted || showSummary) {
+  if (!isSessionStarted) {
     return (
       <div className={styles.container}>
-        <div className={styles.startContainer}>
-          <h1>תרגול מילים</h1>
-          <p>בחר אילו מילים ברצונך לתרגל:</p>
-          
-          <div className={styles.filterContainer}>
+        <h1>תרגול מילים</h1>
+        <p>בחר נושא לתרגול:</p>
+        <div className={styles.filterContainer}>
+          {topics.map(topic => (
             <button
-              className={`${styles.filterButton} ${selectedFilters.red ? styles.selected : ''}`}
-              onClick={() => toggleFilter('red')}
+              key={topic}
+              className={`${styles.filterButton} ${selectedTopic === topic ? styles.selected : ''}`}
+              onClick={() => setSelectedTopic(topic)}
             >
-              מילים חדשות 🔴
+              {topic}
             </button>
-            <button
-              className={`${styles.filterButton} ${selectedFilters.yellow ? styles.selected : ''}`}
-              onClick={() => toggleFilter('yellow')}
-            >
-              בתהליך למידה 🟡
-            </button>
-            <button
-              className={`${styles.filterButton} ${selectedFilters.green ? styles.selected : ''}`}
-              onClick={() => toggleFilter('green')}
-            >
-              מילים שנלמדו 🟢
-            </button>
-          </div>
-
-          {showSummary && (
-            <div className={styles.summary}>
-              <h2>סיכום סבב {roundNumber - 1}</h2>
-              <p>מילים נכונות: {sessionStats.correct} מתוך {sessionStats.total}</p>
-              
-              {sessionStats.missedWords.length > 0 && (
-                <div className={styles.missedWords}>
-                  <h3>מילים שפספסת:</h3>
-                  <ul>
-                    {sessionStats.missedWords.map((word, index) => (
-                      <li key={index}>
-                        <span>{word.russianWord} = {word.hebrewTranslation}</span>
-                        <span className={`${styles.tag} ${styles.incorrect}`}>
-                          התשובה שלך: {word.userAnswer}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          )}
-
-          <button className={styles.startButton} onClick={startSession}>
-            {showSummary ? 'התחל סבב חדש' : 'התחל תרגול'}
-          </button>
+          ))}
         </div>
+        <button className={styles.startButton} onClick={startSession}>התחל תרגול</button>
       </div>
     );
   }
@@ -259,14 +117,14 @@ export default function Practice() {
   return (
     <div className={styles.container}>
       {showConfetti && <Confetti />}
-      <RoundProgress round={sessionStats.total} total={ROUNDS} />
+      <RoundProgress round={currentWordIndex + 1} total={ROUNDS} />
       <div className={styles.practiceContainer}>
         {currentWord && (
           <PracticeBox
             word={{
               id: currentWord.id,
-              russian: currentWord.russianWord,
-              translation: currentWord.hebrewTranslation
+              russian: currentWord.Russian,
+              translation: currentWord.Hebrew
             }}
             onComplete={handleWordComplete}
           />
