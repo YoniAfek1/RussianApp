@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styles from '../../styles/DailySong.module.css';
 import * as XLSX from 'xlsx';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
 interface SongRow {
   Line1: string;
@@ -12,6 +13,8 @@ interface SongRow {
 }
 
 export default function DailySong() {
+  const [songRows, setSongRows] = useState<SongRow[]>([]);
+  const [songIndex, setSongIndex] = useState(0);
   const [song, setSong] = useState<SongRow | null>(null);
   const [revealed, setRevealed] = useState(1);
   const [input, setInput] = useState('');
@@ -21,11 +24,9 @@ export default function DailySong() {
   const [success, setSuccess] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  // State for debug data
-  const [songRows, setSongRows] = useState<SongRow[]>([]);
   const [csvRows, setCsvRows] = useState<string[][]>([]);
 
-  // Load the daily song (row 2)
+  // Load the daily song (all rows)
   useEffect(() => {
     const loadExcel = async () => {
       try {
@@ -39,13 +40,26 @@ export default function DailySong() {
         const sheet = workbook.Sheets[sheetName];
         const data: SongRow[] = XLSX.utils.sheet_to_json(sheet, { defval: '' });
         setSongRows(data);
-        setSong(data[0]); // daily song from row 1 (index 0)
+        setSongIndex(0);
+        setSong(data[0]);
       } catch (err) {
         // Optionally handle error
       }
     };
     loadExcel();
   }, []);
+
+  // Update song when songIndex changes
+  useEffect(() => {
+    if (songRows.length > 0) {
+      setSong(songRows[songIndex]);
+      setRevealed(1);
+      setInput('');
+      setSuccess(false);
+      setShowConfetti(false);
+      setShowSuggestions(false);
+    }
+  }, [songIndex, songRows]);
 
   // Load suggestions from CSV (full dataset)
   useEffect(() => {
@@ -181,31 +195,57 @@ export default function DailySong() {
     </div>
   ) : null;
 
+  // Navigation handlers
+  const handlePrev = () => {
+    if (songRows.length === 0) return;
+    setSongIndex((prev) => (prev - 1 + songRows.length) % songRows.length);
+  };
+  const handleNext = () => {
+    if (songRows.length === 0) return;
+    setSongIndex((prev) => (prev + 1) % songRows.length);
+  };
+
+  // Russian LTR punctuation fix
+  function fixRussianPeriod(line: string) {
+    if (!line) return '';
+    // If ends with period, move it to the left (true LTR)
+    if (line.endsWith('.')) {
+      return line.slice(0, -1) + '.';
+    }
+    return line;
+  }
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>האזינו או קראו את המילים ונחשו את השיר הישראלי</h1>
-      <div className={styles.card}>
-        {lines.map((line, idx) => (
-          <div
-            key={idx}
-            className={styles.lyricLine + (idx < revealed ? ' ' + styles.visible : '')}
-            style={{ transitionDelay: `${idx * 0.2}s` }}
-          >
-            {idx < revealed ? line : ''}
+      <div className={styles.songNavWrapper}>
+        <button className={styles.arrowBtn} onClick={handlePrev} aria-label="שיר קודם"><FaArrowRight /></button>
+        <div className={styles.card}>
+          <div className={styles.songContent}>
+            {lines.map((line, idx) => (
+              <div
+                key={idx}
+                className={styles.lyricLine + (idx < revealed ? ' ' + styles.visible : '')}
+                style={{ transitionDelay: `${idx * 0.2}s`, direction: 'ltr', textAlign: 'left' }}
+              >
+                {idx < revealed ? fixRussianPeriod(line) : ''}
+              </div>
+            ))}
+            <button className={styles.playBtn} onClick={handlePlay} title="השמע שורה ברוסית">
+              ▶️
+            </button>
+            <div>
+              <button
+                className={styles.revealBtn}
+                onClick={handleReveal}
+                disabled={revealed >= 3}
+              >
+                גלה שורה נוספת
+              </button>
+            </div>
           </div>
-        ))}
-        <button className={styles.playBtn} onClick={handlePlay} title="השמע שורה ברוסית">
-          ▶️
-        </button>
-        <div>
-          <button
-            className={styles.revealBtn}
-            onClick={handleReveal}
-            disabled={revealed >= 3}
-          >
-            גלה שורה נוספת
-          </button>
         </div>
+        <button className={styles.arrowBtn} onClick={handleNext} aria-label="שיר הבא"><FaArrowLeft /></button>
       </div>
       <div className={styles.autocompleteWrapper}>
         <button
@@ -246,7 +286,7 @@ export default function DailySong() {
       {success && song.Link && (
         <div className={styles.youtubeWrapper}>
           <a
-            href={song.Link}
+            href={`https://www.youtube.com/watch?v=${song.Link}`}
             target="_blank"
             rel="noopener noreferrer"
             className={styles.youtubeButton}

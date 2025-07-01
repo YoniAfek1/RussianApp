@@ -22,7 +22,7 @@ export default function Home() {
         <span className={styles.icon}>
         <img src="/animations/song.png" alt="daily song Icon" className={styles.iconImage} />
         </span>
-        <span className={styles.buttonText}>שיר יומי</span>
+        <span className={styles.buttonText}>שירים</span>
         <span className={styles.buttonSubtext}>נחשו את השיר שתורגם לרוסית</span>
         </Link>
         <Link href="/exercise" className={styles.navButton}>
