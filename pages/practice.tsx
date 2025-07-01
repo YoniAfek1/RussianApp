@@ -97,15 +97,17 @@ export default function Practice() {
         <h1>תרגול מילים</h1>
         <p>בחר נושא לתרגול:</p>
         <div className={styles.filterContainer}>
-          {topics.map(topic => (
-            <button
-              key={topic}
-              className={`${styles.filterButton} ${selectedTopic === topic ? styles.selected : ''}`}
-              onClick={() => setSelectedTopic(topic)}
-            >
-              {topic}
-            </button>
-          ))}
+          <select
+            className={styles.topicSelect}
+            value={selectedTopic}
+            onChange={e => setSelectedTopic(e.target.value)}
+          >
+            {topics.map(topic => (
+              <option key={topic} value={topic}>
+                {topic}
+              </option>
+            ))}
+          </select>
         </div>
         <button className={styles.startButton} onClick={startSession}>התחל תרגול</button>
       </div>
@@ -115,19 +117,22 @@ export default function Practice() {
   return (
     <div className={styles.container}>
       {showConfetti && <Confetti />}
-      <RoundProgress round={currentWordIndex + 1} total={ROUNDS} />
       <div className={styles.practiceContainer}>
         {currentWord && (
           <PracticeBox
-            word={{
-              id: currentWord.id.toString(), // 🔧 fix: convert number to string
-              russian: currentWord.Russian,
-              translation: currentWord.Hebrew
-            }}
-            onComplete={handleWordComplete}
-          />
+          word={{
+            id: String(currentWord.id),
+            russian: currentWord.Russian,
+            translation: currentWord.Hebrew
+          }}
+          onComplete={handleWordComplete}
+        />
+        
         )}
-      </div>
+    <div className={styles.progressBar}>
+      <RoundProgress round={currentWordIndex + 1} total={ROUNDS} />
+    </div>
+    </div>
     </div>
   );
 }

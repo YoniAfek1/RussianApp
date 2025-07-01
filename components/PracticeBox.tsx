@@ -114,7 +114,7 @@ export default function PracticeBox({ word, onComplete }: PracticeBoxProps) {
 
     if (isCorrect) {
       // Handle correct answer
-      setFeedback({ message: '!נכון מאוד 🎉', type: 'success' });
+      setFeedback({ message: 'נכון מאוד!🎉', type: 'success' });
       setIsComplete(true);
       onComplete({
         isCorrect: true,
