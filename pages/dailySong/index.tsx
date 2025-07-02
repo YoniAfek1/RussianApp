@@ -94,7 +94,7 @@ export default function DailySong() {
     }
     const filtered = allSuggestions.filter(s =>
       s.toLowerCase().includes(input.toLowerCase())
-    ).slice(0, 30);
+    ).slice(0, 20);
     setSuggestions(filtered);
   }, [input, allSuggestions]);
 
