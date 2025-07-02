@@ -362,4 +362,19 @@
   box-shadow: 0 1px 4px rgba(0,0,0,0.04);
   font-weight: 500;
   letter-spacing: 0.01em;
-} 
+}
+
+.feedbackMsgBottom {
+  background: #142850;
+  color: #fff;
+  border-radius: 12px;
+  padding: 0.7rem 1.5rem;
+  font-size: 1.1rem;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(20, 40, 80, 0.13);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  min-width: 220px;
+  max-width: 90%;
+  margin-top: 0.8rem;
+}

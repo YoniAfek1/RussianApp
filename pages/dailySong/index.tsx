@@ -110,13 +110,10 @@ export default function DailySong() {
       setRevealed(revealed + 1);
       setRevealClicks(revealClicks + 1);
     } else if (revealClicks === 2) {
-      // Third click: change button text
-      setRevealClicks(3);
-    } else if (revealClicks === 3) {
-      // Fourth click: simulate correct answer (show buttons, no confetti or success msg)
+      // After revealing the third line, next click should show 'Reveal the Song'
       setForceShowButtons(true);
       setFeedbackMsg('');
-      setRevealClicks(4);
+      setRevealClicks(3);
     }
   };
 
@@ -248,16 +245,15 @@ export default function DailySong() {
             <button
               className={styles.revealBtn}
               onClick={handleReveal}
-              disabled={success || forceShowButtons || revealClicks >= 4}
+              disabled={success || forceShowButtons || revealClicks >= 3}
             >
-              {revealClicks < 3 ? 'גלה שורה נוספת' : (revealClicks === 3 ? 'חשיפת השיר' : 'השיר נחשף')}
+              {revealClicks < 2 ? 'גלה שורה נוספת' : (revealClicks === 2 ? 'חשיפת השיר' : 'השיר נחשף')}
             </button>
           </div>
         </div>
       </div>
 
       <div className={styles.autocompleteWrapper}>
-        {feedbackMsg && <div className={styles.feedbackMsg}>{feedbackMsg}</div>}
         <button
           className={styles.selectButton}
           onClick={handleSelect}
@@ -307,6 +303,7 @@ export default function DailySong() {
         </div>
       )}
       {success && <Confetti />}
+      {feedbackMsg && <div className={styles.feedbackMsgBottom}>{feedbackMsg}</div>}
     </div>
   );
 }
