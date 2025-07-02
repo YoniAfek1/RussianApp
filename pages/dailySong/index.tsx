@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styles from '../../styles/DailySong.module.css';
 import * as XLSX from 'xlsx';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight, FaVolumeUp } from 'react-icons/fa';
 
 interface SongRow {
   Line1: string;
@@ -217,35 +217,36 @@ export default function DailySong() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>האזינו או קראו את המילים ונחשו את השיר הישראלי</h1>
-      <div className={styles.songNavWrapper}>
-        <button className={styles.arrowBtn} onClick={handlePrev} aria-label="שיר קודם"><FaArrowRight /></button>
-        <div className={styles.card}>
-          <div className={styles.songContent}>
-            {lines.map((line, idx) => (
-              <div
-                key={idx}
-                className={styles.lyricLine + (idx < revealed ? ' ' + styles.visible : '')}
-                style={{ transitionDelay: `${idx * 0.2}s`, direction: 'ltr', textAlign: 'left' }}
-              >
-                {idx < revealed ? fixRussianPeriod(line) : ''}
-              </div>
-            ))}
-            <button className={styles.playBtn} onClick={handlePlay} title="השמע שורה ברוסית">
-              ▶️
-            </button>
-            <div>
-              <button
-                className={styles.revealBtn}
-                onClick={handleReveal}
-                disabled={revealed >= 3}
-              >
-                גלה שורה נוספת
-              </button>
+      <h1 className={styles.title}>נחשו את השיר הישראלי</h1>
+      <div className={styles.card}>
+        <div className={styles.songContent}>
+          {lines.map((line, idx) => (
+            <div
+              key={idx}
+              className={styles.lyricLine + (idx < revealed ? ' ' + styles.visible : '')}
+              style={{ transitionDelay: `${idx * 0.2}s`, direction: 'ltr', textAlign: 'left' }}
+            >
+              {idx < revealed ? fixRussianPeriod(line) : ''}
             </div>
+          ))}
+          <button
+            className={styles.speakerButton}
+            onClick={handlePlay}
+            title="השמע שורה ברוסית"
+            type="button"
+          >
+            <FaVolumeUp />
+          </button>
+          <div>
+            <button
+              className={styles.revealBtn}
+              onClick={handleReveal}
+              disabled={revealed >= 3}
+            >
+              גלה שורה נוספת
+            </button>
           </div>
         </div>
-        <button className={styles.arrowBtn} onClick={handleNext} aria-label="שיר הבא"><FaArrowLeft /></button>
       </div>
       <div className={styles.autocompleteWrapper}>
         <button
@@ -293,6 +294,9 @@ export default function DailySong() {
           >
             לצפייה בשיר🎵
           </a>
+          <button onClick={handleNext} className={styles.youtubeButton}>
+            השיר הבא
+          </button>
         </div>
       )}
     </div>
