@@ -31,7 +31,7 @@
 
 .lyricLine {
   font-size: 1.3rem;
-  color: #283593;
+  color: #37474F;
   margin: 0.7rem 0;
   opacity: 0;
   transform: translateY(10px);
@@ -48,7 +48,7 @@
   padding: 0.4rem 1.2rem;
   border-radius: 1rem;
   border: none;
-  background: #6A1B9A;
+  background: #64B5F6;
   color: #fff;
   font-size: 1rem;
   cursor: pointer;
@@ -56,15 +56,15 @@
 }
 
 .revealBtn:disabled {
-  background: #b39ddb;
+  background: #BBDEFB;
   cursor: not-allowed;
 }
 
 .playBtn {
   margin: 0.7rem 0 1.2rem 0;
   background: #fff;
-  border: 2px solid #6A1B9A;
-  color: #6A1B9A;
+  border: 2px solid #64B5F6;
+  color: #64B5F6;
   border-radius: 50%;
   width: 48px;
   height: 48px;
@@ -77,7 +77,7 @@
 }
 
 .playBtn:hover {
-  background: #6A1B9A;
+  background: #64B5F6;
   color: #fff;
 }
 
@@ -104,7 +104,7 @@
   width: 100%;
   padding: 0.7rem 1rem;
   border-radius: 1rem;
-  border: 1.5px solid #b39ddb;
+  border: 1.5px solid #42A5F5;
   font-size: 1.1rem;
   margin-bottom: 0;
   outline: none;
@@ -113,7 +113,7 @@
 }
 
 .autocompleteInput:focus {
-  border: 2px solid #6A1B9A;
+  border: 2px solid #42A5F5;
 }
 
 .suggestionsAbove {
@@ -150,12 +150,12 @@
 }
 
 .suggestion:hover, .suggestion.active {
-  background: #ede7f6;
+  background: #e3f2fd;
 }
 
 .selectButton {
   margin-right: 0.5rem;
-  background: #6A1B9A;
+  background: #42A5F5;
   color: #fff;
   border: none;
   border-radius: 0.8rem;
@@ -175,7 +175,7 @@
 }
 
 .successMsg {
-  color: #388e3c;
+  color: #43A047;
   font-size: 1.3rem;
   margin-top: 1.2rem;
   text-align: center;
@@ -212,7 +212,7 @@
   margin: 0 auto;
   margin-top: 0.5rem;
   padding: 0.8rem 2.2rem;
-  background: #2c3e50;
+  background: #64B5F6;
   color: #fff;
   font-size: 1.25rem;
   font-weight: 600;
@@ -227,7 +227,7 @@
 }
 
 .youtubeButton:hover, .youtubeButton:focus {
-  background: #2c3e50;
+  background: #42A5F5;
   color: #fff;
   box-shadow: 0 4px 16px rgba(30, 64, 175, 0.13);
   text-decoration: none;
@@ -291,7 +291,7 @@
 
 .arrowBtn:hover, .arrowBtn:focus {
   color: #fff;
-  background: #222;
+  background: #42A5F5;
 }
 
 @media (max-width: 600px) {
