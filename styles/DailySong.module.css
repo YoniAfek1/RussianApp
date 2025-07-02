@@ -126,6 +126,7 @@
   box-shadow: 0 -2px 12px rgba(30, 64, 175, 0.10);
   max-height: 180px;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* חלקות גלילה במובייל */
   z-index: 10;
   margin-bottom: 0;
   border-bottom: none;
