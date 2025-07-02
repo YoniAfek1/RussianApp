@@ -25,6 +25,9 @@ export default function DailySong() {
   const [showConfetti, setShowConfetti] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const [csvRows, setCsvRows] = useState<string[][]>([]);
+  const [feedbackMsg, setFeedbackMsg] = useState('');
+  const [revealClicks, setRevealClicks] = useState(0);
+  const [forceShowButtons, setForceShowButtons] = useState(false);
 
   // Load the daily song
   useEffect(() => {
@@ -103,7 +106,18 @@ export default function DailySong() {
   const lines = song ? [song.Line1, song.Line2, song.Line3] : [];
 
   const handleReveal = () => {
-    if (revealed < 3) setRevealed(revealed + 1);
+    if (revealed < 3) {
+      setRevealed(revealed + 1);
+      setRevealClicks(revealClicks + 1);
+    } else if (revealClicks === 2) {
+      // Third click: change button text
+      setRevealClicks(3);
+    } else if (revealClicks === 3) {
+      // Fourth click: simulate correct answer (show buttons, no confetti or success msg)
+      setForceShowButtons(true);
+      setFeedbackMsg('');
+      setRevealClicks(4);
+    }
   };
 
   const handlePlay = () => {
@@ -130,10 +144,32 @@ export default function DailySong() {
   };
 
   const checkAnswer = (guess: string) => {
-    const correct = `${song?.Artist.trim()} - ${song?.SongTitle.trim()}`;
-    if (guess.trim().toLowerCase() === correct.toLowerCase()) {
+    if (!song) return;
+    const correctArtist = song.Artist.trim().toLowerCase();
+    const correctTitle = song.SongTitle.trim().toLowerCase();
+    const [guessArtist, guessTitle] = guess.split(' - ').map(s => s.trim().toLowerCase());
+    if (guessArtist === correctArtist && guessTitle === correctTitle) {
       setSuccess(true);
+      setShowConfetti(true);
+      setFeedbackMsg('נכון! כל הכבוד!');
+      setForceShowButtons(false);
+      return;
     }
+    if (guessTitle === correctTitle && guessArtist !== correctArtist) {
+      setFeedbackMsg('כמעט! נסה אמן אחר');
+      setSuccess(false);
+      setForceShowButtons(false);
+      return;
+    }
+    if (guessArtist === correctArtist && guessTitle !== correctTitle) {
+      setFeedbackMsg('כמעט! נסה שיר אחר');
+      setSuccess(false);
+      setForceShowButtons(false);
+      return;
+    }
+    setFeedbackMsg('טעות! נסה שוב');
+    setSuccess(false);
+    setForceShowButtons(false);
   };
 
   const handleInputBlur = () => {
@@ -175,6 +211,14 @@ export default function DailySong() {
     </div>
   ) : null;
 
+  // Reset feedback and forceShowButtons on song change
+  useEffect(() => {
+    setFeedbackMsg('');
+    setForceShowButtons(false);
+    setRevealClicks(0);
+    setRevealed(1);
+  }, [songIndex]);
+
   if (!song) return <div className={styles.container}><div className={styles.card}>טוען...</div></div>;
 
   return (
@@ -204,15 +248,16 @@ export default function DailySong() {
             <button
               className={styles.revealBtn}
               onClick={handleReveal}
-              disabled={revealed >= 3}
+              disabled={success || forceShowButtons || revealClicks >= 4}
             >
-              גלה שורה נוספת
+              {revealClicks < 3 ? 'גלה שורה נוספת' : (revealClicks === 3 ? 'חשיפת השיר' : 'השיר נחשף')}
             </button>
           </div>
         </div>
       </div>
 
       <div className={styles.autocompleteWrapper}>
+        {feedbackMsg && <div className={styles.feedbackMsg}>{feedbackMsg}</div>}
         <button
           className={styles.selectButton}
           onClick={handleSelect}
@@ -246,10 +291,7 @@ export default function DailySong() {
         )}
       </div>
 
-      {success && <div className={styles.successMsg}>נכון! כל הכבוד! 🎉</div>}
-      <Confetti />
-
-      {success && song.Link && (
+      {(success || forceShowButtons) && song.Link && (
         <div className={styles.youtubeWrapper}>
           <button
             className={styles.youtubeButton}
@@ -264,6 +306,7 @@ export default function DailySong() {
           </button>
         </div>
       )}
+      {success && <Confetti />}
     </div>
   );
 }
