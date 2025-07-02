@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styles from '../../styles/DailySong.module.css';
 import * as XLSX from 'xlsx';
-import { FaArrowLeft, FaArrowRight, FaVolumeUp } from 'react-icons/fa';
+import { FaVolumeUp } from 'react-icons/fa';
 
 interface SongRow {
   Line1: string;
@@ -26,14 +26,11 @@ export default function DailySong() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [csvRows, setCsvRows] = useState<string[][]>([]);
 
-  // Load the daily song (all rows)
+  // Load the daily song
   useEffect(() => {
     const loadExcel = async () => {
       try {
         const res = await fetch('/data/Russian_Daily_Song.xlsx');
-        if (!res.ok) {
-          throw new Error(`Failed to fetch Excel file: ${res.statusText}`);
-        }
         const arrayBuffer = await res.arrayBuffer();
         const workbook = XLSX.read(arrayBuffer, { type: 'array' });
         const sheetName = workbook.SheetNames[0];
@@ -43,13 +40,12 @@ export default function DailySong() {
         setSongIndex(0);
         setSong(data[0]);
       } catch (err) {
-        // Optionally handle error
+        console.error(err);
       }
     };
     loadExcel();
   }, []);
 
-  // Update song when songIndex changes
   useEffect(() => {
     if (songRows.length > 0) {
       setSong(songRows[songIndex]);
@@ -61,16 +57,12 @@ export default function DailySong() {
     }
   }, [songIndex, songRows]);
 
-  // Load suggestions from CSV (full dataset)
   useEffect(() => {
     const fetchSuggestions = async () => {
       try {
         const res = await fetch('/data/Russian_Songs.csv');
-        if (!res.ok) {
-          throw new Error(`Failed to fetch CSV file: ${res.statusText}`);
-        }
         const text = await res.text();
-        const rows = text.split('\n').slice(1); // skip header
+        const rows = text.split('\n').slice(1);
         const csvArr = rows.map(row => row.split(',').map(cell => cell.trim()));
         setCsvRows(csvArr);
         const suggs = rows
@@ -83,13 +75,12 @@ export default function DailySong() {
           .filter(Boolean);
         setAllSuggestions(suggs);
       } catch (err) {
-        // Optionally handle error
+        console.error(err);
       }
     };
     fetchSuggestions();
   }, []);
 
-  // Filter suggestions as user types (always from full allSuggestions array)
   useEffect(() => {
     if (!input) {
       setSuggestions([]);
@@ -101,79 +92,68 @@ export default function DailySong() {
     setSuggestions(filtered);
   }, [input, allSuggestions]);
 
-  // Confetti logic
   useEffect(() => {
     if (success) {
-      console.log('[DailySong] Success! Correct answer detected. Showing confetti.');
       setShowConfetti(true);
       const timer = setTimeout(() => setShowConfetti(false), 5000);
       return () => clearTimeout(timer);
     }
   }, [success]);
 
-  if (!song) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.card}>
-          <div>טוען...</div>
-        </div>
-      </div>
-    );
-  }
-
-  const lines = [song.Line1, song.Line2, song.Line3];
-  console.log('[DailySong] Current lines:', lines, 'Revealed:', revealed);
+  const lines = song ? [song.Line1, song.Line2, song.Line3] : [];
 
   const handleReveal = () => {
-    console.log('[DailySong] Reveal button clicked. Current revealed:', revealed);
     if (revealed < 3) setRevealed(revealed + 1);
   };
 
   const handlePlay = () => {
     const text = lines.slice(0, revealed).join(' ');
     if (!text) return;
-    const utter = new window.SpeechSynthesisUtterance(text);
-    const voices = window.speechSynthesis.getVoices();
+    const utter = new SpeechSynthesisUtterance(text);
+    const voices = speechSynthesis.getVoices();
     const ruVoice = voices.find(v => v.lang === 'ru-RU');
     if (ruVoice) utter.voice = ruVoice;
     utter.lang = 'ru-RU';
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(utter);
+    speechSynthesis.cancel();
+    speechSynthesis.speak(utter);
   };
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
     setShowSuggestions(true);
-    console.log('[DailySong] User input changed:', e.target.value);
   };
 
   const handleSuggestionClick = (s: string) => {
     setInput(s);
     setShowSuggestions(false);
     inputRef.current?.blur();
-    // Do NOT call checkAnswer here; only fill input
   };
 
   const checkAnswer = (guess: string) => {
-    const correct = `${song.Artist.trim()} - ${song.SongTitle.trim()}`;
-    console.log('[DailySong] Checking answer. Guess:', guess, 'Correct:', correct);
+    const correct = `${song?.Artist.trim()} - ${song?.SongTitle.trim()}`;
     if (guess.trim().toLowerCase() === correct.toLowerCase()) {
       setSuccess(true);
-      console.log('[DailySong] Correct answer!');
     }
   };
 
   const handleInputBlur = () => {
     setTimeout(() => setShowSuggestions(false), 150);
-    console.log('[DailySong] Input blurred, hiding suggestions soon.');
   };
 
-  // Add a handler for the select button
   const handleSelect = () => {
     if (input) checkAnswer(input);
   };
 
-  // Confetti (simple emoji overlay)
+  const handleNext = () => {
+    if (songRows.length === 0) return;
+    setSongIndex((prev) => (prev + 1) % songRows.length);
+  };
+
+  const fixRussianPeriod = (line: string) => {
+    if (!line) return '';
+    return line.endsWith('.') ? line.slice(0, -1) + '.' : line;
+  };
+
   const Confetti = () => showConfetti ? (
     <div className={styles.confettiOverlay}>
       {Array.from({ length: 80 }).map((_, i) => (
@@ -195,29 +175,12 @@ export default function DailySong() {
     </div>
   ) : null;
 
-  // Navigation handlers
-  const handlePrev = () => {
-    if (songRows.length === 0) return;
-    setSongIndex((prev) => (prev - 1 + songRows.length) % songRows.length);
-  };
-  const handleNext = () => {
-    if (songRows.length === 0) return;
-    setSongIndex((prev) => (prev + 1) % songRows.length);
-  };
-
-  // Russian LTR punctuation fix
-  function fixRussianPeriod(line: string) {
-    if (!line) return '';
-    // If ends with period, move it to the left (true LTR)
-    if (line.endsWith('.')) {
-      return line.slice(0, -1) + '.';
-    }
-    return line;
-  }
+  if (!song) return <div className={styles.container}><div className={styles.card}>טוען...</div></div>;
 
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>נחשו את השיר הישראלי</h1>
+
       <div className={styles.card}>
         <div className={styles.songContent}>
           {lines.map((line, idx) => (
@@ -248,12 +211,12 @@ export default function DailySong() {
           </div>
         </div>
       </div>
+
       <div className={styles.autocompleteWrapper}>
         <button
           className={styles.selectButton}
           onClick={handleSelect}
           disabled={success || !input}
-          tabIndex={0}
         >
           בחר
         </button>
@@ -282,18 +245,20 @@ export default function DailySong() {
           </div>
         )}
       </div>
+
       {success && <div className={styles.successMsg}>נכון! כל הכבוד! 🎉</div>}
       <Confetti />
+
       {success && song.Link && (
         <div className={styles.youtubeWrapper}>
-          <a
-            href={`https://www.youtube.com/watch?v=${song.Link}`}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
             className={styles.youtubeButton}
+            onClick={() =>
+              window.open(`https://www.youtube.com/watch?v=${song.Link}`, '_blank')
+            }
           >
-            לצפייה בשיר🎵
-          </a>
+            צפייה בשיר 🎵
+          </button>
           <button onClick={handleNext} className={styles.youtubeButton}>
             השיר הבא
           </button>
@@ -301,4 +266,4 @@ export default function DailySong() {
       )}
     </div>
   );
-} 
+}
