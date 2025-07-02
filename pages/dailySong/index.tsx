@@ -40,8 +40,10 @@ export default function DailySong() {
         const sheet = workbook.Sheets[sheetName];
         const data: SongRow[] = XLSX.utils.sheet_to_json(sheet, { defval: '' });
         setSongRows(data);
-        setSongIndex(0);
-        setSong(data[0]);
+        // Pick a random index for the initial song
+        const initialIndex = Math.floor(Math.random() * data.length);
+        setSongIndex(initialIndex);
+        setSong(data[initialIndex]);
       } catch (err) {
         console.error(err);
       }
@@ -153,13 +155,13 @@ export default function DailySong() {
       return;
     }
     if (guessTitle === correctTitle && guessArtist !== correctArtist) {
-      setFeedbackMsg('כמעט! נסה אמן אחר');
+      setFeedbackMsg('כמעט! נסו אמן אחר');
       setSuccess(false);
       setForceShowButtons(false);
       return;
     }
     if (guessArtist === correctArtist && guessTitle !== correctTitle) {
-      setFeedbackMsg('כמעט! נסה שיר אחר');
+      setFeedbackMsg('כמעט! נסו שיר אחר');
       setSuccess(false);
       setForceShowButtons(false);
       return;
@@ -247,7 +249,7 @@ export default function DailySong() {
               onClick={handleReveal}
               disabled={success || forceShowButtons || revealClicks >= 3}
             >
-              {revealClicks < 2 ? 'גלה שורה נוספת' : (revealClicks === 2 ? 'חשיפת השיר' : 'השיר נחשף')}
+              {revealClicks < 2 ? 'שורה נוספת' : (revealClicks === 2 ? 'חשיפת השיר' : 'השיר נחשף')}
             </button>
           </div>
         </div>
