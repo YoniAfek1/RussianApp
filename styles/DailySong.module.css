@@ -378,3 +378,28 @@
   max-width: 90%;
   margin-top: 0.8rem;
 }
+
+.subtitleRu {
+  font-size: 1.08rem;
+  color: #4a5a6a;
+  text-align: center;
+  margin-top: -0.7rem;
+  margin-bottom: 1.2rem;
+  font-family: 'Arial', 'Open Sans', sans-serif;
+  letter-spacing: 0.01em;
+}
+
+.songYear {
+  font-size: 0.98rem;
+  color: #607d8b;
+  text-align: left;
+  margin-bottom: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.songYear span {
+  color: #263238;
+  font-weight: 600;
+  margin-right: 0.3em;
+}

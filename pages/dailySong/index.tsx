@@ -10,6 +10,7 @@ interface SongRow {
   SongTitle: string;
   Artist: string;
   Link?: string;
+  Year: string;
 }
 
 export default function DailySong() {
@@ -93,7 +94,7 @@ export default function DailySong() {
     }
     const filtered = allSuggestions.filter(s =>
       s.toLowerCase().includes(input.toLowerCase())
-    ).slice(0, 8);
+    ).slice(0, 30);
     setSuggestions(filtered);
   }, [input, allSuggestions]);
 
@@ -218,13 +219,18 @@ export default function DailySong() {
     setRevealed(1);
   }, [songIndex]);
 
+  // Show correct answer if revealed
+  const showCorrectAnswer = forceShowButtons && revealClicks === 3;
+  const correctAnswer = song ? `${song.Artist} - ${song.SongTitle}` : '';
+
   if (!song) return <div className={styles.container}><div className={styles.card}>טוען...</div></div>;
 
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>נחשו את השיר הישראלי</h1>
-
+      <div className={styles.subtitleRu}>Угадай израильскую песню</div>
       <div className={styles.card}>
+        <div className={styles.songYear}><span>Год выпуска:</span> {song?.Year}</div>
         <div className={styles.songContent}>
           {lines.map((line, idx) => (
             <div
@@ -306,6 +312,9 @@ export default function DailySong() {
       )}
       {success && <Confetti />}
       {feedbackMsg && <div className={styles.feedbackMsgBottom}>{feedbackMsg}</div>}
+      {showCorrectAnswer && (
+        <div className={styles.feedbackMsgBottom}>{correctAnswer}</div>
+      )}
     </div>
   );
 }
