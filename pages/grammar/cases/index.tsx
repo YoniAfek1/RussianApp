@@ -241,12 +241,9 @@ export default function CasesPage() {
           <button
             key={caseItem.id}
             onClick={() => setSelectedCase(caseItem.id)}
-            className={`${styles.caseButton} ${caseItem.id === selectedCase ? styles.activeCase : ''}`}
-            style={{
-              backgroundColor: caseItem.color,
-              borderColor: caseItem.id === selectedCase ? '#2c3e50' : caseItem.color,
-              color: '#2c3e50'
-            }}
+            className={
+              `${styles.caseButton} ${styles[`case${caseItem.id}`]} ${caseItem.id === selectedCase ? styles.activeCase : ''}`
+            }
           >
             <div>יחסה {caseItem.id}</div>
             <div>{caseItem.hebrewName}</div>
@@ -256,27 +253,17 @@ export default function CasesPage() {
       <div className={styles.bottomNavRow}>
         <button
           onClick={() => setSelectedCase('explanation')}
-          className={`${styles.caseButton} ${selectedCase === 'explanation' ? styles.activeCase : ''}`}
-          style={{
-            backgroundColor: '#fffbe6',
-            borderColor: selectedCase === 'explanation' ? '#2c3e50' : 'transparent',
-            color: '#2c3e50',
-            width: '50%',
-            margin: 0
-          }}
+          className={
+            `${styles.caseButton} ${styles.explanation} ${selectedCase === 'explanation' ? styles.activeCase : ''}`
+          }
         >
           <div>הסבר</div>
         </button>
         <button
           onClick={() => setSelectedCase('summary')}
-          className={`${styles.caseButton} ${selectedCase === 'summary' ? styles.activeCase : ''}`}
-          style={{
-            backgroundColor: '#E3F2FD', // light blue
-            borderColor: selectedCase === 'summary' ? '#2c3e50' : 'transparent',
-            color: '#2c3e50',
-            width: '50%',
-            margin: 0
-          }}
+          className={
+            `${styles.caseButton} ${styles.summary} ${selectedCase === 'summary' ? styles.activeCase : ''}`
+          }
         >
           <div>סיכום</div>
           <div>טבלת סיומות</div>

@@ -62,14 +62,18 @@
 }
 
 /* Distinct colors for each case button (override inline if needed) */
-.caseButton.case1 { background: #E3F2FD; }
-.caseButton.case2 { background: #E8F5E9; }
-.caseButton.case3 { background: #FFF3E0; }
-.caseButton.case4 { background: #FCE4EC; }
-.caseButton.case5 { background: #F3E5F5; }
-.caseButton.case6 { background: #E0F7FA; }
-.caseButton.summary { background: #E3F2FD; }
-.caseButton.explanation { background: #fffbe6; }
+.caseButton.case1 { background: #FFE3E3; } /* נומינטיבית – ורוד עדין, נעים לפתיחה */
+.caseButton.case2 { background: #FFF5CC; } /* גנטיבית – צהוב קרמי, מראה שייכות */
+.caseButton.case3 { background: #D6F5E3; } /* דטיבית – ירוק מנטה רך */
+.caseButton.case4 { background: #E0F0FF; } /* אקוזטיבית – תכלת בהיר וצלול */
+.caseButton.case5 { background: #F6DFFF; } /* אינסטרומנטלית – סגלגל חלבי ונעים */
+.caseButton.case6 { background: #FFEFD6; } /* פרפוזיציונית – אפרסק בהיר וסוגר מעגל */
+
+.caseButton.explanation { background: #EDF6FF; } /* הסבר – תכלת-לבן שמרגיש נעים לקריאה */
+.caseButton.summary     { background: #FDF4E8; } /* סיכום – שמנת חמימה, תומך קריאה מהירה */
+
+
+
 
 .bottomNavRow {
   display: flex;
