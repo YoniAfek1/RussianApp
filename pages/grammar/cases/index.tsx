@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from '../../../styles/Grammar.module.css';
+import styles from '../../../styles/cases.module.css';
 import Link from 'next/link';
 
 interface CaseEnding {
@@ -307,8 +307,6 @@ export default function CasesPage() {
                   >
                     <td className={styles.caseSummaryName}>
                       <div>יחסה {index + 1}</div>
-                      <div>{caseSum.hebrewName}</div>
-                      <div className={styles.russianName}>{caseSum.caseName}</div>
                     </td>
                     <td>{caseSum.family}</td>
                     <td>{caseSum.stone}</td>
