@@ -229,7 +229,7 @@ const CASE_SUMMARY: CaseSummary[] = [
 ];
 
 export default function CasesPage() {
-  const [selectedCase, setSelectedCase] = useState<number | 'summary'>('summary');
+  const [selectedCase, setSelectedCase] = useState<number | 'summary' | 'explanation'>('explanation');
   const currentCase = typeof selectedCase === 'number' ? CASES.find(c => c.id === selectedCase) : null;
 
   return (
@@ -252,17 +252,30 @@ export default function CasesPage() {
             <div>{caseItem.hebrewName}</div>
           </button>
         ))}
-
+      </div>
+      <div className={styles.bottomNavRow}>
+        <button
+          onClick={() => setSelectedCase('explanation')}
+          className={`${styles.caseButton} ${selectedCase === 'explanation' ? styles.activeCase : ''}`}
+          style={{
+            backgroundColor: '#fffbe6',
+            borderColor: selectedCase === 'explanation' ? '#2c3e50' : 'transparent',
+            color: '#2c3e50',
+            width: '50%',
+            margin: 0
+          }}
+        >
+          <div>הסבר</div>
+        </button>
         <button
           onClick={() => setSelectedCase('summary')}
           className={`${styles.caseButton} ${selectedCase === 'summary' ? styles.activeCase : ''}`}
           style={{
-            backgroundColor: '#f8f9fa',
+            backgroundColor: '#E3F2FD', // light blue
             borderColor: selectedCase === 'summary' ? '#2c3e50' : 'transparent',
             color: '#2c3e50',
-            gridColumn: '1 / -1',
-            maxWidth: '300px',
-            margin: '0 auto'
+            width: '50%',
+            margin: 0
           }}
         >
           <div>סיכום</div>
@@ -309,6 +322,37 @@ export default function CasesPage() {
               </tbody>
             </table>
           </div>
+        </div>
+      ) : selectedCase === 'explanation' ? (
+        <div className={styles.caseContent}>
+          <h2 className={styles.caseTitle}>מה זה ייחסות?</h2>
+          <p className={styles.caseDescription}>
+            בשפה הרוסית, לכל שם עצם יש תפקיד במשפט - נושא, מושא ישיר, מושא עקיף וכו'. כדי להבין מה תפקיד המילה, היא משתנה בהתאם ל"ייחסה" (כמו בעברית – אני, אותי, לי). ברוסית יש 6 ייחסות עיקריות, ולכל אחת צורת סיומת שונה לשם העצם. כדי לדעת איך שם עצם משתנה, חשוב לדעת לאיזו קבוצת ייחוס הוא שייך.
+          </p>
+          <h3 className={styles.caseTitle}>שלוש קבוצות ייחוס עיקריות:</h3>
+          <ul className={styles.commonWordsList}>
+            <li>
+              <strong>🏠 קבוצת המשפחה – סיומות: а / я</strong><br/>
+              שמות עצם שמסתיימים ב־а או я שייכים לרוב למין נקבה.<br/>
+              <b>דוגמאות:</b><br/>
+              мама (אמא)<br/>
+              сестра (אחות)
+            </li>
+            <li style={{marginTop: '1em'}}>
+              <strong>🪨 קבוצת האבן – סיומות: עיצור / о / е</strong><br/>
+              שמות עצם שמסתיימים בעיצור, о או е שייכים לרוב למין זכר או ניטרלי.<br/>
+              <b>דוגמאות:</b><br/>
+              стол (שולחן) – זכר<br/>
+              море (ים) – ניטרלי
+            </li>
+            <li style={{marginTop: '1em'}}>
+              <strong>💗 קבוצת הרכות – סיומת: ь</strong><br/>
+              שמות עצם שמסתיימים ב־ь שייכים לרוב למין נקבה, אך יש גם יוצאי דופן.<br/>
+              <b>דוגמאות:</b><br/>
+              ночь (לילה) – נקבה<br/>
+              дверь (דלת) – נקבה
+            </li>
+          </ul>
         </div>
       ) : currentCase && (
         <div className={styles.caseContent}>

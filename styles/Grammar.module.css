@@ -1853,3 +1853,21 @@
     direction: rtl;
   }
 }
+
+.bottomNavRow {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: stretch;
+  width: 66%; /* 3/3 of the grid above, adjust as needed */
+  max-width: 600px;
+  margin: 1.5rem auto 0 auto;
+  gap: 2%;
+}
+@media (max-width: 900px) {
+  .bottomNavRow {
+    width: 100%;
+    max-width: none;
+    gap: 1%;
+  }
+}
