@@ -353,6 +353,9 @@ export default function CasesPage() {
               дверь (דלת) – נקבה
             </li>
           </ul>
+          <p className={styles.caseDescription} style={{ marginTop: '1.5em' }}>
+          בנוסף לשלוש הקבוצות, קיימת גם קבוצה של מילים ברבים – גם לה יש סיומות משתנות לפי כל יחסה.
+          </p>
         </div>
       ) : currentCase && (
         <div className={styles.caseContent}>
