@@ -60,17 +60,16 @@
   font-size: 0.95rem;
   color: #555;
 }
+.caseButton.case1 { background: #FFEFF1; } /* נומינטיבית – ורוד עדין (אדום פסטלי) */
+.caseButton.case2 { background: #FFF5E5; } /* גנטיבית – כתום אפרסקי (שכנה של ורוד) */
+.caseButton.case3 { background: #FFFFE6; } /* דטיבית – צהוב לימוני מאוד בהיר */
+.caseButton.case4 { background: #F0FFF0; } /* אקוזטיבית – ירוק נענע בהיר */
+.caseButton.case5 { background: #E8FAFF; } /* אינסטרומנטלית – תכלת מימי (קרוב לירוק) */
+.caseButton.case6 { background: #F3EDFF; } /* פרפוזיציונית – סגול לילו בהיר (שכנה של כחול) */
 
-/* Distinct colors for each case button (override inline if needed) */
-.caseButton.case1 { background: #FFE3E3; } /* נומינטיבית – ורוד עדין, נעים לפתיחה */
-.caseButton.case2 { background: #FFF5CC; } /* גנטיבית – צהוב קרמי, מראה שייכות */
-.caseButton.case3 { background: #D6F5E3; } /* דטיבית – ירוק מנטה רך */
-.caseButton.case4 { background: #E0F0FF; } /* אקוזטיבית – תכלת בהיר וצלול */
-.caseButton.case5 { background: #F6DFFF; } /* אינסטרומנטלית – סגלגל חלבי ונעים */
-.caseButton.case6 { background: #FFEFD6; } /* פרפוזיציונית – אפרסק בהיר וסוגר מעגל */
+.caseButton.explanation { background: #EDF7FF; } /* הסבר – כחול קרח רגוע */
+.caseButton.summary     { background: #FFF7F0; } /* סיכום – כתום בהיר־חמים */
 
-.caseButton.explanation { background: #EDF6FF; } /* הסבר – תכלת-לבן שמרגיש נעים לקריאה */
-.caseButton.summary     { background: #FDF4E8; } /* סיכום – שמנת חמימה, תומך קריאה מהירה */
 
 
 

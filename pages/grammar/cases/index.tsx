@@ -345,7 +345,7 @@ export default function CasesPage() {
       ) : currentCase && (
         <div className={styles.caseContent}>
           <h2 className={styles.caseTitle}>
-            יחסה {currentCase.id} – {currentCase.hebrewName}
+            יחסה {currentCase.id}
           </h2>
 
           <p className={styles.caseDescription}>{currentCase.description}</p>
