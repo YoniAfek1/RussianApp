@@ -39,7 +39,6 @@ function levenshteinDistance(str1: string, str2: string): number {
 }
 
 export default function PracticeBox({ word, onComplete }: PracticeBoxProps) {
-  // Core state
   const [userInput, setUserInput] = useState('');
   const [currentAttempt, setCurrentAttempt] = useState(1);
   const [isComplete, setIsComplete] = useState(false);
@@ -52,34 +51,26 @@ export default function PracticeBox({ word, onComplete }: PracticeBoxProps) {
 
   const MAX_ATTEMPTS = 2;
 
-  // Speech synthesis setup
   const speakWord = useCallback(() => {
     if ('speechSynthesis' in window) {
-      // Cancel any ongoing speech
       window.speechSynthesis.cancel();
-
       const utterance = new SpeechSynthesisUtterance(word.russian);
       utterance.lang = 'ru-RU';
-      utterance.rate = 0.8; // Slightly slower for better clarity
-      
-      // Handle speech events
+      utterance.rate = 0.8;
       utterance.onstart = () => setIsPlaying(true);
       utterance.onend = () => setIsPlaying(false);
       utterance.onerror = () => setIsPlaying(false);
-
       window.speechSynthesis.speak(utterance);
     }
   }, [word.russian]);
 
-  // Play audio when word changes
   useEffect(() => {
     const timer = setTimeout(() => {
       speakWord();
-    }, 50); // Small delay to ensure smooth transition
+    }, 50);
     return () => clearTimeout(timer);
   }, [word.russian, speakWord]);
 
-  // Reset state when word changes
   useEffect(() => {
     setCurrentAttempt(1);
     setUserInput('');
@@ -87,7 +78,6 @@ export default function PracticeBox({ word, onComplete }: PracticeBoxProps) {
     setFeedback({ message: '', type: 'error' });
   }, [word.russian]);
 
-  // Handle animation timeout
   useEffect(() => {
     if (isAnimating) {
       const timer = setTimeout(() => setIsAnimating(false), 300);
@@ -95,25 +85,22 @@ export default function PracticeBox({ word, onComplete }: PracticeBoxProps) {
     }
   }, [isAnimating]);
 
-  const checkAnswer = (userAnswer: string, correctAnswer: string): { isCorrect: boolean; isAlmostCorrect: boolean } => {
-    const distance = levenshteinDistance(userAnswer, correctAnswer);
-    const isCorrect = distance === 0;
-    const isAlmostCorrect = distance <= 2;
-    return { isCorrect, isAlmostCorrect };
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Don't process if already complete or no input
     if (isComplete || !userInput.trim()) return;
 
     const normalizedInput = userInput.toLowerCase().trim();
-    const normalizedAnswer = word.translation.toLowerCase();
-    const { isCorrect, isAlmostCorrect } = checkAnswer(normalizedInput, normalizedAnswer);
+    const possibleAnswers = word.translation
+      .split(',')
+      .map(ans => ans.trim().toLowerCase())
+      .filter(Boolean);
+
+    const isCorrect = possibleAnswers.includes(normalizedInput);
+    const isAlmostCorrect = !isCorrect && possibleAnswers.some(
+      ans => levenshteinDistance(normalizedInput, ans) <= 2
+    );
 
     if (isCorrect) {
-      // Handle correct answer
       setFeedback({ message: 'נכון מאוד!🎉', type: 'success' });
       setIsComplete(true);
       onComplete({
@@ -122,21 +109,18 @@ export default function PracticeBox({ word, onComplete }: PracticeBoxProps) {
         userAnswer: normalizedInput
       });
     } else {
-      // Handle incorrect answer
       setIsAnimating(true);
-
       if (currentAttempt < MAX_ATTEMPTS) {
-        // First attempt - allow retry
         setFeedback({
           message: isAlmostCorrect ? 'כמעט! נסה שוב' : 'לא נכון, נסה שוב',
           type: isAlmostCorrect ? 'almost' : 'error'
         });
         setUserInput('');
-        setCurrentAttempt(2); // Move to second attempt
+        setCurrentAttempt(2);
       } else {
-        // Second attempt - show answer and complete
+        const primaryAnswer = possibleAnswers[0]; // Take only first as the main one
         setFeedback({
-          message: `לא נכון. התשובה הנכונה היא: ${word.translation}`,
+          message: `לא נכון. התשובה הנכונה היא: ${primaryAnswer}`,
           type: 'error'
         });
         setIsComplete(true);
@@ -149,7 +133,6 @@ export default function PracticeBox({ word, onComplete }: PracticeBoxProps) {
     }
   };
 
-  // Determine if input should be disabled
   const isInputDisabled = isComplete;
 
   return (
@@ -182,8 +165,8 @@ export default function PracticeBox({ word, onComplete }: PracticeBoxProps) {
           disabled={isInputDisabled}
           autoFocus
         />
-        <button 
-          type="submit" 
+        <button
+          type="submit"
           className={styles.checkButton}
           disabled={isInputDisabled || !userInput.trim()}
         >

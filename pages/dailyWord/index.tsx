@@ -51,7 +51,7 @@ export default function DailyWordPage() {
   useEffect(() => {
     const loadExcel = async () => {
       try {
-        const res = await fetch('/data/Russian_Daily_Word.xlsx');
+        const res = await fetch('/data/Russian_Words_Cards.xlsx');
         const arrayBuffer = await res.arrayBuffer();
         const workbook = XLSX.read(arrayBuffer, { type: 'array' });
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
