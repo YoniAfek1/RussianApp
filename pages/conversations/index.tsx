@@ -114,7 +114,6 @@ export default function ConversationsIndex() {
   const [listening, setListening] = useState(false);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [debugMsg, setDebugMsg] = useState<string>('Initializing...');
-  const [correctionEnabled, setCorrectionEnabled] = useState(true);
   const chatRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -142,9 +141,7 @@ export default function ConversationsIndex() {
           const genAI = new GoogleGenerativeAI(API_KEY);
           const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-          const globalPrompt = correctionEnabled
-            ? basePrompt + "\n\n" + correctionAddon
-            : basePrompt;
+          const globalPrompt = basePrompt + "\n\n" + correctionAddon;
 
           // Add instruction for varied greeting and natural conversation
           const promptWithGreeting = `${globalPrompt}\n\n${selectedConversation.prompt}\n\nНачни диалог с **разного** приветствия каждый раз. Используй разные варианты: "Привет!", "Здравствуйте!", "Как дела?", "Ты готов?", "Добрый день!", "Рад тебя видеть!" и т.д. Будь **естественным** и **спонтанным**, как в настоящем разговоре.`;
@@ -178,7 +175,7 @@ export default function ConversationsIndex() {
 
       initGemini();
     }
-  }, [selectedConversation, correctionEnabled]);
+      }, [selectedConversation]);
 
   const speak = (text: string) => {
     const utterance = new SpeechSynthesisUtterance(text);
@@ -264,9 +261,7 @@ export default function ConversationsIndex() {
       try {
         const genAI = new GoogleGenerativeAI(API_KEY);
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-        const globalPrompt = correctionEnabled
-          ? basePrompt + "\n\n" + correctionAddon
-          : basePrompt;
+        const globalPrompt = basePrompt + "\n\n" + correctionAddon;
         const chat = await model.startChat({
           history: [{
             role: "user",
@@ -296,23 +291,14 @@ export default function ConversationsIndex() {
           לחץ ודבר ברוסית. השיחה תתנהל ברוסית
         </p>
 
-        <div className={styles.correctionToggle}>
-          <label>
-            האם תרצה לקבל תיקונים שלך בשיחה?
-            <input
-              type="checkbox"
-              checked={correctionEnabled}
-              onChange={() => setCorrectionEnabled(!correctionEnabled)}
-            />
-          </label>
-        </div>
+
 
         <div className={styles.chatBox} ref={chatRef}>
           {history.map((msg, i) => (
             <div key={i} className={msg.role === 'user' ? styles.userMsg : styles.assistantMsg}>
               <div className={styles.msgHeader}>
                 <div className={styles.messageContent}>
-                  <div className={styles.messageText}>
+                  <div className={styles.messageText} dir="ltr">
                     {msg.content}
                   </div>
                 </div>
