@@ -14,22 +14,25 @@ const API_KEY = "AIzaSyBJjYZif960Nh_FccIVcngUZcSFfPq_tgA";
 const MAX_MESSAGES = 10;
 
 const basePrompt = `
-Ты чат-бот, помогающий человеку учить русский язык через ролевые диалоги.
-Всегда говори по-русски, избегай английского.
+Ты чат-бот, помогающий учить русский язык через ролевые диалоги.  
+Всегда говори **только по-русски**, даже если собеседник пишет по-другому.
 
-Используй простые, повседневные слова и выражения — как для начинающего ученика.
-Отвечай по смыслу — коротко, понятно, не более 12 слов.
-Избегай сложных конструкций и редких слов.
-Каждое твоё сообщение должно заканчиваться вопросом, чтобы продолжить диалог.
+Общайся **как с ребёнком** или с человеком, который **только начинает учить русский**.  
+Говори **очень просто** — только самые частые и лёгкие слова.  
+Используй **короткие, ясные фразы**, **не более 8–12 слов**.  
+Избегай сложных слов и длинных предложений.  
 
-Будь вежливым, живым и терпеливым — как хороший учитель, который играет роль.
+Каждое твоё сообщение должно заканчиваться **простым вопросом**, чтобы человек мог ответить.
 
+Будь тёплым, дружелюбным и терпеливым — как хороший учитель, который играет и радуется успехам ученика.
+
+**ВАЖНО:** Никогда не повторяй и не перефразируй то, что говорит пользователь. Отвечай естественно, как в настоящем разговоре.
 `;
 
 const correctionAddon = `
-Если пользователь делает ошибку — сначала повтори его фразу в правильной и естественной форме.
-Начни это предложение словами: "Правильнее сказать...".
-Если ошибки нет — не повторяй его фразу.
+Если пользователь делает ошибку — исправь её **естественно** в своём ответе, используя правильную форму слова или фразы. 
+Не говори "Правильнее сказать..." — просто используй правильную форму в контексте своего ответа.
+Если ошибки нет — отвечай как обычно.
 `;
 
 type Role = 'user' | 'assistant';
@@ -143,8 +146,8 @@ export default function ConversationsIndex() {
             ? basePrompt + "\n\n" + correctionAddon
             : basePrompt;
 
-          // Add instruction for varied greeting
-          const promptWithGreeting = `${globalPrompt}\n\n${selectedConversation.prompt}\n\nНачни диалог с подходящего приветствия, соответствующего твоей роли. Не используй всегда одно и то же приветствие.`;
+          // Add instruction for varied greeting and natural conversation
+          const promptWithGreeting = `${globalPrompt}\n\n${selectedConversation.prompt}\n\nНачни диалог с **разного** приветствия каждый раз. Используй разные варианты: "Привет!", "Здравствуйте!", "Как дела?", "Ты готов?", "Добрый день!", "Рад тебя видеть!" и т.д. Будь **естественным** и **спонтанным**, как в настоящем разговоре.`;
 
           const chat = await model.startChat({
             history: [{
@@ -152,24 +155,24 @@ export default function ConversationsIndex() {
               parts: [{ text: promptWithGreeting }]
             }],
             generationConfig: {
-              maxOutputTokens: 50,
-              temperature: 0.7,
+              maxOutputTokens: 60,
+              temperature: 0.9,
             },
           });
 
           setChatSession(chat);
 
           // Send a dummy message to trigger the assistant's greeting
-          const dummyInputs = ["...", "—", "🔊", "👋"];
+          const dummyInputs = ["...", "—", "🔊", "👋", "Привет", "Начинаем"];
           const dummy = dummyInputs[Math.floor(Math.random() * dummyInputs.length)];
           const initialResponse = await chat.sendMessage(dummy);
           const assistantMessage = initialResponse.response.text();
           setHistory([{ role: 'assistant', content: assistantMessage }]);
           speak(assistantMessage);
-          setDebugMsg('✅ Gemini ready!');
+          setDebugMsg('✅ ready!');
         } catch (error) {
-          console.error('Error initializing Gemini:', error);
-          setDebugMsg('❌ Failed to initialize Gemini');
+          console.error('Error initializing:', error);
+          setDebugMsg('❌ Failed to initialize');
         }
       };
 
@@ -267,11 +270,11 @@ export default function ConversationsIndex() {
         const chat = await model.startChat({
           history: [{
             role: "user",
-            parts: [{ text: globalPrompt + '\n\n' + selectedConversation.prompt }]
+            parts: [{ text: globalPrompt + '\n\n' + selectedConversation.prompt + '\n\nНачни диалог с **разного** приветствия каждый раз. Используй разные варианты: "Привет!", "Здравствуйте!", "Как дела?", "Ты готов?", "Добрый день!", "Рад тебя видеть!" и т.д. Будь **естественным** и **спонтанным**, как в настоящем разговоре.' }]
           }],
           generationConfig: {
-            maxOutputTokens: 50,
-            temperature: 0.7,
+            maxOutputTokens: 60,
+            temperature: 0.9,
           },
         });
         setChatSession(chat);
