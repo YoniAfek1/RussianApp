@@ -150,8 +150,6 @@ export default function DailyWordPage() {
           <div className={styles.cardFront} style={{ backgroundColor: cardColor }}>
             <div className={styles.wordRow}>
               <span className={styles.word}>{word.Russian}</span>
-              <span className={styles.separator}>–</span>
-              <span className={styles.word}>{word.Hebrew}</span>
             </div>
             <div className={styles.icon}>{word.Icon}</div>
             <button
