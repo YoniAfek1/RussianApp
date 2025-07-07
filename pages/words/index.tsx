@@ -29,7 +29,7 @@ export default function DailyWordPage() {
   const [words, setWords] = useState<DailyWordRow[]>([]);
   const [filteredWords, setFilteredWords] = useState<DailyWordRow[]>([]);
   const [topics, setTopics] = useState<string[]>([]);
-  const [selectedTopic, setSelectedTopic] = useState<string>('');
+  const [selectedTopic, setSelectedTopic] = useState<string>('הכל');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [cardColor, setCardColor] = useState<string>('');
@@ -64,7 +64,7 @@ export default function DailyWordPage() {
         // Extract unique topics
         const uniqueTopics = Array.from(new Set(data.map(row => row.Topic).filter((t): t is string => !!t)));
         setTopics(uniqueTopics);
-        setSelectedTopic(uniqueTopics[0] || '');
+        setSelectedTopic('הכל');
       } catch (err) {
         console.error('Failed to load daily words:', err);
       }
@@ -74,12 +74,10 @@ export default function DailyWordPage() {
 
   // Filter words by topic
   useEffect(() => {
-    if (!selectedTopic) {
-      setFilteredWords(words);
-      setCurrentIndex(0);
-      return;
+    let filtered = words;
+    if (selectedTopic && selectedTopic !== 'הכל') {
+      filtered = words.filter(w => w.Topic === selectedTopic);
     }
-    const filtered = words.filter(w => w.Topic === selectedTopic);
     setFilteredWords(filtered);
     // Pick a random index for the first card
     if (filtered.length > 0) {
@@ -128,19 +126,18 @@ export default function DailyWordPage() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.topBar}>
-        <h1 className={styles.title}>🧩 אוצר מילים 🧩</h1>
-        <div className={styles.topicFilter}>
-          <select
-            value={selectedTopic}
-            onChange={e => setSelectedTopic(e.target.value)}
-            className={styles.dropdown}
-          >
-            {topics.map(topic => (
-              <option key={topic} value={topic}>{topic}</option>
-            ))}
-          </select>
-        </div>
+      <h1 className={styles.title}>🧩 אוצר מילים 🧩</h1>
+      <div className={styles.topicFilter}>
+        <select
+          value={selectedTopic}
+          onChange={e => setSelectedTopic(e.target.value)}
+          className={styles.dropdown}
+        >
+          <option value="הכל">הכל</option>
+          {topics.map(topic => (
+            <option key={topic} value={topic}>{topic}</option>
+          ))}
+        </select>
       </div>
       <p className={styles.subtitle}>לחצו על הקלף לחשיפת האסוציאציה</p>
       <div className={styles.cardContainer}>
