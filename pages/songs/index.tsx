@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import styles from '../../styles/DailySong.module.css';
+import styles from '../../styles/Songs.module.css';
 import * as XLSX from 'xlsx';
 import { FaVolumeUp } from 'react-icons/fa';
 
@@ -34,7 +34,7 @@ export default function DailySong() {
   useEffect(() => {
     const loadExcel = async () => {
       try {
-        const res = await fetch('/data/Russian_Daily_Song.xlsx');
+        const res = await fetch('/data/Russian_My_Songs.xlsx');
         const arrayBuffer = await res.arrayBuffer();
         const workbook = XLSX.read(arrayBuffer, { type: 'array' });
         const sheetName = workbook.SheetNames[0];

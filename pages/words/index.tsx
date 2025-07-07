@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import styles from '../../styles/DailyWord.module.css';
+import styles from '../../styles/CardsWords.module.css';
 import * as XLSX from 'xlsx';
 import { FaVolumeUp, FaArrowLeft, FaArrowRight, FaArrowCircleLeft, FaArrowAltCircleLeft } from 'react-icons/fa';
 
@@ -66,7 +66,7 @@ export default function DailyWordPage() {
         setTopics(uniqueTopics);
         setSelectedTopic('הכל');
       } catch (err) {
-        console.error('Failed to load daily words:', err);
+        console.error('Failed to load words:', err);
       }
     };
     loadExcel();
