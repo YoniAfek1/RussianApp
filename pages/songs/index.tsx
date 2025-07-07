@@ -273,7 +273,7 @@ export default function DailySong() {
           ref={inputRef}
           className={styles.autocompleteInput}
           type="text"
-          placeholder="הכניסו שם שיר/אומן ובחרו"
+          placeholder="הכניסו אמן - שם שיר ובחרו"
           value={input}
           onChange={handleInput}
           onFocus={() => setShowSuggestions(true)}
