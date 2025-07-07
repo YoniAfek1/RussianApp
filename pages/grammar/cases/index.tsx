@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from '../../../styles/Cases.module.css';
+import styles from '../../../styles/cases.module.css';
 import Link from 'next/link';
 
 interface CaseEnding {
