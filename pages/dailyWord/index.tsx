@@ -10,6 +10,7 @@ interface DailyWordRow {
   AssociationWord: string;
   Association: string;
   Icon: string;
+  Topic?: string;
 }
 
 async function getVoices(): Promise<SpeechSynthesisVoice[]> {
@@ -26,6 +27,9 @@ async function getVoices(): Promise<SpeechSynthesisVoice[]> {
 
 export default function DailyWordPage() {
   const [words, setWords] = useState<DailyWordRow[]>([]);
+  const [filteredWords, setFilteredWords] = useState<DailyWordRow[]>([]);
+  const [topics, setTopics] = useState<string[]>([]);
+  const [selectedTopic, setSelectedTopic] = useState<string>('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [cardColor, setCardColor] = useState<string>('');
@@ -57,21 +61,41 @@ export default function DailyWordPage() {
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
         const data: DailyWordRow[] = XLSX.utils.sheet_to_json(sheet, { defval: '' });
         setWords(data);
+        // Extract unique topics
+        const uniqueTopics = Array.from(new Set(data.map(row => row.Topic).filter((t): t is string => !!t)));
+        setTopics(uniqueTopics);
+        setSelectedTopic(uniqueTopics[0] || '');
       } catch (err) {
         console.error('Failed to load daily words:', err);
       }
     };
-
     loadExcel();
   }, []);
 
+  // Filter words by topic
   useEffect(() => {
-    if (words.length > 0) {
-      const word = words[currentIndex];
+    if (!selectedTopic) {
+      setFilteredWords(words);
+      setCurrentIndex(0);
+      return;
+    }
+    const filtered = words.filter(w => w.Topic === selectedTopic);
+    setFilteredWords(filtered);
+    // Pick a random index for the first card
+    if (filtered.length > 0) {
+      setCurrentIndex(Math.floor(Math.random() * filtered.length));
+    } else {
+      setCurrentIndex(0);
+    }
+  }, [selectedTopic, words]);
+
+  useEffect(() => {
+    if (filteredWords.length > 0) {
+      const word = filteredWords[currentIndex];
       setCardColor(prev => getNewColor(prev));
       checkImageExists(`${word.Russian.toLowerCase()}.png`);
     }
-  }, [currentIndex, words]);
+  }, [currentIndex, filteredWords]);
 
   const speak = async (text: string) => {
     const synth = window.speechSynthesis;
@@ -89,22 +113,35 @@ export default function DailyWordPage() {
   };
 
   const next = () => {
-    setCurrentIndex((prev) => (prev + 1) % words.length);
+    setCurrentIndex((prev) => (prev + 1) % filteredWords.length);
     setFlipped(false);
   };
 
   const prev = () => {
-    setCurrentIndex((prev) => (prev - 1 + words.length) % words.length);
+    setCurrentIndex((prev) => (prev - 1 + filteredWords.length) % filteredWords.length);
     setFlipped(false);
   };
 
-  if (!words.length) return <div className={styles.loading}>טוען...</div>;
+  if (!filteredWords.length) return <div className={styles.loading}>לא נמצאו מילים בנושא זה</div>;
 
-  const word = words[currentIndex];
+  const word = filteredWords[currentIndex];
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>🧩 אוצר מילים 🧩</h1>
+      <div className={styles.topBar}>
+        <h1 className={styles.title}>🧩 אוצר מילים 🧩</h1>
+        <div className={styles.topicFilter}>
+          <select
+            value={selectedTopic}
+            onChange={e => setSelectedTopic(e.target.value)}
+            className={styles.dropdown}
+          >
+            {topics.map(topic => (
+              <option key={topic} value={topic}>{topic}</option>
+            ))}
+          </select>
+        </div>
+      </div>
       <p className={styles.subtitle}>לחצו על הקלף לחשיפת האסוציאציה</p>
       <div className={styles.cardContainer}>
         <div

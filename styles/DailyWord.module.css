@@ -180,6 +180,34 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
+.topBar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.topicFilter {
+  margin-left: auto;
+}
+
+.dropdown {
+  padding: 0.4rem 1.2rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background: #f8f8f8;
+  color: #333;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  transition: border 0.2s;
+}
+
+.dropdown:focus {
+  border: 1.5px solid #1976D2;
+}
 
 @media (max-width: 768px) {
   .wordRow {
