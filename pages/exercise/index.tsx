@@ -53,7 +53,7 @@ export default function Exercise() {
           </span>
         </Link>
         {/* Vocabulary Button */}
-        <Link href="/practice" className={styles.optionCard}>
+        <Link href="/words/game" className={styles.optionCard}>
           <span className={styles.optionText}>מילים</span>
           <span className={styles.icon}>
             <img src="/animations/book.png" alt="Vocabulary Icon" className={styles.iconImage} />

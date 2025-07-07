@@ -13,14 +13,14 @@ export default function Home() {
       <main className={styles.mainNav}>
       <Link href="/words" className={styles.navButton}>
         <span className={styles.icon}>
-        <img src="/animations/puzzle.png" alt="daily word Icon" className={styles.iconImage} />
+        <img src="/animations/puzzle.png" alt="words Icon" className={styles.iconImage} />
         </span>        
         <span className={styles.buttonText}>אוצר מילים</span>
         <span className={styles.buttonSubtext}>למדו מילים בעזרת אסוציאציות</span>
         </Link>
         <Link href="/songs" className={styles.navButton}>
         <span className={styles.icon}>
-        <img src="/animations/song.png" alt="daily song Icon" className={styles.iconImage} />
+        <img src="/animations/song.png" alt="songs Icon" className={styles.iconImage} />
         </span>
         <span className={styles.buttonText}>שירים</span>
         <span className={styles.buttonSubtext}>נחשו את השיר שתורגם לרוסית</span>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import styles from '../styles/Practice.module.css';
+import styles from '@/styles/Practice.module.css';
 import Confetti from 'react-confetti';
 import * as XLSX from 'xlsx';
 import PracticeBox from '@/components/PracticeBox';
