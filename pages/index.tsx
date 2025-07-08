@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { FaBook, FaChalkboardTeacher, FaHeadphones, FaLanguage } from 'react-icons/fa';
 import styles from '../styles/HomePage.module.css';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export default function Home() {
   return (
