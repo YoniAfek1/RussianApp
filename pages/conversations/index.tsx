@@ -78,13 +78,12 @@ const conversations: Conversation[] = [
     title: 'ברחוב',
     emoji: '🚇',
     description: 'התמצאות ברחוב',
-    prompt: `Ты житель города и помогаешь туристу сориентироваться на улице и найти нужное место.
-    Отвечай дружелюбно, понятно и по делу.`
+    prompt: `Ты житель города и помогаешь туристу сориентироваться на улице и найти нужное место. Отвечай дружелюбно, понятно и по делу.`
   },
   {
     id: 'hotel',
     title: 'בבית מלון',
-    emoji: '🎬',
+    emoji: '🏨',
     description: 'צ\'ק אין במלון',
     prompt: `Ты администратор отеля. Говори по-русски вежливо, помогай с заселением, отвечай на вопросы.`
   },
@@ -112,6 +111,7 @@ export default function ConversationsIndex() {
   const [listening, setListening] = useState(false);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [debugMsg, setDebugMsg] = useState<string>('Initializing...');
+  const [debugLog, setDebugLog] = useState<string[]>([]);
   const chatRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -136,27 +136,27 @@ export default function ConversationsIndex() {
       const initGemini = async () => {
         try {
           setDebugMsg('📦 Initializing Gemini...');
-          // Build the prompt as before
           const globalPrompt = basePrompt + "\n\n" + correctionAddon;
           const promptWithGreeting = `${globalPrompt}\n\n${selectedConversation.prompt}\n\nНачни диалог с **разного** приветствия каждый раз. Используй разные варианты: "Привет!", "Здравствуйте!", "Как дела?", "Ты готов?", "Добрый день!", "Рад тебя видеть!" и т.д. Будь **естественным** и **спонтанным**, как в настоящем разговоре.`;
 
-          // Call our API route to get the assistant's greeting
+          setDebugLog(prev => [...prev, '🚀 Sending initial prompt to Gemini']);
+
           const response = await fetch('/api/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              messages: [
-                { role: 'user', content: promptWithGreeting }
-              ]
+              messages: [{ role: 'user', content: promptWithGreeting }]
             })
           });
           const data = await response.json();
           setHistory([{ role: 'assistant', content: data.reply }]);
           speak(data.reply);
+          setDebugLog(prev => [...prev, `✅ Gemini replied: ${data.reply}`]);
           setDebugMsg('✅ ready!');
         } catch (error) {
           console.error('Error initializing:', error);
           setDebugMsg('❌ Failed to initialize');
+          setDebugLog(prev => [...prev, `❌ Init error: ${error}`]);
         }
       };
       initGemini();
@@ -174,14 +174,17 @@ export default function ConversationsIndex() {
   const handleRecognizedText = async (text: string) => {
     if (!text) {
       setDebugMsg('⚠️ No input or model not ready');
+      setDebugLog(prev => [...prev, '⚠️ Empty user input']);
       return;
     }
+
     const updatedHistory: Message[] = [...history, { role: 'user', content: text }];
     setHistory(updatedHistory);
     setDebugMsg('💬 Sending to Gemini...');
     setLoading(true);
+    setDebugLog(prev => [...prev, `📤 User: ${text}`]);
+
     try {
-      // Send the full history to the API route
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -190,11 +193,14 @@ export default function ConversationsIndex() {
       const data = await response.json();
       setHistory([...updatedHistory, { role: 'assistant', content: data.reply }]);
       speak(data.reply);
+      setDebugLog(prev => [...prev, `🤖 Gemini replied: ${data.reply}`]);
       setDebugMsg('✅ Response complete');
     } catch (error) {
-      console.error('Error from Gemini:', error);
+      console.error('Gemini error:', error);
       setDebugMsg('❌ Error from model');
+      setDebugLog(prev => [...prev, `❌ Error: ${error}`]);
     }
+
     setLoading(false);
   };
 
@@ -202,185 +208,88 @@ export default function ConversationsIndex() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
       alert('הדפדפן שלך לא תומך בזיהוי קולי');
-      setDebugMsg('❌ SpeechRecognition not supported');
       return;
     }
 
-    try {
-      const recognition = new SpeechRecognition();
-      recognition.lang = 'ru-RU';
-      recognition.interimResults = false;
-      recognition.maxAlternatives = 1;
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'ru-RU';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
 
-      const timeoutId = setTimeout(() => recognition.stop(), 8000);
+    recognition.onstart = () => {
+      setListening(true);
+      setDebugMsg('🎙️ Listening...');
+    };
+    recognition.onresult = (event: SpeechRecognitionEvent) => {
+      const text = event.results[0][0].transcript;
+      setDebugMsg(`📝 Recognized: "${text}"`);
+      setDebugLog(prev => [...prev, `🎧 Recognized: "${text}"`]);
+      handleRecognizedText(text);
+    };
+    recognition.onerror = (event: any) => {
+      setDebugMsg(`❌ STT Error: ${event.error}`);
+      setDebugLog(prev => [...prev, `❌ STT error: ${event.error}`]);
+      setListening(false);
+    };
+    recognition.onend = () => {
+      setListening(false);
+    };
 
-      recognition.onstart = () => {
-        setDebugMsg('🎙️ Listening...');
-        setListening(true);
-      };
-      recognition.onend = () => {
-        clearTimeout(timeoutId);
-        setListening(false);
-        setDebugMsg('🛑 Recognition ended.');
-      };
-      recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
-        console.error('Speech recognition error:', event.error);
-        setListening(false);
-        setDebugMsg(`❌ STT error: ${event.error}`);
-      };
-      recognition.onresult = (event: SpeechRecognitionEvent) => {
-        const text = event.results[0][0].transcript;
-        setDebugMsg(`📝 Recognized: "${text}"`);
-        handleRecognizedText(text);
-      };
-
-      recognition.start();
-    } catch (err) {
-      console.error('Error initializing speech recognition:', err);
-      setDebugMsg('❌ Error initializing STT');
-    }
-  };
-
-  const startNewConversation = async () => {
-    setHistory([]);
-    setDebugMsg('🔄 Starting new conversation...');
-    if (selectedConversation) {
-      try {
-        const globalPrompt = basePrompt + "\n\n" + correctionAddon;
-        const promptWithGreeting = `${globalPrompt}\n\n${selectedConversation.prompt}\n\nНачни диалог с **разного** приветствия каждый раз. Используй разные варианты: "Привет!", "Здравствуйте!", "Как дела?", "Ты готов?", "Добрый день!", "Рад тебя видеть!" и т.д. Будь **естественным** и **спонтанным**, как в настоящем разговоре.`;
-        const response = await fetch('/api/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            messages: [
-              { role: 'user', content: promptWithGreeting }
-            ]
-          })
-        });
-        const data = await response.json();
-        setHistory([{ role: 'assistant', content: data.reply }]);
-        setDebugMsg('✅ Ready for new conversation!');
-      } catch (error) {
-        console.error('Error starting new conversation:', error);
-        setDebugMsg('❌ Failed to start new conversation');
-      }
-    }
+    recognition.start();
   };
 
   const isConversationEnded = history.length >= MAX_MESSAGES;
 
-  if (selectedConversation) {
-    return (
-      <div className={styles.container} dir="rtl">
-        <h1 className={styles.title}>{selectedConversation.emoji} {selectedConversation.title}</h1>
-        <p className={styles.description}>
-          לחץ ודבר ברוסית. השיחה תתנהל ברוסית
-        </p>
-
-
-
-        <div className={styles.chatBox} ref={chatRef}>
-          {history.map((msg, i) => (
-            <div key={i} className={msg.role === 'user' ? styles.userMsg : styles.assistantMsg}>
-              <div className={styles.msgHeader}>
-                <div className={styles.messageContent}>
-                  <div className={styles.messageText} dir="ltr">
-                    {msg.content}
-                  </div>
-                </div>
-                {msg.role === 'assistant' && (
-                  <div className={styles.messageActions}>
-                    <button 
-                      className={styles.iconButton}
-                      onClick={() => speak(msg.content)}
-                      title="Replay audio"
-                    >
-                      🔊
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className={styles.controls}>
-          {isConversationEnded ? (
-            <>
-              <div className={styles.conversationEnded}>
-                🔁 השיחה הסתיימה. לחץ למטה כדי להתחיל שיחה חדשה
-              </div>
-              <button 
-                className={styles.newConversationButton}
-                onClick={startNewConversation}
+  return (
+    <div className={styles.container} dir="rtl">
+      {!selectedConversation ? (
+        <>
+          <h1 className={styles.title}>בחר סוג שיחה 💬</h1>
+          <div className={styles.description}>בחר את סוג השיחה שברצונך לתרגל</div>
+          <div className={styles.grid}>
+            {conversations.map((conv) => (
+              <div
+                key={conv.id}
+                className={styles.conversationCard}
+                onClick={() => setSelectedConversation(conv)}
               >
-                התחל שיחה חדשה
-              </button>
-            </>
+                <div>{conv.emoji}</div>
+                <div>{conv.title}</div>
+              </div>
+            ))}
+          </div>
+        </>
+      ) : (
+        <>
+          <h1>{selectedConversation.emoji} {selectedConversation.title}</h1>
+          <div className={styles.chatBox} ref={chatRef}>
+            {history.map((msg, i) => (
+              <div key={i} className={msg.role === 'user' ? styles.userMsg : styles.assistantMsg}>
+                {msg.content}
+              </div>
+            ))}
+          </div>
+
+          {isConversationEnded ? (
+            <div>🔁 השיחה הסתיימה</div>
           ) : (
-            <button
-              className={`${styles.recordButton} ${listening ? styles.recording : ''}`}
-              onClick={startRecognition}
-              disabled={listening || loading}
-            >
+            <button onClick={startRecognition} disabled={listening || loading}>
               {listening ? 'מקשיב...' : 'לחץ ודבר'}
             </button>
           )}
-        </div>
 
-        <div style={{ marginTop: '1rem', fontSize: '1rem', color: '#666' }}>
-          <strong>סטטוס:</strong> {debugMsg}
-        </div>
-
-        <button 
-          onClick={() => setSelectedConversation(null)}
-          style={{
-            marginTop: '1rem',
-            padding: '0.5rem 1rem',
-            background: '#f5f5f5',
-            border: 'none',
-            borderRadius: '0.5rem',
-            cursor: 'pointer'
-          }}
-        >
-          חזרה לרשימת השיחות
-        </button>
-      </div>
-    );
-  }
-
-  return (
-    <div className={styles.container} dir="rtl">
-      <h1 className={styles.title}>בחר סוג שיחה 💬</h1>
-      <p className={styles.description}>
-        בחר את סוג השיחה שברצונך לתרגל
-      </p>
-
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-        gap: '1rem',
-        padding: '1rem',
-        width: '100%',
-        maxWidth: '1200px',
-        margin: '0 auto'
-      }}>
-        {conversations.map((conv) => (
-          <div 
-            key={conv.id}
-            onClick={() => setSelectedConversation(conv)}
-            className={styles.conversationCard}
-            style={{
-              backgroundImage: `url("/animations/conversation/${conv.id.charAt(0).toUpperCase() + conv.id.slice(1)}.png")`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              position: "relative"
-            }}
-          >
-            <div className={styles.cardLabel}>{conv.title}</div>
+          <div style={{ marginTop: '1rem', fontSize: '0.9rem', color: '#666' }}>
+            <strong>סטטוס:</strong> {debugMsg}
           </div>
-        ))}
-      </div>
+
+          <div style={{ marginTop: '1rem', background: '#f9f9f9', padding: '1rem', fontFamily: 'monospace', maxHeight: '200px', overflowY: 'auto' }}>
+            <strong>🔍 Debug Log:</strong>
+            <ul style={{ padding: 0, listStyle: 'none' }}>
+              {debugLog.map((msg, i) => <li key={i}>{msg}</li>)}
+            </ul>
+          </div>
+        </>
+      )}
     </div>
   );
 }
