@@ -1,0 +1,161 @@
+.navigation {
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 1rem;
+  z-index: 1000;
+}
+
+.menuButton,
+.backButton {
+  background: white;
+  border: none;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  color: #2c3e50;
+}
+
+.backButton {
+  transform: scaleX(-1); /* Flip the arrow for RTL */
+}
+
+.menuButton:hover,
+.backButton:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.backButton:hover {
+  transform: scaleX(-1) scale(1.05); /* Maintain RTL flip while scaling */
+}
+
+.menuButton:active,
+.backButton:active {
+  transform: scale(0.95);
+}
+
+.backButton:active {
+  transform: scaleX(-1) scale(0.95); /* Maintain RTL flip while scaling */
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.2s ease;
+}
+
+.menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 250px;
+  background: white;
+  padding: 4rem 1rem 1rem;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.menu button {
+  background: none;
+  border: none;
+  padding: 0.75rem 1rem;
+  font-size: 1.1rem;
+  color: #2c3e50;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  text-align: right;
+  width: 100%;
+}
+
+.menu button:hover {
+  background: #f5f5f5;
+  color: #2196F3;
+}
+
+.logoutButton {
+  margin-top: auto;
+  color: #e74c3c !important;
+}
+
+.logoutButton:hover {
+  background: #fee2e2 !important;
+  color: #dc2626 !important;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .navigation {
+    padding: 0.75rem;
+  }
+
+  .menuButton,
+  .backButton {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .menu {
+    width: 200px;
+    padding: 3.5rem 0.75rem 0.75rem;
+  }
+
+  .menu button {
+    padding: 0.6rem 0.75rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navigation {
+    padding: 0.5rem;
+  }
+
+  .menuButton,
+  .backButton {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .menu {
+    width: 180px;
+    padding: 3rem 0.5rem 0.5rem;
+  }
+
+  .menu button {
+    padding: 0.5rem 0.6rem;
+    font-size: 0.95rem;
+  }
+} 

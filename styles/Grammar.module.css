@@ -1,0 +1,1694 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 4rem 1rem 1rem;
+  background-color: #C8E6F8;
+  direction: rtl;
+  text-align: right;
+}
+
+/* Remove navigation styles */
+.hamburgerButton,
+.sideMenu,
+.sideMenu.open,
+.mainContent.menuOpen,
+.menuButton,
+.grammarButton,
+.vocabularyButton,
+.hearingButton,
+.buttonIcon {
+  display: none;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 2rem;
+  width: 100%;
+  direction: rtl;
+  text-align: right;
+}
+
+.title {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 3rem;
+  text-align: center;
+  font-weight: 600;
+  direction: rtl;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #666;
+  text-align: center;
+  margin-bottom: 3rem;
+  direction: rtl;
+}
+
+.topicsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  padding: 1rem;
+  direction: rtl;
+  justify-items: center;
+}
+
+.topicCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: #2c3e50;
+  min-height: 120px;
+  min-width: 0;
+  width: 100%;
+  max-width: 200px;
+  direction: rtl;
+  text-align: center;
+}
+
+.topicCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+.icon {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+  color: #2196F3;
+}
+
+.topicIconImage {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+  margin-bottom: 0px;
+}
+
+.topicTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0rem;
+  text-align: center;
+  line-height: 0;
+  direction: rtl;
+}
+
+.topicDescription {
+  font-size: 0.8rem;
+  color: #666;
+  text-align: center;
+  line-height: 1.4;
+  direction: rtl;
+}
+
+.topicContent {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  direction: rtl;
+  text-align: right;
+}
+
+.topicContent h1,
+.topicContent h2,
+.topicContent h3,
+.topicContent h4,
+.topicContent h5,
+.topicContent h6 {
+  direction: rtl;
+  text-align: right;
+}
+
+.topicContent p {
+  direction: rtl;
+  text-align: right;
+}
+
+.topicContent ul,
+.topicContent ol {
+  direction: rtl;
+  text-align: right;
+  padding-right: 1.5rem;
+  padding-left: 0;
+}
+
+.topicContent li {
+  direction: rtl;
+  text-align: right;
+}
+
+.backButton {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  color: #2c3e50;
+  background: transparent;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 2rem;
+  direction: rtl;
+}
+
+.backButton:hover {
+  background: #f5f5f5;
+  border-color: #2196F3;
+  color: #1976D2;
+}
+
+.grammarTable {
+  margin-top: 2rem;
+  direction: rtl;
+}
+
+.topicExplanation {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  direction: rtl;
+  text-align: right;
+}
+
+.tableContainer {
+  margin: 0.5rem 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  direction: rtl;
+}
+
+.tableContainer table {
+  width: 100%;
+  border-collapse: collapse;
+  direction: rtl;
+  font-size: 0.9rem;
+}
+
+.tableContainer th {
+  background-color: #f8f9fa;
+  color: #000000;
+  padding: 0.6rem;
+  text-align: right;
+  font-weight: 600;
+  border-bottom: 1px solid #e0e0e0;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  white-space: nowrap;
+  direction: rtl;
+}
+
+.tableContainer td {
+  padding: 0.6rem;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: right;
+  direction: rtl;
+}
+
+.tableContainer tr:hover {
+  background-color: #f5f5f5;
+}
+
+.lettersSection {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding: 2rem;
+  direction: rtl;
+}
+
+.sectionTitle {
+  font-size: 2rem;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 2rem;
+  direction: rtl;
+}
+
+.alphabetSection {
+  padding: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+  direction: rtl;
+  text-align: right;
+}
+
+.sectionDescription {
+  text-align: center;
+  color: #666;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  direction: rtl;
+}
+
+.alphabetGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  direction: rtl;
+}
+
+.letterCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  direction: rtl;
+  text-align: center;
+}
+
+.letterCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.letterPair {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  direction: rtl;
+}
+
+.pronunciation {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+  direction: rtl;
+}
+
+.audioButton {
+  background: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  direction: rtl;
+}
+
+.audioButton:hover {
+  background: #1976D2;
+  transform: scale(1.1);
+}
+
+.audioButton:active {
+  transform: scale(0.95);
+}
+
+.audioButton:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.audioButton svg {
+  width: 20px;
+  height: 20px;
+}
+
+.pronunciationRules {
+  margin-top: 2rem;
+  direction: rtl;
+}
+
+.ruleTitle {
+  font-size: 1.3rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  direction: rtl;
+  text-align: right;
+}
+
+.lightbulbContainer {
+  margin: 2rem 0;
+  direction: rtl;
+}
+
+.ruleSection {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  direction: rtl;
+  text-align: right;
+}
+
+.ruleSection h3 {
+  color: #2c3e50;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  direction: rtl;
+  text-align: right;
+}
+
+.ruleSection p {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  direction: rtl;
+  text-align: right;
+}
+
+.ruleSection ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+  direction: rtl;
+  text-align: right;
+  padding-right: 1.5rem;
+  padding-left: 0;
+}
+
+.ruleSection li {
+  margin: 0.5rem 0;
+  color: #666;
+  direction: rtl;
+  text-align: right;
+}
+
+.examplesSection {
+  margin-top: 1.25rem;
+  padding: 0.75rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  direction: rtl;
+  text-align: right;
+}
+
+.examplesTitle {
+  font-size: 1rem;
+  color: #2c3e50;
+  margin-bottom: 0.6rem;
+  text-align: center;
+  direction: rtl;
+}
+
+.examplesList {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  direction: rtl;
+}
+
+.exampleWord {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 0.4rem;
+  direction: rtl;
+  text-align: center;
+}
+
+.wordText {
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: #2c3e50;
+  direction: rtl;
+}
+
+.wordHover {
+  position: static;
+  background: #2c3e50;
+  color: white;
+  padding: 0.6rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.2s ease;
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  white-space: normal;
+  width: 100%;
+  margin: 0.4rem 0;
+  direction: rtl;
+}
+
+@media (max-width: 768px) {
+  .examplesList {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    direction: rtl;
+  }
+
+  .wordHover {
+    position: static;
+    margin-top: 0.5rem;
+    background: #f8f9fa;
+    color: #2c3e50;
+    border: 1px solid #e9ecef;
+    margin-left: 0;
+    margin-right: 0;
+    min-width: auto;
+    max-width: none;
+    direction: rtl;
+  }
+
+  .exampleWord:hover .wordHover {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+}
+
+.pronunciationRules {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  direction: rtl;
+}
+
+.pronunciationRule {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  direction: rtl;
+  text-align: right;
+}
+
+.ruleExplanation {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  direction: rtl;
+  text-align: right;
+}
+
+.explanationIcon {
+  font-size: 1.2rem;
+  margin-left: 0.5rem;
+  color: #2196F3;
+}
+
+.inlineExamples {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  direction: rtl;
+  text-align: right;
+}
+
+.exampleItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.1rem;
+  direction: rtl;
+  text-align: right;
+}
+
+.russianWord {
+  font-weight: bold;
+  color: #2c3e50;
+  direction: rtl;
+}
+
+.pronunciation {
+  color: #666;
+  font-style: italic;
+  direction: rtl;
+}
+
+.pronunciation strong {
+  color: #2196F3;
+}
+
+@media (max-width: 768px) {
+  .pronunciationRule {
+    padding: 1.5rem;
+    direction: rtl;
+  }
+
+  .inlineExamples {
+    padding: 0.75rem;
+    direction: rtl;
+  }
+
+  .exampleItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    direction: rtl;
+    text-align: right;
+  }
+}
+
+/* Number Tables Styles */
+.numberTablesContainer {
+  margin: 2rem 0;
+  padding: 1rem;
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+}
+
+.rangeGroups {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.rangeGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.rangeGroupTitle {
+  font-size: 1.2rem;
+  color: #2c3e50;
+  margin: 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.rangeNavigation {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.rangeButton {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  background: white;
+  color: #666;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 100px;
+}
+
+.rangeButton:hover {
+  border-color: #2196F3;
+  color: #2196F3;
+}
+
+.activeRange {
+  background: #2196F3;
+  color: white;
+  border-color: #2196F3;
+}
+
+.activeRange:hover {
+  color: white;
+  background: #1976D2;
+}
+
+.transliterationCell {
+  font-family: 'SBL Hebrew', 'Times New Roman', serif;
+  direction: rtl;
+}
+
+.tooltipContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip {
+  visibility: hidden;
+  position: absolute;
+  background: var(--primary-color);
+  color: white;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  z-index: 2;
+  bottom: 100%;
+  right: 50%;
+  transform: translateX(50%);
+  margin-bottom: 0.5rem;
+}
+
+.tooltipContainer:hover .tooltip {
+  visibility: visible;
+}
+
+@media (max-width: 768px) {
+  .numberTablesContainer {
+    padding: 1rem;
+  }
+
+  .rangeGroups {
+    gap: 1.5rem;
+  }
+
+  .rangeGroup {
+    gap: 0.75rem;
+  }
+
+  .rangeNavigation {
+    gap: 0.25rem;
+  }
+
+  .rangeButton {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    min-width: 80px;
+  }
+
+  .tableContainer td,
+  .tableContainer th {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .tooltip {
+    position: fixed;
+    bottom: 20px;
+    right: 50%;
+    transform: translateX(50%);
+    width: 90%;
+    max-width: 300px;
+    white-space: normal;
+    text-align: center;
+  }
+}
+
+.ruleDisplay {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  width: 100%;
+}
+
+.ruleToggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  transition: transform 0.2s ease;
+  align-self: flex-start;
+}
+
+.ruleToggle:hover {
+  transform: scale(1.1);
+}
+
+.ruleText {
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  width: 100%;
+  text-align: right;
+  animation: fadeIn 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  direction: rtl;
+}
+
+.ruleText h3 {
+  color: #2c3e50;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.ruleText p {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.ruleText ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.ruleText li {
+  margin: 0.5rem 0;
+  color: #666;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .ruleText {
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+.verbConjugation {
+  direction: rtl;
+  margin: 2rem 0;
+}
+
+.verbTabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.verbTab {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  background: #f0f0f0;
+  color: #333;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.verbTab:hover {
+  background: #e0e0e0;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.verbTab.activeTab {
+  background: #2196F3;
+  color: white;
+  box-shadow: 0 2px 4px rgba(33, 150, 243, 0.2);
+}
+
+.verbTableTitle {
+  margin: 2rem 0 1.5rem;
+  font-size: 1.2rem;
+  color: #2c3e50;
+  text-align: center;
+}
+
+.tenseDescription {
+  text-align: center;
+  color: #2c3e50;
+  font-size: 1.1rem;
+  margin: 1rem 0 2rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  line-height: 1.5;
+}
+
+.conjugationTable {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1.5fr;
+  background: #2196F3;
+  color: white;
+  padding: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1.5fr;
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s ease;
+  align-items: center;
+}
+
+.tableRow:last-child {
+  border-bottom: none;
+}
+
+.tableRow:hover {
+  background: #f8f9fa;
+}
+
+.pronounCol {
+  text-align: right;
+  padding-right: 1.5rem;
+  font-weight: 500;
+}
+
+.endingCol {
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.endingCol strong {
+  color: #2196F3;
+}
+
+.exampleCol {
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.infinitiveExamples {
+  margin-top: 2rem;
+}
+
+.examplesTable {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.examplesHeader {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: #2196F3;
+  color: white;
+  padding: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.exampleRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 14px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+  transition: background-color 0.2s ease;
+}
+
+.exampleRow:last-child {
+  border-bottom: none;
+}
+
+.exampleRow:hover {
+  background: #f8f9fa;
+}
+
+.russianVerb {
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .verbTabs {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .verbTab {
+    width: 100%;
+    min-width: unset;
+  }
+  
+  .tableHeader, .tableRow, .examplesHeader, .exampleRow {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .pronounCol {
+    text-align: center;
+    padding-right: 0;
+  }
+}
+
+.consonantPairsWrapper {
+  margin: 2rem auto;
+  width: 100%;
+  max-width: 800px;
+}
+
+.consonantPairsTitle {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.consonantPairsTable {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
+  background: white;
+  padding: 0.6rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.consonantRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(45px, 1fr));
+  gap: 0.3rem;
+}
+
+.consonantCell {
+  font-size: 1.2rem;
+  padding: 0.3rem;
+  max-width: 40px;
+  text-align: center;
+}
+
+.voicedCell {
+  color: #1e90ff;
+  background-color: rgba(30, 144, 255, 0.1);
+}
+
+.voicelessCell {
+  color: #ff4757;
+  background-color: rgba(255, 71, 87, 0.1);
+}
+
+.consonantCell.highlighted {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.voicedCell.highlighted {
+  border-color: #1e90ff;
+  background-color: rgba(30, 144, 255, 0.2);
+}
+
+.voicelessCell.highlighted {
+  border-color: #ff4757;
+  background-color: rgba(255, 71, 87, 0.2);
+}
+
+@media (max-width: 768px) {
+  .consonantPairsTable {
+    padding: 0.4rem;
+  }
+
+  .consonantRow {
+    grid-template-columns: repeat(auto-fit, minmax(35px, 1fr));
+    gap: 0.25rem;
+  }
+
+  .consonantCell {
+    font-size: 1rem;
+    padding: 0.25rem;
+    max-width: 35px;
+  }
+}
+
+/* Adjectives Page Styles */
+.endingsTable {
+  width: 100%;
+  max-width: 400px;
+  margin: 1rem 0;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.endingsTable th,
+.endingsTable td {
+  padding: 0.75rem;
+  text-align: center;
+  border: 1px solid #e0e0e0;
+}
+
+.endingsTable th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+/* Gender-based row colors */
+.masculineRow {
+  background-color: #d9ecff;
+}
+
+.feminineRow {
+  background-color: #fae1f4;
+}
+
+.neuterRow {
+  background-color: #fff7cc;
+}
+
+.pluralRow {
+  background-color: #f0f0f0;
+}
+
+.masculineRow:hover {
+  background-color: #c5e1ff;
+}
+
+.feminineRow:hover {
+  background-color: #f8d0ee;
+}
+
+.neuterRow:hover {
+  background-color: #fff0b3;
+}
+
+.pluralRow:hover {
+  background-color: #e6e6e6;
+}
+
+/* Color Legend */
+.colorLegend {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin: 1rem 0;
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.legendColor {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 4px;
+}
+
+.legendColor.masculine {
+  background-color: #d9ecff;
+}
+
+.legendColor.feminine {
+  background-color: #fae1f4;
+}
+
+.legendColor.neuter {
+  background-color: #fff7cc;
+}
+
+.legendColor.plural {
+  background-color: #f0f0f0;
+}
+
+.ruleNote {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  color: #2c3e50;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  border-right: 4px solid #2196F3;
+}
+
+/* Pronouns Table Styles */
+.singularRow {
+  background-color: rgba(173, 216, 230, 0.1);
+}
+
+.singularRow:hover {
+  background-color: rgba(173, 216, 230, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+.pluralRow {
+  background-color: rgba(255, 182, 193, 0.1);
+}
+
+.pluralRow:hover {
+  background-color: rgba(255, 182, 193, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+/* Mobile responsiveness for pronouns table */
+@media (max-width: 768px) {
+  .tableContainer table td,
+  .tableContainer table th {
+    padding: 8px;
+    font-size: 14px;
+  }
+}
+
+/* Possessive Pronouns Table Styles */
+.evenRow {
+  background-color: rgba(173, 216, 230, 0.1);
+}
+
+.oddRow {
+  background-color: rgba(255, 182, 193, 0.1);
+}
+
+.evenRow:hover,
+.oddRow:hover {
+  background-color: rgba(173, 216, 230, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+/* Examples Section */
+.exampleSentence {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.exampleSentence:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.russianText {
+  font-size: 1.2rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.transliteration {
+  color: #666;
+  margin-bottom: 0.5rem;
+  font-style: italic;
+}
+
+.hebrewText {
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+/* Mobile responsiveness for examples */
+@media (max-width: 768px) {
+  .examplesSection {
+    padding: 1rem;
+  }
+
+  .exampleSentence {
+    padding: 0.75rem;
+  }
+
+  .russianText {
+    font-size: 1.1rem;
+  }
+}
+
+.prepositionsSection {
+  background-color: rgba(173, 216, 230, 0.1);
+  padding: 2rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.prepositionsSection table tr {
+  background-color: rgba(255, 182, 193, 0.1);
+}
+
+.prepositionsSection table tr:hover {
+  background-color: rgba(255, 182, 193, 0.2);
+}
+
+.conjunctionsSection {
+  background-color: rgba(255, 182, 193, 0.1);
+  padding: 2rem;
+  border-radius: 12px;
+}
+
+.conjunctionsSection table tr {
+  background-color: rgba(173, 216, 230, 0.1);
+}
+
+.conjunctionsSection table tr:hover {
+  background-color: rgba(173, 216, 230, 0.2);
+}
+
+.prepositionsSection h3,
+.conjunctionsSection h3 {
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.prepositionsSection .tableContainer,
+.conjunctionsSection .tableContainer {
+  margin-top: 1.5rem;
+  overflow-x: auto;
+}
+
+.prepositionsSection table,
+.conjunctionsSection table {
+  width: 100%;
+  border-collapse: collapse;
+  direction: rtl;
+}
+
+.prepositionsSection th,
+.conjunctionsSection th {
+  background-color: #f8f9fa;
+  color: #000000;
+  padding: 1rem;
+  text-align: right;
+  font-weight: 600;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.prepositionsSection td,
+.conjunctionsSection td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .prepositionsSection,
+  .conjunctionsSection {
+    padding: 1rem;
+  }
+
+  .prepositionsSection th,
+  .conjunctionsSection th,
+  .prepositionsSection td,
+  .conjunctionsSection td {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+.russianName {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.exampleContainer {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 2rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.exampleText {
+  font-size: 1.2rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  text-align: right;
+}
+
+.exampleTranslation {
+  font-size: 1.1rem;
+  color: #666;
+  font-style: italic;
+  text-align: right;
+}
+
+.commonWordsContainer {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.commonWordsTitle {
+  color: #2c3e50;
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+  text-align: right;
+}
+
+.commonWordsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.commonWordsList li {
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  color: #2c3e50;
+  transition: all 0.2s ease;
+  text-align: right;
+}
+
+.commonWordsList li:hover {
+  background: #e9ecef;
+  transform: translateX(-5px);
+}
+
+.commonWordsList li strong {
+  color: #1976D2;
+}
+
+@media (max-width: 768px) {
+  .exampleContainer {
+    padding: 1rem;
+  }
+
+  .exampleText {
+    font-size: 1.1rem;
+  }
+
+  .exampleTranslation {
+    font-size: 1rem;
+  }
+
+  .tableContainer {
+    margin: 1.5rem 0;
+  }
+
+  .tableContainer th,
+  .tableContainer td {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .commonWordsContainer {
+    padding: 1rem;
+  }
+
+  .commonWordsList {
+    grid-template-columns: 1fr;
+  }
+
+  .commonWordsList li {
+    padding: 0.75rem;
+  }
+}
+
+.summaryTableContainer {
+  margin-top: 2rem;
+  overflow-x: auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.summaryTable {
+  width: 100%;
+  border-collapse: collapse;
+  direction: rtl;
+}
+
+.summaryTable th {
+  background-color: #f8f9fa;
+  color: #2c3e50;
+  font-weight: 600;
+  padding: 1rem;
+  text-align: right;
+  border-bottom: 2px solid #e0e0e0;
+  white-space: nowrap;
+}
+
+.summaryTable td {
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: right;
+}
+
+.commonWordsCell {
+  min-width: 200px;
+  max-width: 300px;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .summaryTableContainer {
+    margin: 1rem -1rem;
+    border-radius: 0;
+  }
+
+  .summaryTable th,
+  .summaryTable td {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .commonWordsCell {
+    min-width: 150px;
+  }
+}
+
+.gameButton {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  color: #2c3e50;
+  background: transparent;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 2rem;
+}
+
+.gameButton:hover {
+  background: #f5f5f5;
+  border-color: #2196F3;
+  color: #1976D2;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .topicsGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding: 0.75rem;
+    direction: rtl;
+    justify-items: center;
+  }
+
+  .topicCard {
+    padding: 0.75rem;
+    min-height: 100px;
+    max-width: 120px;
+    direction: rtl;
+  }
+
+  .icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .topicTitle {
+    font-size: 1rem;
+    direction: rtl;
+  }
+
+  .topicDescription {
+    font-size: 0.7rem;
+    direction: rtl;
+  }
+
+  .tableContainer {
+    margin: 0.4rem 0;
+    direction: rtl;
+  }
+
+  .tableContainer table {
+    font-size: 0.85rem;
+    direction: rtl;
+  }
+
+  .tableContainer th,
+  .tableContainer td {
+    padding: 0.5rem;
+    direction: rtl;
+  }
+
+  .consonantPairsTable {
+    padding: 0.4rem;
+    direction: rtl;
+  }
+
+  .consonantRow {
+    grid-template-columns: repeat(auto-fit, minmax(35px, 1fr));
+    gap: 0.25rem;
+    direction: rtl;
+  }
+
+  .consonantCell {
+    font-size: 1rem;
+    padding: 0.25rem;
+    max-width: 35px;
+    direction: rtl;
+  }
+
+  .examplesSection {
+    padding: 0.6rem;
+    margin-top: 1rem;
+    direction: rtl;
+  }
+
+  .examplesTitle {
+    font-size: 0.95rem;
+    direction: rtl;
+  }
+
+  .examplesList {
+    gap: 0.6rem;
+    direction: rtl;
+  }
+
+  .wordText {
+    font-size: 0.9rem;
+    direction: rtl;
+  }
+
+  .tableRow,
+  .exampleRow {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    text-align: center;
+    padding: 0.5rem;
+    direction: rtl;
+  }
+
+  .pronounCol {
+    text-align: center;
+    padding-right: 0;
+    direction: rtl;
+  }
+}
+
+@media (max-width: 480px) {
+  .topicsGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    padding: 0.5rem;
+    direction: rtl;
+    justify-items: center;
+  }
+
+  .topicCard {
+    padding: 0.5rem;
+    min-height: 80px;
+    max-width: 100px;
+    direction: rtl;
+  }
+
+  .icon {
+    font-size: 1.25rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .topicTitle {
+    font-size: 0.9rem;
+    direction: rtl;
+  }
+
+  .topicDescription {
+    font-size: 0.65rem;
+    direction: rtl;
+  }
+
+  .consonantRow {
+    grid-template-columns: repeat(auto-fit, minmax(30px, 1fr));
+    gap: 0.2rem;
+    direction: rtl;
+  }
+
+  .consonantCell {
+    font-size: 0.9rem;
+    padding: 0.2rem;
+    max-width: 30px;
+    direction: rtl;
+  }
+
+  .tableContainer table {
+    font-size: 0.8rem;
+    direction: rtl;
+  }
+
+  .examplesSection {
+    padding: 0.4rem;
+    direction: rtl;
+  }
+
+  .examplesTitle {
+    font-size: 0.9rem;
+    direction: rtl;
+  }
+
+  .wordText {
+    font-size: 0.85rem;
+    direction: rtl;
+  }
+}
+
+.bottomNavRow {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: stretch;
+  width: 66%; /* 3/3 of the grid above, adjust as needed */
+  max-width: 600px;
+  margin: 1.5rem auto 0 auto;
+  gap: 2%;
+}
+@media (max-width: 900px) {
+  .bottomNavRow {
+    width: 100%;
+    max-width: none;
+    gap: 1%;
+  }
+}

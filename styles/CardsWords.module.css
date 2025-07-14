@@ -1,0 +1,234 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  font-family: sans-serif;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.loading {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-top: 4rem;
+}
+
+.cardContainer {
+  perspective: 1000px;
+  width: 90%;
+  max-width: 400px;
+  height: 400px;
+  margin-bottom: 2rem;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+  cursor: pointer;
+}
+
+.cardFlipped {
+  transform: rotateY(180deg);
+}
+
+.cardFront, .cardBack {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+}
+
+.cardBack {
+  transform: rotateY(180deg);
+}
+
+.word {
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.wordRow {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  direction: rtl;
+}
+
+.separator {
+  font-weight: bold;
+  font-size: 1.4rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+.transliteration {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #666;
+  text-align: center;
+}
+
+.associationBlock {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  margin-top: 1rem;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.associationRow {
+  display: inline-flex;
+  flex-direction: row;
+  text-align: right;
+  direction: rtl;
+  gap: 0.5rem;
+  font-size: 1rem;
+}
+
+.associationLabel {
+  font-weight: bold;
+  color: #333;
+  white-space: nowrap;
+}
+
+.associationValue {
+  color: #444;
+}
+
+.associationSentence {
+  font-size: 1rem;
+  color: #666;
+  direction: rtl;
+  text-align: right;
+  width: 100%;
+}
+
+.icon {
+  font-size: 5rem;
+  margin: 1rem 0;
+}
+
+.speakerButton {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #555;
+}
+
+.speakerButton:hover {
+  color: #000;
+}
+
+.navigation {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.navigation button {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #444;
+}
+
+.navigation button:hover {
+  color: #000;
+}
+
+.imageContainer {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.wordImage {
+  max-width: 80%;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.topBar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.topicFilter {
+  margin-left: auto;
+}
+
+.dropdown {
+  padding: 0.4rem 1.2rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background: #f8f8f8;
+  color: #333;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  transition: border 0.2s;
+}
+
+.dropdown:focus {
+  border: 1.5px solid #1976D2;
+}
+
+@media (max-width: 768px) {
+  .wordRow {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .separator {
+    font-size: 1.1rem;
+  }
+
+  .associationBlock {
+    margin-top: 0.5rem;
+    gap: 0.3rem;
+  }
+
+  .associationRow {
+    font-size: 1rem;
+  }
+
+  .associationSentence {
+    font-size: 0.85rem;
+  }
+}

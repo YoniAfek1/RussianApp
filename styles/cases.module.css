@@ -1,0 +1,256 @@
+/* === Grammatical Cases Section Styles === */
+
+.casesContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2.5rem 1rem 1rem;
+  background: #f6fbff;
+  direction: rtl;
+  text-align: right;
+}
+
+.casesTitle {
+  font-size: 2.2rem;
+  color: #2c3e50;
+  margin-bottom: 2.2rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.casesNavigation {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 1.2rem;
+}
+
+.caseButton {
+  padding: 1.1rem 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  background: #f8f9fa;
+  color: #2c3e50;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(44,62,80,0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  outline: none;
+}
+
+.caseButton.activeCase {
+  border-color: #2c3e50;
+  box-shadow: 0 4px 12px rgba(44,62,80,0.10);
+  font-weight: 700;
+}
+
+.caseButton div:first-child {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+.caseButton div:nth-child(2) {
+  font-size: 0.95rem;
+  color: #555;
+}
+.caseButton.case1 { background: #FFEFF1; } /* נומינטיבית – ורוד עדין (אדום פסטלי) */
+.caseButton.case2 { background: #FFF5E5; } /* גנטיבית – כתום אפרסקי (שכנה של ורוד) */
+.caseButton.case3 { background: #FFFFE6; } /* דטיבית – צהוב לימוני מאוד בהיר */
+.caseButton.case4 { background: #F0FFF0; } /* אקוזטיבית – ירוק נענע בהיר */
+.caseButton.case5 { background: #E8FAFF; } /* אינסטרומנטלית – תכלת מימי (קרוב לירוק) */
+.caseButton.case6 { background: #F3EDFF; } /* פרפוזיציונית – סגול לילו בהיר (שכנה של כחול) */
+
+.caseButton.explanation { background: #EDF7FF; } /* הסבר – כחול קרח רגוע */
+.caseButton.summary     { background: #FFF7F0; } /* סיכום – כתום בהיר־חמים */
+
+
+
+
+
+.bottomNavRow {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: stretch;
+  width: 66%;
+  max-width: 600px;
+  margin: 1.5rem auto 0 auto;
+  gap: 2%;
+}
+
+@media (max-width: 900px) {
+  .casesNavigation, .bottomNavRow {
+    max-width: 100%;
+    width: 100%;
+    gap: 1%;
+  }
+}
+@media (max-width: 600px) {
+  .casesNavigation {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+  }
+  .bottomNavRow {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.7rem;
+  }
+  .caseButton {
+    width: 100% !important;
+    min-width: 0;
+  }
+}
+
+.caseContent {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(44,62,80,0.07);
+  padding: 2rem 1.2rem 1.5rem;
+  margin-top: 1.5rem;
+  width: 100%;
+  max-width: 700px;
+  direction: rtl;
+  text-align: right;
+}
+
+.caseTitle {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin-bottom: 1.2rem;
+  font-weight: 600;
+}
+
+.caseDescription {
+  color: #666;
+  line-height: 1.7;
+  margin-bottom: 1.2rem;
+  font-size: 1.08rem;
+}
+
+.exampleContainer {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 1px 3px rgba(44,62,80,0.04);
+}
+.exampleText {
+  font-size: 1.08rem;
+  color: #2c3e50;
+  margin-bottom: 0.3rem;
+}
+.exampleTranslation {
+  font-size: 0.98rem;
+  color: #1976D2;
+}
+
+.tableContainer {
+  margin: 1.2rem 0;
+  overflow-x: auto;
+  background: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(44,62,80,0.05);
+}
+.tableContainer table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 400px;
+}
+.tableContainer th, .tableContainer td {
+  padding: 0.7rem 0.5rem;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: right;
+  font-size: 1rem;
+}
+.tableContainer th {
+  background: #E3F2FD;
+  color: #2c3e50;
+  font-weight: 600;
+}
+.tableContainer tr:last-child td {
+  border-bottom: none;
+}
+
+.summaryTableContainer {
+  margin: 0.5rem 0;
+  overflow-x: auto;
+  width: 100%;
+  background: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(44,62,80,0.05);
+}
+.summaryTable {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 500px;
+}
+.summaryTable th, .summaryTable td {
+  padding: 0.7rem 0.5rem;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: right;
+  font-size: 1rem;
+}
+.summaryTable th {
+  background: #E3F2FD;
+  color: #2c3e50;
+  font-weight: 600;
+}
+.summaryTable tr:last-child td {
+  border-bottom: none;
+}
+.caseSummaryName {
+  font-weight: 600;
+  color: #1976D2;
+}
+.russianName {
+  font-size: 0.95rem;
+  color: #888;
+}
+.commonWordsCell {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.commonWordsContainer {
+  margin-top: 1.5rem;
+}
+.commonWordsTitle {
+  font-size: 1.1rem;
+  color: #2c3e50;
+  margin-bottom: 0.7rem;
+  font-weight: 600;
+}
+.commonWordsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.commonWordsList li {
+  margin: 0.5rem 0;
+  color: #666;
+  font-size: 1.05rem;
+}
+.commonWordsList li strong {
+  color: #1976D2;
+}
+
+@media (max-width: 600px) {
+  .caseContent {
+    padding: 1.2rem 0.5rem 1rem;
+    max-width: 100%;
+  }
+  .summaryTable, .tableContainer table {
+    min-width: 320px;
+    font-size: 0.95rem;
+  }
+  .casesTitle {
+    font-size: 1.3rem;
+  }
+} 

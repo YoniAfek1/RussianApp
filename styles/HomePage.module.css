@@ -1,0 +1,360 @@
+.homeBg {
+  min-height: 100vh;
+  background: #C8E6F8;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 1rem;
+}
+
+.headerSection {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.header {
+  font-size: 2.3rem;
+  margin-bottom: 0.5rem;
+  color: #1a237e;
+}
+
+.subheader {
+  text-align: center;
+  font-size: 1.7rem;
+  color: #0e6198;
+  margin-bottom: 0.5rem;
+}
+
+.mainNav {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  max-width: 700px;
+  margin: 0 auto 1rem;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+.navButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.8rem;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+  height: 130px;
+  border: 2px solid #ffffff;
+  text-decoration: none;
+  color: inherit;
+}
+
+.navButton * {
+  text-decoration: none !important;
+}
+
+.navButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  border-color: #007bff;
+}
+
+.fullWidthButton {
+  direction: rtl;
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0.8rem 1.2rem;
+  height: auto;
+  min-height: 70px;
+  gap: 1rem;
+}
+
+.fullWidthButton .icon {
+  margin: 0 0 0 1rem;
+}
+
+.textColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  flex: 1 1 0%;
+  width: 100%;
+}
+
+.fullWidthButton .buttonText {
+  text-align: right;
+  width: 100%;
+  margin-bottom: 0.2rem;
+}
+
+.fullWidthButton .buttonSubtext {
+  text-align: right;
+  width: 100%;
+  margin: 0;
+}
+
+.iconCircle {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.iconImage {
+  width: 56px;
+  height: 56px;
+}
+
+.buttonText {
+  font-weight: 600;
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.buttonSubtext {
+  flex: 1;
+  font-size: 0.85rem;
+  color: #666;
+  text-align: right;
+  direction: rtl;
+  margin-top: 0.3rem;
+  line-height: 1.3;
+  max-width: 100%;
+}
+
+.wavingAnim {
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  mix-blend-mode: normal;
+}
+
+.bottomNav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  background: #fff;
+  box-shadow: 0 -2px 12px rgba(30, 64, 175, 0.08);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  padding: 0.5rem 0;
+}
+
+.homeNavButton {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(30, 64, 175, 0.10);
+  padding: 0.6rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #1a237e;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+  margin: 0.25rem 0;
+  text-decoration: none;
+  box-sizing: border-box;
+  max-width: 280px;
+}
+
+.homeNavButton:active {
+  transform: translateY(2px) scale(0.98);
+  box-shadow: 0 1px 4px rgba(30, 64, 175, 0.08);
+}
+
+.homeLightbulbBubble {
+  background: #fffbe7;
+  color: #333;
+  border-radius: 18px;
+  box-shadow: 0 4px 18px rgba(255, 215, 0, 0.13), 0 1.5px 8px rgba(0,0,0,0.07);
+  padding: 1.1rem 1.3rem;
+  margin: 1.2rem auto 0.7rem auto;
+  max-width: 420px;
+  text-align: center;
+  font-size: 1.13rem;
+  line-height: 1.7;
+  position: relative;
+  transition: max-height 0.4s cubic-bezier(.4,0,.2,1), opacity 0.3s;
+  opacity: 1;
+  z-index: 10;
+  border: 1.5px solid #ffe066;
+}
+
+@media (max-width: 600px) {
+  .homeLightbulbBubble {
+    font-size: 1rem;
+    padding: 0.8rem 0.7rem;
+    max-width: 98vw;
+  }
+}
+
+.homeLightbulbAnim {
+  overflow: hidden;
+  max-height: 500px;
+  opacity: 1;
+  transition: max-height 0.4s cubic-bezier(.4,0,.2,1), opacity 0.3s;
+}
+
+.homeLightbulbAnimCollapsed {
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.4s cubic-bezier(.4,0,.2,1), opacity 0.3s;
+}
+
+.homeLightbulbToggleBtn {
+  background: none;
+  border: none;
+  font-size: 2.1rem;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+  transition: transform 0.2s;
+  outline: none;
+  color: #f7c948;
+  filter: drop-shadow(0 2px 6px #ffe06688);
+}
+
+.homeLightbulbToggleBtn:active {
+  transform: scale(1.13) rotate(-8deg);
+}
+
+@media (max-width: 768px) {
+  .homeBg {
+    padding: 1rem 0.75rem;
+  }
+
+  .headerSection {
+    margin-top: 1.25rem;
+    margin-bottom: 0.75rem;
+    padding: 0 0.75rem;
+  }
+
+  .header {
+    font-size: 1.4rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .subheader {
+    font-size: 1.2rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .mainNav {
+    gap: 1.5rem;
+    padding: 0 0.75rem;
+  }
+
+  .navButton {
+    padding: 0.6rem;
+    height: 110px;
+  }
+
+  .fullWidthButton {
+    padding: 0.6rem 1rem;
+    min-height: 60px;
+    gap: 0.8rem;
+  }
+
+  .fullWidthButton .icon {
+    margin-right: 0.8rem;
+  }
+
+  .iconCircle {
+    width: 42px;
+    height: 42px;
+  }
+
+  .iconImage {
+    width: 50px;
+    height: 50px;
+  }
+
+  .buttonText {
+    font-size: 1.1rem;
+  }
+
+  .buttonSubtext {
+    font-size: 0.8rem;
+  }
+
+  .wavingAnim {
+    width: 200px;
+    height: 200px;
+  }
+
+  .homeNavButton {
+    padding: 0.5rem 1.25rem;
+    font-size: 1rem;
+    max-width: 240px;
+  }
+}
+
+@media (max-width: 430px) {
+  .mainNav {
+    gap: 1.25rem;
+    padding: 0 0.6rem;
+  }
+
+  .navButton {
+    padding: 0.6rem;
+    height: 100px;
+  }
+
+  .fullWidthButton {
+    padding: 0.6rem 0.9rem;
+    min-height: 55px;
+    gap: 0.7rem;
+  }
+
+  .fullWidthButton .icon {
+    margin-right: 0.7rem;
+  }
+
+  .buttonText {
+    font-size: 1.1rem;
+  }
+
+  .buttonSubtext {
+    font-size: 0.75rem;
+  }
+
+  .iconCircle {
+    width: 38px;
+    height: 38px;
+  }
+
+  .iconImage {
+    width: 50px;
+    height: 50px;
+  }
+}

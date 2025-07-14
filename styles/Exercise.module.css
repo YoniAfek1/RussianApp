@@ -1,0 +1,193 @@
+.container {
+  min-height: 100vh;
+  background: #C8E6F8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+}
+
+.title {
+  font-size: 3rem;
+  color: #2c3e50;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.optionsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.0rem;
+  justify-items: center;
+  max-width:600px;
+  width: 100%;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.optionCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border: 2px solid #ffffff;
+  border-radius: 1.8rem;
+  padding: 1.5rem;
+  text-align: center;
+  text-decoration: none;
+  min-width: 250px;
+  min-height: 250px;
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.1);
+  transition: all 0.2s ease-in-out;
+}
+
+.optionCard:hover {
+  background-color: #ffffff;
+  border-color: #90caf9;
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.optionText {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0;
+}
+
+.iconImage {
+  width: 7rem;
+  height: 7rem;
+  object-fit: contain;
+}
+
+.bottomAnim {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.annaImage {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 600px) {
+  .optionsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .optionCard {
+    min-width: 120px;
+    min-height: 120px;
+    padding: 1rem;
+    border-radius: 1.2rem;
+  }
+  .optionText {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .iconImage {
+    width: 5rem;
+    height: 5rem;
+  }
+  .annaImage {
+    width: 180px;
+    height: 180px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .title {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .optionsGrid {
+    gap: 1rem;
+    padding: 0.75 0.75rem;
+  }
+
+  .optionCard {
+    width: 170px;
+    height: 170px;
+    padding: 1rem;
+    border-radius: 20px;
+  }
+
+  .optionText {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .iconImage {
+    width: 70px;
+    height: 70px;
+  }
+
+  .annaImage {
+    width: 180px;
+    height: 180px;
+  }
+}
+
+@media (max-width: 430px) {
+  .container {
+    padding: 1.25rem 0.6rem;
+  }
+
+  .title {
+    font-size: 2rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .optionsGrid {
+    gap: 1rem;
+    padding: 0.6 0.6rem;
+  }
+
+  .optionCard {
+    width: 140px;
+    height: 140px;
+    padding: 0.8rem;
+    border-radius: 16px;
+  }
+
+  .optionText {
+    font-size: 1.3rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .iconImage {
+    width: 62px;
+    height: 62px;
+  }
+
+  .annaImage {
+    width: 180px;
+    height: 180px;
+  }
+} 

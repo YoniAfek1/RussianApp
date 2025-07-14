@@ -1,0 +1,41 @@
+# Node modules
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.*.local
+.env.local
+
+# IDEs
+.vscode/
+.idea/
+
+# Testing
+coverage/
+
+# Cache
+.cache/
+.next/
+out/
+
+# Others
+*.local
+*.log
+public/models/silero_v3_ru.pt
+
+.next/
+
+.env.local

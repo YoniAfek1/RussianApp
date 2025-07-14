@@ -1,0 +1,90 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.description {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.recordingSection {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.recordButton {
+  width: 100px;
+  height: 100px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 50%; /* ← עיגול */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.recordButton:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+.recordButton.recording {
+  background-color: #f44336;
+  animation: pulse 1.5s infinite;
+}
+
+.recordButton.recording:hover {
+  background-color: #d32f2f;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.audioPlayer {
+  margin-top: 1rem;
+}
+
+.audioPlayer audio {
+  width: 100%;
+  max-width: 400px;
+}
+
+.placeholder {
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.placeholder h2 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.placeholder p {
+  color: #666;
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+} 
