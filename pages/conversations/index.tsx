@@ -11,19 +11,28 @@ declare global {
 }
 
 const API_KEY = "AIzaSyBJjYZif960Nh_FccIVcngUZcSFfPq_tgA";
-const MAX_MESSAGES = 10;
+const MAX_MESSAGES = 20;
 
 const basePrompt = `
-Ты чат-бот, помогающий человеку учить русский язык через ролевые диалоги.
+Ты чат-бот, помогающий человеку учить русский язык через ролевые диалоги.  
 Всегда говори по-русски, избегай английского.
+Говори как с маленьким ребёнком, который только начинает учить язык.  
+Используй только самые простые и частые слова — из повседневной жизни.  
+Избегай редких слов, сложных фраз и длинных предложений.  
+Отвечай коротко, ясно и по смыслу — не более 6–10 слов.  
+Каждое твоё сообщение должно заканчиваться простым вопросом, чтобы продолжить диалог.  
+Будь **вежливым**, **живым** и **терпеливым** — как хороший учитель, который играет роль.
 
-Используй простые, повседневные слова и выражения — как для начинающего ученика.
-Отвечай по смыслу — коротко, понятно, не более 12 слов.
-Избегай сложных конструкций и редких слов.
-Каждое твоё сообщение должно заканчиваться вопросом, чтобы продолжить диалог.
+В конце каждого твоего ответа предлагай **две очень простые и короткие фразы**, которые человек может выбрать как следующий ответ.
 
-Будь вежливым, живым и терпеливым — как хороший учитель, который играет роль.
+Формат:
+Твоя реплика.
 
+**Варианты ответа:**
+– Вариант 1  
+– Вариант 2
+
+Не используй одинаковые фразы каждый раз. Пусть ответы будут связаны с твоей репликой и логичны для продолжения.
 `;
 
 const correctionAddon = `
@@ -111,7 +120,8 @@ export default function ConversationsIndex() {
   const [listening, setListening] = useState(false);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [debugMsg, setDebugMsg] = useState<string>('Initializing...');
-  const [correctionEnabled, setCorrectionEnabled] = useState(true);
+  const [correctionEnabled, setCorrectionEnabled] = useState(false);
+  const [suggestedReplies, setSuggestedReplies] = useState<string[]>([]);
   const chatRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -164,8 +174,10 @@ export default function ConversationsIndex() {
           const dummy = dummyInputs[Math.floor(Math.random() * dummyInputs.length)];
           const initialResponse = await chat.sendMessage(dummy);
           const assistantMessage = initialResponse.response.text();
-          setHistory([{ role: 'assistant', content: assistantMessage }]);
-          speak(assistantMessage);
+          const { reply, options } = extractReplyAndOptions(assistantMessage);
+          setHistory([{ role: 'assistant', content: reply }]);
+          setSuggestedReplies(options);
+          speak(reply);
           setDebugMsg('✅ Gemini ready!');
         } catch (error) {
           console.error('Error initializing Gemini:', error);
@@ -185,6 +197,18 @@ export default function ConversationsIndex() {
     window.speechSynthesis.speak(utterance);
   };
 
+  function extractReplyAndOptions(fullText: string): { reply: string, options: string[] } {
+    const parts = fullText.split('Варианты ответа:');
+    const reply = parts[0].trim();
+    const options = parts[1]
+      ? parts[1]
+          .split('–')
+          .map(opt => opt.trim())
+          .filter(opt => opt.length > 0)
+      : [];
+    return { reply, options };
+  }
+
   const handleRecognizedText = async (text: string) => {
     if (!chatSession || !text) {
       setDebugMsg('⚠️ No input or model not ready');
@@ -200,8 +224,10 @@ export default function ConversationsIndex() {
       const result = await chatSession.sendMessage(text);
       const reply = result.response.text();
       
-      setHistory([...updatedHistory, { role: 'assistant', content: reply }]);
-      speak(reply);
+      const { reply: assistantReply, options: assistantOptions } = extractReplyAndOptions(reply);
+      setHistory([...updatedHistory, { role: 'assistant', content: assistantReply }]);
+      setSuggestedReplies(assistantOptions);
+      speak(assistantReply);
       setDebugMsg('✅ Response complete');
     } catch (error) {
       console.error('Error from Gemini:', error);
@@ -328,6 +354,16 @@ export default function ConversationsIndex() {
             </div>
           ))}
         </div>
+
+        {suggestedReplies.length > 0 && (
+          <div className={styles.suggestions}>
+            {suggestedReplies.map((option, index) => (
+              <button key={index} onClick={() => handleRecognizedText(option)}>
+                {option}
+              </button>
+            ))}
+          </div>
+        )}
 
         <div className={styles.controls}>
           {isConversationEnded ? (
