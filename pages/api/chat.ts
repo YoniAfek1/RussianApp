@@ -17,11 +17,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
     const chat = await model.startChat({ history: messages });
-    const result = await chat.sendMessage(messages[messages.length - 1].content);
+    
+    const lastMessage = messages[messages.length - 1].content;
+    console.log("📤 Sending message to Gemini:", lastMessage);
+    const result = await chat.sendMessage(lastMessage);
+    
     console.log('🤖 Gemini API result:', JSON.stringify(result, null, 2));
     const reply = await result.response.text();
     console.log('📤 Gemini reply:', reply);
+    
+    console.log("📥 Gemini raw response:", reply);
     res.status(200).json({ reply });
+    
   } catch (err) {
     console.error('❌ Gemini API error:', err);
     res.status(500).json({ error: 'Gemini API error' });
