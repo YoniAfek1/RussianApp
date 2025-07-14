@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const API_KEY = process.env.API_KEY!;
+const API_KEY = "AIzaSyBJjYZif960Nh_FccIVcngUZcSFfPq_tgA";
 const genAI = new GoogleGenerativeAI(API_KEY);
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
