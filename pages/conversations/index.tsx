@@ -149,6 +149,15 @@ export default function ConversationsIndex() {
             })
           });
           const data = await response.json();
+          console.log("🌐 Gemini debugLog:", data.debugLog);  // חדש
+
+          if (data.reply) {
+            setHistory([{ role: 'assistant', content: data.reply }]);
+            speak(data.reply);
+          } else {
+            setHistory([{ role: 'assistant', content: '⚠️ No reply from Gemini' }]);
+          }
+
           setHistory([{ role: 'assistant', content: data.reply }]);
           speak(data.reply);
           setDebugLog(prev => [...prev, `✅ Gemini replied: ${data.reply}`]);
@@ -191,7 +200,14 @@ export default function ConversationsIndex() {
         body: JSON.stringify({ messages: updatedHistory })
       });
       const data = await response.json();
-      setHistory([...updatedHistory, { role: 'assistant', content: data.reply }]);
+      console.log("🌐 Gemini debugLog:", data.debugLog);  // חדש
+      
+      if (data.reply) {
+        setHistory([{ role: 'assistant', content: data.reply }]);
+        speak(data.reply);
+      } else {
+        setHistory([{ role: 'assistant', content: '⚠️ No reply from Gemini' }]);
+      }
       speak(data.reply);
       setDebugLog(prev => [...prev, `🤖 Gemini replied: ${data.reply}`]);
       setDebugMsg('✅ Response complete');
