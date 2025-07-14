@@ -28,7 +28,7 @@ const basePrompt = `
 Формат:
 Твоя реплика.
 
-**Варианты ответа:**
+Варианты ответа:
 – Вариант 1  
 – Вариант 2
 
@@ -351,19 +351,27 @@ export default function ConversationsIndex() {
                   </div>
                 )}
               </div>
+              {/* הצעות לתשובה UI - רק להודעה האחרונה של הבוט */}
+              {msg.role === 'assistant' && i === history.length - 1 && suggestedReplies.length > 0 && (
+                <div className={styles.suggestions}>
+                  <div className={styles.suggestionsTitle}>הצעות לתשובה</div>
+                  <div className={styles.suggestionButtons}>
+                    {suggestedReplies.map((option, idx) => (
+                      <button
+                        key={idx}
+                        className={styles.suggestionButton}
+                        onClick={() => handleRecognizedText(option)}
+                        tabIndex={0}
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           ))}
         </div>
-
-        {suggestedReplies.length > 0 && (
-          <div className={styles.suggestions}>
-            {suggestedReplies.map((option, index) => (
-              <button key={index} onClick={() => handleRecognizedText(option)}>
-                {option}
-              </button>
-            ))}
-          </div>
-        )}
 
         <div className={styles.controls}>
           {isConversationEnded ? (
