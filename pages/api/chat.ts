@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const API_KEY = process.env.API_KEY!;
+const API_KEY = "AIzaSyBJjYZif960Nh_FccIVcngUZcSFfPq_tgA"
 const genAI = new GoogleGenerativeAI(API_KEY);
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -13,10 +13,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (!messages) {
     return res.status(400).json({ error: 'No messages provided' });
   }
-
-  // Debug logging
-  console.log('🔑 API_KEY present:', !!process.env.API_KEY);
-  console.log('📝 Incoming prompt:', messages[messages.length - 1]?.content);
 
   try {
     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
