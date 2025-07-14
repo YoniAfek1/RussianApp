@@ -311,6 +311,14 @@
   color: #5d4037;
 }
 
+.suggestionsWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  margin: 1.2rem 0 0.5rem 0;
+}
+
 @media (max-width: 600px) {
   .container {
     padding: 1rem;
@@ -359,5 +367,8 @@
   .suggestionButton {
     font-size: 1rem;
     padding: 0.7rem 0.7rem;
+  }
+  .suggestionsWrapper {
+    margin: 0.7rem 0 0.3rem 0;
   }
 } 

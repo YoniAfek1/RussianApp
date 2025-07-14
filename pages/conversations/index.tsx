@@ -210,6 +210,10 @@ export default function ConversationsIndex() {
   }
 
   const handleRecognizedText = async (text: string) => {
+    if (isConversationEnded) {
+      setDebugMsg("השיחה נגמרה. התחילו שיחה חדשה");
+      return;
+    }
     if (!chatSession || !text) {
       setDebugMsg('⚠️ No input or model not ready');
       return;
@@ -351,26 +355,35 @@ export default function ConversationsIndex() {
                   </div>
                 )}
               </div>
-              {/* הצעות לתשובה UI - רק להודעה האחרונה של הבוט */}
-              {msg.role === 'assistant' && i === history.length - 1 && suggestedReplies.length > 0 && (
-                <div className={styles.suggestions}>
-                  <div className={styles.suggestionsTitle}>הצעות לתשובה</div>
-                  <div className={styles.suggestionButtons}>
-                    {suggestedReplies.map((option, idx) => (
-                      <button
-                        key={idx}
-                        className={styles.suggestionButton}
-                        onClick={() => handleRecognizedText(option)}
-                        tabIndex={0}
-                      >
-                        {option}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
+            // הצעות לתשובה UI - מחוץ לבועה של הבוט, אחרי ההודעה האחרונה בלבד
           ))}
+          {/* הצעות לתשובה - רק אחרי הודעת הבוט האחרונה */}
+          {history.length > 0 && history[history.length - 1].role === 'assistant' && suggestedReplies.length > 0 && (
+            <div className={styles.suggestionsWrapper}>
+              <div className={styles.suggestions}>
+                <div className={styles.suggestionsTitle}>הצעות לתשובה</div>
+                <div className={styles.suggestionButtons}>
+                  {suggestedReplies.map((option, idx) => (
+                    <button
+                      key={idx}
+                      className={styles.suggestionButton}
+                      onClick={() => {
+                        if (isConversationEnded) {
+                          setDebugMsg("🚫 Conversation ended. Start a new one.");
+                          return;
+                        }
+                        handleRecognizedText(option);
+                      }}
+                      tabIndex={0}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className={styles.controls}>
