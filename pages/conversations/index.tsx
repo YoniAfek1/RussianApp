@@ -1,26 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import styles from '../../styles/Conversations.module.css';
-import { GoogleGenerativeAI } from '@google/generative-ai';
-
-const genAI = new GoogleGenerativeAI("AIzaSyBJjYZif960Nh_FccIVcngUZcSFfPq_tgA");
-const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-
-async function sendToGemini(messages: Message[]): Promise<string> {
-  // Convert to Gemini format
-  const geminiHistory = messages.map(m => ({
-    role: m.role,
-    parts: [{ text: m.content }]
-  }));
-  const chat = await model.startChat({ history: geminiHistory });
-  const result = await chat.sendMessage(messages[messages.length - 1].content);
-  // Try both .text() and .candidates[0].content.parts[0].text for robustness
-  let reply = result.response?.text?.();
-  if (!reply && result.response?.candidates?.[0]?.content?.parts?.[0]?.text) {
-    reply = result.response.candidates[0].content.parts[0].text;
-  }
-  return reply || '';
-}
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 declare global {
   interface Window {
@@ -29,28 +10,26 @@ declare global {
   }
 }
 
+const API_KEY = "AIzaSyBJjYZif960Nh_FccIVcngUZcSFfPq_tgA";
 const MAX_MESSAGES = 10;
 
 const basePrompt = `
-Ты чат-бот, помогающий учить русский язык через ролевые диалоги.  
-Всегда говори **только по-русски**, даже если собеседник пишет по-другому.
+Ты чат-бот, помогающий человеку учить русский язык через ролевые диалоги.
+Всегда говори по-русски, избегай английского.
 
-Общайся **как с ребёнком** или с человеком, который **только начинает учить русский**.  
-Говори **очень просто** — только самые частые и лёгкие слова.  
-Используй **короткие, ясные фразы**, **не более 8–12 слов**.  
-Избегай сложных слов и длинных предложений.  
+Используй простые, повседневные слова и выражения — как для начинающего ученика.
+Отвечай по смыслу — коротко, понятно, не более 12 слов.
+Избегай сложных конструкций и редких слов.
+Каждое твоё сообщение должно заканчиваться вопросом, чтобы продолжить диалог.
 
-Каждое твоё сообщение должно заканчиваться **простым вопросом**, чтобы человек мог ответить.
+Будь вежливым, живым и терпеливым — как хороший учитель, который играет роль.
 
-Будь тёплым, дружелюбным и терпеливым — как хороший учитель, который играет и радуется успехам ученика.
-
-**ВАЖНО:** Никогда не повторяй и не перефразируй то, что говорит пользователь. Отвечай естественно, как в настоящем разговоре.
 `;
 
 const correctionAddon = `
-Если пользователь делает ошибку — исправь её **естественно** в своём ответе, используя правильную форму слова или фразы. 
-Не говори "Правильнее сказать..." — просто используй правильную форму в контексте своего ответа.
-Если ошибки нет — отвечай как обычно.
+Если пользователь делает ошибку — сначала повтори его фразу в правильной и естественной форме.
+Начни это предложение словами: "Правильнее сказать...".
+Если ошибки нет — не повторяй его фразу.
 `;
 
 type Role = 'user' | 'assistant';
@@ -132,6 +111,7 @@ export default function ConversationsIndex() {
   const [listening, setListening] = useState(false);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [debugMsg, setDebugMsg] = useState<string>('Initializing...');
+  const [correctionEnabled, setCorrectionEnabled] = useState(true);
   const chatRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -156,18 +136,46 @@ export default function ConversationsIndex() {
       const initGemini = async () => {
         try {
           setDebugMsg('📦 Initializing Gemini...');
-          const globalPrompt = basePrompt + "\n\n" + correctionAddon;
-          const promptWithGreeting = `${globalPrompt}\n\n${selectedConversation.prompt}\n\nНачни диалог с **разного** приветствия каждый раз. Используй разные варианты: "Привет!", "Здравствуйте!", "Как дела?", "Ты готов?", "Добрый день!", "Рад тебя видеть!" и т.д. Будь **естественным** и **спонтанным**, как в настоящем разговоре.`;
-          const reply = await sendToGemini(history);
-          setHistory([...history, { role: 'assistant', content: reply }]);
-          speak(reply);
+          const genAI = new GoogleGenerativeAI(API_KEY);
+          const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+          const globalPrompt = correctionEnabled
+            ? basePrompt + "\n\n" + correctionAddon
+            : basePrompt;
+
+          // Add instruction for varied greeting
+          const promptWithGreeting = `${globalPrompt}\n\n${selectedConversation.prompt}\n\nНачни диалог с подходящего приветствия, соответствующего твоей роли. Не используй всегда одно и то же приветствие.`;
+
+          const chat = await model.startChat({
+            history: [{
+              role: "user",
+              parts: [{ text: promptWithGreeting }]
+            }],
+            generationConfig: {
+              maxOutputTokens: 50,
+              temperature: 0.7,
+            },
+          });
+
+          setChatSession(chat);
+
+          // Send a dummy message to trigger the assistant's greeting
+          const dummyInputs = ["...", "—", "🔊", "👋"];
+          const dummy = dummyInputs[Math.floor(Math.random() * dummyInputs.length)];
+          const initialResponse = await chat.sendMessage(dummy);
+          const assistantMessage = initialResponse.response.text();
+          setHistory([{ role: 'assistant', content: assistantMessage }]);
+          speak(assistantMessage);
+          setDebugMsg('✅ Gemini ready!');
         } catch (error) {
-          setDebugMsg('❌ Failed to initialize');
+          console.error('Error initializing Gemini:', error);
+          setDebugMsg('❌ Failed to initialize Gemini');
         }
       };
+
       initGemini();
     }
-  }, [selectedConversation]);
+  }, [selectedConversation, correctionEnabled]);
 
   const speak = (text: string) => {
     const utterance = new SpeechSynthesisUtterance(text);
@@ -178,20 +186,26 @@ export default function ConversationsIndex() {
   };
 
   const handleRecognizedText = async (text: string) => {
-    if (!text) {
+    if (!chatSession || !text) {
       setDebugMsg('⚠️ No input or model not ready');
       return;
     }
+
     const updatedHistory: Message[] = [...history, { role: 'user', content: text }];
     setHistory(updatedHistory);
+
     setDebugMsg('💬 Sending to Gemini...');
     setLoading(true);
     try {
-      const reply = await sendToGemini(updatedHistory);
+      const result = await chatSession.sendMessage(text);
+      const reply = result.response.text();
+      
       setHistory([...updatedHistory, { role: 'assistant', content: reply }]);
       speak(reply);
+      setDebugMsg('✅ Response complete');
     } catch (error) {
-      setDebugMsg('❌ Error from Gemini');
+      console.error('Error from Gemini:', error);
+      setDebugMsg('❌ Error from model');
     }
     setLoading(false);
   };
@@ -242,15 +256,28 @@ export default function ConversationsIndex() {
   const startNewConversation = async () => {
     setHistory([]);
     setDebugMsg('🔄 Starting new conversation...');
+    
     if (selectedConversation) {
       try {
-        const globalPrompt = basePrompt + "\n\n" + correctionAddon;
-        const promptWithGreeting = `${globalPrompt}\n\n${selectedConversation.prompt}\n\nНачни диалог с **разного** приветствия каждый раз. Используй разные варианты: "Привет!", "Здравствуйте!", "Как дела?", "Ты готов?", "Добрый день!", "Рад тебя видеть!" и т.д. Будь **естественным** и **спонтанным**, как в настоящем разговоре.`;
-        const reply = await sendToGemini(history);
-        setHistory([...history, { role: 'assistant', content: reply }]);
-        speak(reply);
+        const genAI = new GoogleGenerativeAI(API_KEY);
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const globalPrompt = correctionEnabled
+          ? basePrompt + "\n\n" + correctionAddon
+          : basePrompt;
+        const chat = await model.startChat({
+          history: [{
+            role: "user",
+            parts: [{ text: globalPrompt + '\n\n' + selectedConversation.prompt }]
+          }],
+          generationConfig: {
+            maxOutputTokens: 50,
+            temperature: 0.7,
+          },
+        });
+        setChatSession(chat);
         setDebugMsg('✅ Ready for new conversation!');
       } catch (error) {
+        console.error('Error starting new conversation:', error);
         setDebugMsg('❌ Failed to start new conversation');
       }
     }
@@ -266,14 +293,23 @@ export default function ConversationsIndex() {
           לחץ ודבר ברוסית. השיחה תתנהל ברוסית
         </p>
 
-
+        <div className={styles.correctionToggle}>
+          <label>
+            האם תרצה לקבל תיקונים שלך בשיחה?
+            <input
+              type="checkbox"
+              checked={correctionEnabled}
+              onChange={() => setCorrectionEnabled(!correctionEnabled)}
+            />
+          </label>
+        </div>
 
         <div className={styles.chatBox} ref={chatRef}>
           {history.map((msg, i) => (
             <div key={i} className={msg.role === 'user' ? styles.userMsg : styles.assistantMsg}>
               <div className={styles.msgHeader}>
                 <div className={styles.messageContent}>
-                  <div className={styles.messageText} dir="ltr">
+                  <div className={styles.messageText}>
                     {msg.content}
                   </div>
                 </div>
