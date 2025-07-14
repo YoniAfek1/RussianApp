@@ -29,10 +29,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(500).json({ error: 'Empty reply from Gemini' });
     }
 
-    console.log('✅ Gemini reply:', reply);
+    console.log('✅ reply:', reply);
     res.status(200).json({ reply });
   } catch (err) {
-    console.error('❌ Gemini API error:', err);
+    console.error('❌ API error:', err);
     res.status(500).json({ error: 'Gemini API error' });
   }
 }
