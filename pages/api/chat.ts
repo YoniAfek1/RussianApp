@@ -19,7 +19,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const chat = await model.startChat({ history: messages });
     const result = await chat.sendMessage(messages[messages.length - 1].content);
     console.log('🤖 Gemini API result:', JSON.stringify(result, null, 2));
-    const reply = result.response.text();
+    const reply = await result.response.text();
+    console.log('📤 Gemini reply:', reply);
     res.status(200).json({ reply });
   } catch (err) {
     console.error('❌ Gemini API error:', err);
